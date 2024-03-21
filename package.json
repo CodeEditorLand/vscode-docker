@@ -2968,7 +2968,7 @@
 		"node-loader": "^2.0.0",
 		"ts-loader": "^9.4.2",
 		"typescript": "^5.0.4",
-		"typescript-esbuild": "latest",
+		"typescript-esbuild": "0.4.5",
 		"umd-compat-loader": "^2.1.2",
 		"webpack": "^5.80.0",
 		"webpack-bundle-analyzer": "^4.8.0",
