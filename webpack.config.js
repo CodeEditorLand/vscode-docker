@@ -17,7 +17,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const debugWebpack = !!process.env.DEBUG_WEBPACK;
 
-/** @type {import('webpack').Configuration} */ // Here's where we can get typing help even though it's JS
+ // Here's where we can get typing help even though it's JS
 const config = {
     target: 'node', // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
     mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
