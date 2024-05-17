@@ -1,27 +1,7 @@
 {
 	"name": "vscode-docker",
 	"displayName": "Docker",
-	"version": "0.0.1",
-	"private": false,
 	"description": "Makes it easy to create, manage, and debug containerized applications.",
-	"keywords": [
-		"land"
-	],
-	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandDocker#readme",
-	"bugs": {
-		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandDocker/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+HTTPS://github.com/CodeEditorLand/LandDocker.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "🛬 Land —",
-		"email": "Land@PlayForm.Cloud",
-		"url": "HTTPS://Land.PlayForm.Cloud"
-	},
-	"type": "module",
 	"main": "main",
 	"scripts": {
 		"Document": "Document 'Source/**/*.ts'",
@@ -2946,7 +2926,6 @@
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
-		"@playform/document": "0.0.6",
 		"@types/fs-extra": "11.0.4",
 		"@types/glob": "8.1.0",
 		"@types/node": "20.x",
@@ -2962,9 +2941,6 @@
 		"vscode.docker",
 		"vscode.yaml"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"icon": "resources/docker_blue.png",
 	"galleryBanner": {
 		"color": "#1e1e1e",
