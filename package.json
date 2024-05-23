@@ -2929,7 +2929,7 @@
 		"@types/semver": "7.5.8",
 		"@types/xml2js": "0.4.14",
 		"chai": "5.1.1",
-		"glob": "10.3.15",
+		"glob": "10.3.16",
 		"node-loader": "2.0.0",
 		"ts-loader": "9.5.1",
 		"umd-compat-loader": "2.1.2"
