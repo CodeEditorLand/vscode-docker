@@ -2914,7 +2914,7 @@
 		"@microsoft/vscode-container-client": "0.1.1",
 		"@microsoft/vscode-docker-registries": "0.1.11",
 		"dayjs": "1.11.11",
-		"dockerfile-language-server-nodejs": "0.11.0",
+		"dockerfile-language-server-nodejs": "0.12.0",
 		"fs-extra": "11.2.0",
 		"gradle-to-js": "2.0.1",
 		"handlebars": "4.7.8",
@@ -2929,7 +2929,7 @@
 		"@types/semver": "7.5.8",
 		"@types/xml2js": "0.4.14",
 		"chai": "5.1.1",
-		"glob": "10.3.16",
+		"glob": "10.4.1",
 		"node-loader": "2.0.0",
 		"ts-loader": "9.5.1",
 		"umd-compat-loader": "2.1.2"
