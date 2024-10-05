@@ -4,11 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ListContextItem } from "@microsoft/vscode-container-client";
+
 import { LocalGroupTreeItemBase } from "../LocalGroupTreeItemBase";
 import { ContextProperty } from "./ContextProperties";
 
-export class ContextGroupTreeItem extends LocalGroupTreeItemBase<ListContextItem, ContextProperty> {
-    public static readonly contextValue: string = 'contextGroup';
-    public readonly contextValue: string = ContextGroupTreeItem.contextValue;
-    public childTypeLabel: string = 'context';
+export class ContextGroupTreeItem extends LocalGroupTreeItemBase<
+	ListContextItem,
+	ContextProperty
+> {
+	public static readonly contextValue: string = "contextGroup";
+	public readonly contextValue: string = ContextGroupTreeItem.contextValue;
+	public childTypeLabel: string = "context";
 }

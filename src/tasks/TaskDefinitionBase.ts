@@ -3,32 +3,37 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { TaskDefinition } from 'vscode';
+import { TaskDefinition } from "vscode";
 
 export interface DependsOn {
-    type?: string;
+	type?: string;
 }
 
 export interface TaskDefinitionBase extends TaskDefinition {
-    label?: string;
-    dependsOn?: string[] | DependsOn;
-    options?: {
-        cwd?: string;
-        env?: NodeJS.ProcessEnv;
-    };
+	label?: string;
+	dependsOn?: string[] | DependsOn;
+	options?: {
+		cwd?: string;
+		env?: NodeJS.ProcessEnv;
+	};
 }
 
-export type DockerLabels = { includeDefaults?: boolean; } & { [key: string]: string; };
-
-export const defaultVsCodeLabels: { [key: string]: string } = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    'com.microsoft.created-by': 'visual-studio-code'
+export type DockerLabels = { includeDefaults?: boolean } & {
+	[key: string]: string;
 };
 
-export function getAggregateLabels(labels: DockerLabels | undefined, defaultLabels: { [key: string]: string }): { [key: string]: string } {
-    const { includeDefaults, ...explicitLabels } = labels || {};
+export const defaultVsCodeLabels: { [key: string]: string } = {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	"com.microsoft.created-by": "visual-studio-code",
+};
 
-    return (includeDefaults !== false)
-        ? { ...defaultLabels, ...explicitLabels }
-        : explicitLabels;
+export function getAggregateLabels(
+	labels: DockerLabels | undefined,
+	defaultLabels: { [key: string]: string },
+): { [key: string]: string } {
+	const { includeDefaults, ...explicitLabels } = labels || {};
+
+	return includeDefaults !== false
+		? { ...defaultLabels, ...explicitLabels }
+		: explicitLabels;
 }

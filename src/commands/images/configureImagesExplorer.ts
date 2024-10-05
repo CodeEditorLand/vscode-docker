@@ -4,8 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { IActionContext } from "@microsoft/vscode-azext-utils";
+
 import { ext } from "../../extensionVariables";
 
-export async function configureImagesExplorer(context: IActionContext): Promise<void> {
-    await ext.imagesRoot.configureExplorer(context);
+export async function configureImagesExplorer(
+	context: IActionContext,
+): Promise<void> {
+	await ext.imagesRoot.configureExplorer(context);
 }

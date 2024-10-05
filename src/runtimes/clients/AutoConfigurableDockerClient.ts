@@ -3,22 +3,27 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { DockerClient } from '@microsoft/vscode-container-client';
-import * as vscode from 'vscode';
-import { ext } from '../../extensionVariables';
-import { AutoConfigurableClient } from './AutoConfigurableClient';
+import { DockerClient } from "@microsoft/vscode-container-client";
+import * as vscode from "vscode";
 
-export class AutoConfigurableDockerClient extends DockerClient implements AutoConfigurableClient {
-    public constructor() {
-        super();
-        this.reconfigure();
-    }
+import { ext } from "../../extensionVariables";
+import { AutoConfigurableClient } from "./AutoConfigurableClient";
 
-    public reconfigure(): void {
-        const config = vscode.workspace.getConfiguration('docker');
-        const dockerCommand = config.get<string | undefined>('dockerPath') || 'docker';
-        this.commandName = dockerCommand;
+export class AutoConfigurableDockerClient
+	extends DockerClient
+	implements AutoConfigurableClient
+{
+	public constructor() {
+		super();
+		this.reconfigure();
+	}
 
-        ext.outputChannel.debug(`docker.dockerPath: ${this.commandName}`);
-    }
+	public reconfigure(): void {
+		const config = vscode.workspace.getConfiguration("docker");
+		const dockerCommand =
+			config.get<string | undefined>("dockerPath") || "docker";
+		this.commandName = dockerCommand;
+
+		ext.outputChannel.debug(`docker.dockerPath: ${this.commandName}`);
+	}
 }

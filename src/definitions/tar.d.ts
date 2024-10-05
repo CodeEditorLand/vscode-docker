@@ -8,71 +8,76 @@
  * to just declare typings for it here
  */
 declare module "tar" {
-    //#region Parse
+	//#region Parse
 
-    export interface ParseOptions {
-        filter?: (path: string, entry: ReadEntryClass) => boolean;
-        onentry?: (entry: ReadEntryClass) => void;
-    }
+	export interface ParseOptions {
+		filter?: (path: string, entry: ReadEntryClass) => boolean;
+		onentry?: (entry: ReadEntryClass) => void;
+	}
 
-    export interface ParseClass extends NodeJS.ReadWriteStream {
-        // eslint-disable-next-line @typescript-eslint/no-misused-new
-        new(options?: ParseOptions): ParseClass;
-    }
+	export interface ParseClass extends NodeJS.ReadWriteStream {
+		// eslint-disable-next-line @typescript-eslint/no-misused-new
+		new (options?: ParseOptions): ParseClass;
+	}
 
-    export const Parse: ParseClass;
+	export const Parse: ParseClass;
 
-    //#endregion Parse
+	//#endregion Parse
 
-    //#region Pack
+	//#region Pack
 
-    export interface PackOptions {
-        portable?: boolean;
-    }
+	export interface PackOptions {
+		portable?: boolean;
+	}
 
-    export interface PackClass extends NodeJS.ReadWriteStream {
-        // eslint-disable-next-line @typescript-eslint/no-misused-new
-        new(options?: PackOptions): PackClass;
-        add(readEntry: ReadEntryClass): void;
-    }
+	export interface PackClass extends NodeJS.ReadWriteStream {
+		// eslint-disable-next-line @typescript-eslint/no-misused-new
+		new (options?: PackOptions): PackClass;
+		add(readEntry: ReadEntryClass): void;
+	}
 
-    export const Pack: PackClass;
+	export const Pack: PackClass;
 
-    //#endregion Pack
+	//#endregion Pack
 
-    //#region ReadEntry
+	//#region ReadEntry
 
-    export interface ReadEntryOptions {
-        path: string;
-        type: 'File' | 'Directory';
-        size: number;
-        atime: Date;
-        mtime: Date;
-        ctime: Date;
-        mode?: number;
-        gid?: number;
-        uid?: number;
-    }
+	export interface ReadEntryOptions {
+		path: string;
+		type: "File" | "Directory";
+		size: number;
+		atime: Date;
+		mtime: Date;
+		ctime: Date;
+		mode?: number;
+		gid?: number;
+		uid?: number;
+	}
 
-    export interface ReadEntryClass extends NodeJS.EventEmitter, NodeJS.ReadWriteStream {
-        // eslint-disable-next-line @typescript-eslint/no-misused-new
-        new(options: ReadEntryOptions): ReadEntryClass;
-        path: string;
-    }
+	export interface ReadEntryClass
+		extends NodeJS.EventEmitter,
+			NodeJS.ReadWriteStream {
+		// eslint-disable-next-line @typescript-eslint/no-misused-new
+		new (options: ReadEntryOptions): ReadEntryClass;
+		path: string;
+	}
 
-    export const ReadEntry: ReadEntryClass;
+	export const ReadEntry: ReadEntryClass;
 
-    //#endregion ReadEntry
+	//#endregion ReadEntry
 
-    //#region Create
+	//#region Create
 
-    export interface CreateOptions {
-        cwd?: string;
-    }
+	export interface CreateOptions {
+		cwd?: string;
+	}
 
-    export function create(options: CreateOptions, fileList: string[]): NodeJS.ReadableStream;
+	export function create(
+		options: CreateOptions,
+		fileList: string[],
+	): NodeJS.ReadableStream;
 
-    export const c: typeof create;
+	export const c: typeof create;
 
-    //#endregion
+	//#endregion
 }

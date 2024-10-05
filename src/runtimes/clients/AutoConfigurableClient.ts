@@ -4,5 +4,5 @@
  *--------------------------------------------------------------------------------------------*/
 
 export interface AutoConfigurableClient {
-    reconfigure(): void;
+	reconfigure(): void;
 }

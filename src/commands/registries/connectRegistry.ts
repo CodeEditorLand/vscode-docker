@@ -6,5 +6,5 @@
 import { ext } from "../../extensionVariables";
 
 export async function connectRegistry(): Promise<void> {
-    await ext.registriesRoot.connectRegistryProvider();
+	await ext.registriesRoot.connectRegistryProvider();
 }

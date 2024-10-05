@@ -3,33 +3,40 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { DockerClient, IContainersClient } from '@microsoft/vscode-container-client';
-import { ContextManager, IContextManager } from './ContextManager';
-import { RuntimeManager } from './RuntimeManager';
+import {
+	DockerClient,
+	IContainersClient,
+} from "@microsoft/vscode-container-client";
+
+import { ContextManager, IContextManager } from "./ContextManager";
+import { RuntimeManager } from "./RuntimeManager";
 
 export class ContainerRuntimeManager extends RuntimeManager<IContainersClient> {
-    private readonly _contextManager = new ContextManager();
-    public readonly onContainerRuntimeClientRegistered = this.runtimeClientRegisteredEmitter.event;
+	private readonly _contextManager = new ContextManager();
+	public readonly onContainerRuntimeClientRegistered =
+		this.runtimeClientRegisteredEmitter.event;
 
-    public constructor() {
-        super('containerClient');
-    }
+	public constructor() {
+		super("containerClient");
+	}
 
-    public override dispose(): void {
-        this._contextManager.dispose();
-        super.dispose();
-    }
+	public override dispose(): void {
+		this._contextManager.dispose();
+		super.dispose();
+	}
 
-    public get contextManager(): IContextManager {
-        return this._contextManager;
-    }
+	public get contextManager(): IContextManager {
+		return this._contextManager;
+	}
 
-    public getClient(): Promise<IContainersClient> {
-        // TODO: runtimes: alt: temporarily just return the Docker client, always
-        return Promise.resolve(this.runtimeClients.find(isDockerClient));
-    }
+	public getClient(): Promise<IContainersClient> {
+		// TODO: runtimes: alt: temporarily just return the Docker client, always
+		return Promise.resolve(this.runtimeClients.find(isDockerClient));
+	}
 }
 
-function isDockerClient(maybeDockerClient: IContainersClient): maybeDockerClient is DockerClient {
-    return maybeDockerClient.id === DockerClient.ClientId;
+function isDockerClient(
+	maybeDockerClient: IContainersClient,
+): maybeDockerClient is DockerClient {
+	return maybeDockerClient.id === DockerClient.ClientId;
 }

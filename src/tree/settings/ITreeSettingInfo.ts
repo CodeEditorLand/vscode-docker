@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 export interface ITreeSettingInfo<T extends string> {
-    properties: ITreePropertyInfo<T>[];
-    defaultProperty: T;
+	properties: ITreePropertyInfo<T>[];
+	defaultProperty: T;
 }
 
 export interface ITreeArraySettingInfo<T extends string> {
-    properties: ITreePropertyInfo<T>[];
-    defaultProperty: T[];
+	properties: ITreePropertyInfo<T>[];
+	defaultProperty: T[];
 }
 
 export interface ITreePropertyInfo<T extends string> {
-    property: T;
-    exampleValue?: string;
-    description?: string;
+	property: T;
+	exampleValue?: string;
+	description?: string;
 }

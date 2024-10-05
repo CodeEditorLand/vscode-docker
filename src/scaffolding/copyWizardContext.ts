@@ -3,22 +3,27 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ScaffoldingWizardContext } from './wizard/ScaffoldingWizardContext';
+import { ScaffoldingWizardContext } from "./wizard/ScaffoldingWizardContext";
 
-export function copyWizardContext(wizardContext: Partial<ScaffoldingWizardContext>, priorWizardContext: ScaffoldingWizardContext | undefined): void {
-    if (!priorWizardContext) {
-        return;
-    }
+export function copyWizardContext(
+	wizardContext: Partial<ScaffoldingWizardContext>,
+	priorWizardContext: ScaffoldingWizardContext | undefined,
+): void {
+	if (!priorWizardContext) {
+		return;
+	}
 
-    for (const prop of Object.keys(priorWizardContext)) {
-        // Skip properties from IActionContext
-        if (prop === 'telemetry' ||
-            prop === 'errorHandling' ||
-            prop === 'ui' ||
-            prop === 'valuesToMask') {
-            continue;
-        }
+	for (const prop of Object.keys(priorWizardContext)) {
+		// Skip properties from IActionContext
+		if (
+			prop === "telemetry" ||
+			prop === "errorHandling" ||
+			prop === "ui" ||
+			prop === "valuesToMask"
+		) {
+			continue;
+		}
 
-        wizardContext[prop] = priorWizardContext[prop];
-    }
+		wizardContext[prop] = priorWizardContext[prop];
+	}
 }

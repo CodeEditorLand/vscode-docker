@@ -3,96 +3,110 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IAzExtOutputChannel } from '@microsoft/vscode-azext-utils';
-import * as vscode from 'vscode';
-import { isLogLevelEnabled } from './diagnostics';
+import { IAzExtOutputChannel } from "@microsoft/vscode-azext-utils";
+import * as vscode from "vscode";
 
-export class AzExtLogOutputChannelWrapper implements vscode.LogOutputChannel, IAzExtOutputChannel {
-    public readonly name: string;
-    public readonly extensionPrefix: string;
-    public readonly onDidChangeLogLevel: vscode.Event<vscode.LogLevel>;
-    private _logOutputChannel: vscode.LogOutputChannel;
+import { isLogLevelEnabled } from "./diagnostics";
 
-    constructor(logOutputChannel: vscode.LogOutputChannel, extensionPrefix: string) {
-        this._logOutputChannel = logOutputChannel;
-        this.name = this._logOutputChannel.name;
-        this.extensionPrefix = extensionPrefix;
-        this.onDidChangeLogLevel = this._logOutputChannel.onDidChangeLogLevel;
-    }
+export class AzExtLogOutputChannelWrapper
+	implements vscode.LogOutputChannel, IAzExtOutputChannel
+{
+	public readonly name: string;
+	public readonly extensionPrefix: string;
+	public readonly onDidChangeLogLevel: vscode.Event<vscode.LogLevel>;
+	private _logOutputChannel: vscode.LogOutputChannel;
 
-    public get logLevel() {
-        return this._logOutputChannel.logLevel;
-    }
+	constructor(
+		logOutputChannel: vscode.LogOutputChannel,
+		extensionPrefix: string,
+	) {
+		this._logOutputChannel = logOutputChannel;
+		this.name = this._logOutputChannel.name;
+		this.extensionPrefix = extensionPrefix;
+		this.onDidChangeLogLevel = this._logOutputChannel.onDidChangeLogLevel;
+	}
 
-    public get isDebugLoggingEnabled(): boolean {
-        return isLogLevelEnabled(this, vscode.LogLevel.Debug);
-    }
+	public get logLevel() {
+		return this._logOutputChannel.logLevel;
+	}
 
-    appendLog(value: string, options?: { resourceName?: string; date?: Date; }): void {
-        const enableOutputTimestampsSetting: string = 'enableOutputTimestamps';
-        const projectConfiguration: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration(this.extensionPrefix);
-        const result: boolean | undefined = projectConfiguration.get<boolean>(enableOutputTimestampsSetting);
+	public get isDebugLoggingEnabled(): boolean {
+		return isLogLevelEnabled(this, vscode.LogLevel.Debug);
+	}
 
-        if (!result) {
-            this.info(value);
-        } else {
-            options ||= {};
-            this.info(`${options.resourceName ? ' '.concat(options.resourceName) : ''}: ${value}`);
-        }
-    }
+	appendLog(
+		value: string,
+		options?: { resourceName?: string; date?: Date },
+	): void {
+		const enableOutputTimestampsSetting: string = "enableOutputTimestamps";
+		const projectConfiguration: vscode.WorkspaceConfiguration =
+			vscode.workspace.getConfiguration(this.extensionPrefix);
+		const result: boolean | undefined = projectConfiguration.get<boolean>(
+			enableOutputTimestampsSetting,
+		);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    trace(message: string, ...args: any[]): void {
-        this._logOutputChannel.trace(message, ...args);
-    }
+		if (!result) {
+			this.info(value);
+		} else {
+			options ||= {};
+			this.info(
+				`${options.resourceName ? " ".concat(options.resourceName) : ""}: ${value}`,
+			);
+		}
+	}
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    debug(message: string, ...args: any[]): void {
-        this._logOutputChannel.debug(message, ...args);
-    }
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	trace(message: string, ...args: any[]): void {
+		this._logOutputChannel.trace(message, ...args);
+	}
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    info(message: string, ...args: any[]): void {
-        this._logOutputChannel.info(message, ...args);
-    }
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	debug(message: string, ...args: any[]): void {
+		this._logOutputChannel.debug(message, ...args);
+	}
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    warn(message: string, ...args: any[]): void {
-        this._logOutputChannel.warn(message, ...args);
-    }
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	info(message: string, ...args: any[]): void {
+		this._logOutputChannel.info(message, ...args);
+	}
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error(error: string | Error, ...args: any[]): void {
-        this._logOutputChannel.error(error, ...args);
-    }
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	warn(message: string, ...args: any[]): void {
+		this._logOutputChannel.warn(message, ...args);
+	}
 
-    append(value: string): void {
-        this._logOutputChannel.append(value);
-    }
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	error(error: string | Error, ...args: any[]): void {
+		this._logOutputChannel.error(error, ...args);
+	}
 
-    appendLine(value: string): void {
-        this._logOutputChannel.appendLine(value);
-    }
+	append(value: string): void {
+		this._logOutputChannel.append(value);
+	}
 
-    replace(value: string): void {
-        this._logOutputChannel.replace(value);
-    }
+	appendLine(value: string): void {
+		this._logOutputChannel.appendLine(value);
+	}
 
-    clear(): void {
-        this._logOutputChannel.clear();
-    }
+	replace(value: string): void {
+		this._logOutputChannel.replace(value);
+	}
 
-    show(preserveFocus?: boolean): void;
-    show(column?: vscode.ViewColumn, preserveFocus?: boolean): void;
-    show(column?: boolean | vscode.ViewColumn, preserveFocus?: boolean): void {
-        this._logOutputChannel.show(column as vscode.ViewColumn, preserveFocus);
-    }
+	clear(): void {
+		this._logOutputChannel.clear();
+	}
 
-    hide(): void {
-        this._logOutputChannel.hide();
-    }
+	show(preserveFocus?: boolean): void;
+	show(column?: vscode.ViewColumn, preserveFocus?: boolean): void;
+	show(column?: boolean | vscode.ViewColumn, preserveFocus?: boolean): void {
+		this._logOutputChannel.show(column as vscode.ViewColumn, preserveFocus);
+	}
 
-    dispose(): void {
-        this._logOutputChannel.dispose();
-    }
+	hide(): void {
+		this._logOutputChannel.hide();
+	}
+
+	dispose(): void {
+		this._logOutputChannel.dispose();
+	}
 }

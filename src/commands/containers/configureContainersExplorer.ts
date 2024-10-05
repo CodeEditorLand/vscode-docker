@@ -4,8 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { IActionContext } from "@microsoft/vscode-azext-utils";
+
 import { ext } from "../../extensionVariables";
 
-export async function configureContainersExplorer(context: IActionContext): Promise<void> {
-    await ext.containersRoot.configureExplorer(context);
+export async function configureContainersExplorer(
+	context: IActionContext,
+): Promise<void> {
+	await ext.containersRoot.configureExplorer(context);
 }

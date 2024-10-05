@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as stream from 'stream';
-import * as tar from 'tar';
+import * as stream from "stream";
+import * as tar from "tar";
 
 /**
  * Write tarball data containing a single file to this stream, and
@@ -12,17 +12,19 @@ import * as tar from 'tar';
  * @param destination The destination stream to unpack to
  * @returns A stream to write tarball data into
  */
-export function tarUnpackStream(destination: NodeJS.WritableStream): NodeJS.WritableStream {
-    let entryCounter = 0;
-    return new tar.Parse({
-        filter: () => {
-            return entryCounter < 1;
-        },
-        onentry: (entry: tar.ReadEntryClass) => {
-            entryCounter++;
-            entry.pipe(destination);
-        }
-    });
+export function tarUnpackStream(
+	destination: NodeJS.WritableStream,
+): NodeJS.WritableStream {
+	let entryCounter = 0;
+	return new tar.Parse({
+		filter: () => {
+			return entryCounter < 1;
+		},
+		onentry: (entry: tar.ReadEntryClass) => {
+			entryCounter++;
+			entry.pipe(destination);
+		},
+	});
 }
 
 /**
@@ -39,24 +41,33 @@ export function tarUnpackStream(destination: NodeJS.WritableStream): NodeJS.Writ
  * @param uid Optional unix user id specifier
  * @returns A stream to read tarball data from
  */
-export function tarPackStream(source: Buffer, sourceFileName: string, atime: Date = new Date(), mtime: Date = new Date(), ctime: Date = new Date(), mode?: number, gid?: number, uid?: number): NodeJS.ReadableStream {
-    const tarPack = new tar.Pack({ portable: true });
-    const readEntry = new tar.ReadEntry({
-        path: sourceFileName,
-        type: 'File',
-        size: source.length,
-        atime,
-        mtime,
-        ctime,
-        mode,
-        gid,
-        uid,
-    });
+export function tarPackStream(
+	source: Buffer,
+	sourceFileName: string,
+	atime: Date = new Date(),
+	mtime: Date = new Date(),
+	ctime: Date = new Date(),
+	mode?: number,
+	gid?: number,
+	uid?: number,
+): NodeJS.ReadableStream {
+	const tarPack = new tar.Pack({ portable: true });
+	const readEntry = new tar.ReadEntry({
+		path: sourceFileName,
+		type: "File",
+		size: source.length,
+		atime,
+		mtime,
+		ctime,
+		mode,
+		gid,
+		uid,
+	});
 
-    const sourceStream = stream.Readable.from(source);
-    sourceStream.pipe(readEntry);
-    tarPack.add(readEntry);
-    tarPack.end();
+	const sourceStream = stream.Readable.from(source);
+	sourceStream.pipe(readEntry);
+	tarPack.add(readEntry);
+	tarPack.end();
 
-    return tarPack;
+	return tarPack;
 }

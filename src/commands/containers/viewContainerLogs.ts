@@ -3,34 +3,43 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IActionContext } from '@microsoft/vscode-azext-utils';
-import { l10n } from 'vscode';
-import { ext } from '../../extensionVariables';
-import { TaskCommandRunnerFactory } from '../../runtimes/runners/TaskCommandRunnerFactory';
-import { ContainerTreeItem } from '../../tree/containers/ContainerTreeItem';
-import { selectLogsCommand } from '../selectCommandTemplate';
+import { IActionContext } from "@microsoft/vscode-azext-utils";
+import { l10n } from "vscode";
 
-export async function viewContainerLogs(context: IActionContext, node?: ContainerTreeItem): Promise<void> {
-    if (!node) {
-        await ext.containersTree.refresh(context);
-        node = await ext.containersTree.showTreeItemPicker<ContainerTreeItem>(ContainerTreeItem.allContextRegExp, {
-            ...context,
-            noItemFoundErrorMessage: l10n.t('No containers are available to view logs')
-        });
-    }
+import { ext } from "../../extensionVariables";
+import { TaskCommandRunnerFactory } from "../../runtimes/runners/TaskCommandRunnerFactory";
+import { ContainerTreeItem } from "../../tree/containers/ContainerTreeItem";
+import { selectLogsCommand } from "../selectCommandTemplate";
 
-    const terminalCommand = await selectLogsCommand(
-        context,
-        node.containerName,
-        node.imageName,
-        node.containerId
-    );
+export async function viewContainerLogs(
+	context: IActionContext,
+	node?: ContainerTreeItem,
+): Promise<void> {
+	if (!node) {
+		await ext.containersTree.refresh(context);
+		node = await ext.containersTree.showTreeItemPicker<ContainerTreeItem>(
+			ContainerTreeItem.allContextRegExp,
+			{
+				...context,
+				noItemFoundErrorMessage: l10n.t(
+					"No containers are available to view logs",
+				),
+			},
+		);
+	}
 
-    const taskCRF = new TaskCommandRunnerFactory({
-        taskName: l10n.t('Logs: {0}', node.containerName),
-        alwaysRunNew: true,
-        focus: true,
-    });
+	const terminalCommand = await selectLogsCommand(
+		context,
+		node.containerName,
+		node.imageName,
+		node.containerId,
+	);
 
-    await taskCRF.getCommandRunner()(terminalCommand);
+	const taskCRF = new TaskCommandRunnerFactory({
+		taskName: l10n.t("Logs: {0}", node.containerName),
+		alwaysRunNew: true,
+		focus: true,
+	});
+
+	await taskCRF.getCommandRunner()(terminalCommand);
 }

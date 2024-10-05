@@ -3,16 +3,21 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { workspace } from 'vscode';
-import { cloneObject } from './cloneObject';
+import { workspace } from "vscode";
 
-export function withDockerEnvSettings(baseEnv: NodeJS.ProcessEnv = process.env): NodeJS.ProcessEnv {
-    const newEnv = cloneObject(baseEnv || {});
-    const environmentSettings: NodeJS.ProcessEnv = workspace.getConfiguration('docker').get<NodeJS.ProcessEnv>('environment', {});
+import { cloneObject } from "./cloneObject";
 
-    for (const key of Object.keys(environmentSettings)) {
-        newEnv[key] = environmentSettings[key];
-    }
+export function withDockerEnvSettings(
+	baseEnv: NodeJS.ProcessEnv = process.env,
+): NodeJS.ProcessEnv {
+	const newEnv = cloneObject(baseEnv || {});
+	const environmentSettings: NodeJS.ProcessEnv = workspace
+		.getConfiguration("docker")
+		.get<NodeJS.ProcessEnv>("environment", {});
 
-    return newEnv;
+	for (const key of Object.keys(environmentSettings)) {
+		newEnv[key] = environmentSettings[key];
+	}
+
+	return newEnv;
 }

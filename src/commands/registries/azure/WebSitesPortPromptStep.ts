@@ -4,32 +4,38 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { AzureWizardPromptStep } from "@microsoft/vscode-azext-utils";
-import { l10n } from 'vscode';
-import { IAppServiceContainerWizardContext } from './deployImageToAzure';
+import { l10n } from "vscode";
+
+import { IAppServiceContainerWizardContext } from "./deployImageToAzure";
 
 export class WebSitesPortPromptStep extends AzureWizardPromptStep<IAppServiceContainerWizardContext> {
+	public async prompt(
+		context: IAppServiceContainerWizardContext,
+	): Promise<void> {
+		const prompt: string = l10n.t("What port does your app listen on?");
+		const placeHolder: string = "80";
+		const value: string = "80";
+		const portString: string = await context.ui.showInputBox({
+			prompt,
+			placeHolder,
+			value,
+			validateInput,
+		});
+		context.webSitesPort = parseInt(portString, 10);
+	}
 
-    public async prompt(context: IAppServiceContainerWizardContext): Promise<void> {
-        const prompt: string = l10n.t('What port does your app listen on?');
-        const placeHolder: string = '80';
-        const value: string = '80';
-        const portString: string = await context.ui.showInputBox({ prompt, placeHolder, value, validateInput });
-        context.webSitesPort = parseInt(portString, 10);
-    }
-
-    public shouldPrompt(context: IAppServiceContainerWizardContext): boolean {
-        return !!context.customLocation;
-    }
+	public shouldPrompt(context: IAppServiceContainerWizardContext): boolean {
+		return !!context.customLocation;
+	}
 }
 
 function validateInput(value: string | undefined): string | undefined {
-    if (Number(value)) {
-        const port: number = parseInt(value, 10);
-        if (port >= 1 && port <= 65535) {
-            return undefined;
-        }
-    }
+	if (Number(value)) {
+		const port: number = parseInt(value, 10);
+		if (port >= 1 && port <= 65535) {
+			return undefined;
+		}
+	}
 
-    return l10n.t('Port must be a positive integer (1 to 65535).');
+	return l10n.t("Port must be a positive integer (1 to 65535).");
 }
-

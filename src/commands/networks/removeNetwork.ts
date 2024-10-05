@@ -3,33 +3,58 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IActionContext } from '@microsoft/vscode-azext-utils';
-import * as vscode from 'vscode';
-import { ext } from '../../extensionVariables';
-import { NetworkTreeItem } from '../../tree/networks/NetworkTreeItem';
-import { multiSelectNodes } from '../../utils/multiSelectNodes';
+import { IActionContext } from "@microsoft/vscode-azext-utils";
+import * as vscode from "vscode";
 
-export async function removeNetwork(context: IActionContext, node?: NetworkTreeItem, nodes?: NetworkTreeItem[]): Promise<void> {
-    nodes = await multiSelectNodes(
-        { ...context, suppressCreatePick: true, noItemFoundErrorMessage: vscode.l10n.t('No networks are available to remove') },
-        ext.networksTree,
-        NetworkTreeItem.customNetworkRegExp,
-        node,
-        nodes
-    );
+import { ext } from "../../extensionVariables";
+import { NetworkTreeItem } from "../../tree/networks/NetworkTreeItem";
+import { multiSelectNodes } from "../../utils/multiSelectNodes";
 
-    let confirmRemove: string;
-    if (nodes.length === 1) {
-        confirmRemove = vscode.l10n.t('Are you sure you want to remove network "{0}"?', nodes[0].label);
-    } else {
-        confirmRemove = vscode.l10n.t('Are you sure you want to remove selected networks?');
-    }
+export async function removeNetwork(
+	context: IActionContext,
+	node?: NetworkTreeItem,
+	nodes?: NetworkTreeItem[],
+): Promise<void> {
+	nodes = await multiSelectNodes(
+		{
+			...context,
+			suppressCreatePick: true,
+			noItemFoundErrorMessage: vscode.l10n.t(
+				"No networks are available to remove",
+			),
+		},
+		ext.networksTree,
+		NetworkTreeItem.customNetworkRegExp,
+		node,
+		nodes,
+	);
 
-    // no need to check result - cancel will throw a UserCancelledError
-    await context.ui.showWarningMessage(confirmRemove, { modal: true }, { title: vscode.l10n.t('Remove') });
+	let confirmRemove: string;
+	if (nodes.length === 1) {
+		confirmRemove = vscode.l10n.t(
+			'Are you sure you want to remove network "{0}"?',
+			nodes[0].label,
+		);
+	} else {
+		confirmRemove = vscode.l10n.t(
+			"Are you sure you want to remove selected networks?",
+		);
+	}
 
-    const removing: string = vscode.l10n.t('Removing network(s)...');
-    await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: removing }, async () => {
-        await Promise.all(nodes.map(async n => await n.deleteTreeItem(context)));
-    });
+	// no need to check result - cancel will throw a UserCancelledError
+	await context.ui.showWarningMessage(
+		confirmRemove,
+		{ modal: true },
+		{ title: vscode.l10n.t("Remove") },
+	);
+
+	const removing: string = vscode.l10n.t("Removing network(s)...");
+	await vscode.window.withProgress(
+		{ location: vscode.ProgressLocation.Notification, title: removing },
+		async () => {
+			await Promise.all(
+				nodes.map(async (n) => await n.deleteTreeItem(context)),
+			);
+		},
+	);
 }

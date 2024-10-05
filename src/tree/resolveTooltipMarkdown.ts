@@ -3,17 +3,20 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { MarkdownString } from 'vscode';
-import { getHandlebarsWithHelpers } from '../utils/getHandlebarsWithHelpers';
+import { MarkdownString } from "vscode";
 
-export async function resolveTooltipMarkdown(templateString: string, context: unknown): Promise<MarkdownString> {
-    const handlebars = await getHandlebarsWithHelpers();
+import { getHandlebarsWithHelpers } from "../utils/getHandlebarsWithHelpers";
 
-    const template = handlebars.compile(templateString);
+export async function resolveTooltipMarkdown(
+	templateString: string,
+	context: unknown,
+): Promise<MarkdownString> {
+	const handlebars = await getHandlebarsWithHelpers();
 
-    const markdownString = template(context);
-    const result = new MarkdownString(markdownString, true);
-    result.isTrusted = { enabledCommands: ['revealFileInOS'] }; // revealFileInOS is used in container tooltips
-    return result;
+	const template = handlebars.compile(templateString);
+
+	const markdownString = template(context);
+	const result = new MarkdownString(markdownString, true);
+	result.isTrusted = { enabledCommands: ["revealFileInOS"] }; // revealFileInOS is used in container tooltips
+	return result;
 }
-

@@ -3,31 +3,50 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { AzureWizard, AzureWizardPromptStep, UserCancelledError } from '@microsoft/vscode-azext-utils';
-import * as vscode from 'vscode';
-import { copyWizardContext } from './copyWizardContext';
-import { ChoosePlatformStep } from './wizard/ChoosePlatformStep';
-import { ChooseWorkspaceFolderStep } from './wizard/ChooseWorkspaceFolderStep';
-import { ScaffoldingWizardContext } from './wizard/ScaffoldingWizardContext';
+import {
+	AzureWizard,
+	AzureWizardPromptStep,
+	UserCancelledError,
+} from "@microsoft/vscode-azext-utils";
+import * as vscode from "vscode";
 
-export async function scaffoldDebugConfig(wizardContext: Partial<ScaffoldingWizardContext>, apiInput?: ScaffoldingWizardContext): Promise<void> {
-    if (!vscode.workspace.isTrusted) {
-        throw new UserCancelledError('enforceTrust');
-    }
+import { copyWizardContext } from "./copyWizardContext";
+import { ChoosePlatformStep } from "./wizard/ChoosePlatformStep";
+import { ChooseWorkspaceFolderStep } from "./wizard/ChooseWorkspaceFolderStep";
+import { ScaffoldingWizardContext } from "./wizard/ScaffoldingWizardContext";
 
-    copyWizardContext(wizardContext, apiInput);
-    wizardContext.scaffoldType = 'debugging';
+export async function scaffoldDebugConfig(
+	wizardContext: Partial<ScaffoldingWizardContext>,
+	apiInput?: ScaffoldingWizardContext,
+): Promise<void> {
+	if (!vscode.workspace.isTrusted) {
+		throw new UserCancelledError("enforceTrust");
+	}
 
-    const promptSteps: AzureWizardPromptStep<ScaffoldingWizardContext>[] = [
-        new ChooseWorkspaceFolderStep(),
-        new ChoosePlatformStep(['Node.js', '.NET: ASP.NET Core', '.NET: Console', 'Python: Django', 'Python: FastAPI', 'Python: Flask', 'Python: General']),
-    ];
+	copyWizardContext(wizardContext, apiInput);
+	wizardContext.scaffoldType = "debugging";
 
-    const wizard = new AzureWizard<ScaffoldingWizardContext>(wizardContext as ScaffoldingWizardContext, {
-        promptSteps: promptSteps,
-        title: vscode.l10n.t('Initialize for Debugging'),
-    });
+	const promptSteps: AzureWizardPromptStep<ScaffoldingWizardContext>[] = [
+		new ChooseWorkspaceFolderStep(),
+		new ChoosePlatformStep([
+			"Node.js",
+			".NET: ASP.NET Core",
+			".NET: Console",
+			"Python: Django",
+			"Python: FastAPI",
+			"Python: Flask",
+			"Python: General",
+		]),
+	];
 
-    await wizard.prompt();
-    await wizard.execute();
+	const wizard = new AzureWizard<ScaffoldingWizardContext>(
+		wizardContext as ScaffoldingWizardContext,
+		{
+			promptSteps: promptSteps,
+			title: vscode.l10n.t("Initialize for Debugging"),
+		},
+	);
+
+	await wizard.prompt();
+	await wizard.execute();
 }

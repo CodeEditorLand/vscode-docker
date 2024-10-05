@@ -5,9 +5,9 @@
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function cloneObject<T = any>(obj: T): T {
-    if (obj === undefined) {
-        return undefined;
-    }
+	if (obj === undefined) {
+		return undefined;
+	}
 
-    return <T>JSON.parse(JSON.stringify(obj));
+	return <T>JSON.parse(JSON.stringify(obj));
 }

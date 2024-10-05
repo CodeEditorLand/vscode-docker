@@ -4,8 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { IActionContext } from "@microsoft/vscode-azext-utils";
+
 import { ext } from "../../extensionVariables";
 
-export async function configureNetworksExplorer(context: IActionContext): Promise<void> {
-    await ext.networksRoot.configureExplorer(context);
+export async function configureNetworksExplorer(
+	context: IActionContext,
+): Promise<void> {
+	await ext.networksRoot.configureExplorer(context);
 }

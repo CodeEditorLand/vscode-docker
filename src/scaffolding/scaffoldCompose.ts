@@ -3,41 +3,53 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { AzureWizard, AzureWizardExecuteStep, AzureWizardPromptStep, UserCancelledError } from '@microsoft/vscode-azext-utils';
-import * as vscode from 'vscode';
-import { copyWizardContext } from './copyWizardContext';
-import { ChoosePlatformStep } from './wizard/ChoosePlatformStep';
-import { ChooseWorkspaceFolderStep } from './wizard/ChooseWorkspaceFolderStep';
-import { ScaffoldFileStep } from './wizard/ScaffoldFileStep';
-import { ScaffoldingWizardContext } from './wizard/ScaffoldingWizardContext';
-import { VerifyDockerfileStep } from './wizard/VerifyDockerfileStep';
+import {
+	AzureWizard,
+	AzureWizardExecuteStep,
+	AzureWizardPromptStep,
+	UserCancelledError,
+} from "@microsoft/vscode-azext-utils";
+import * as vscode from "vscode";
 
-export async function scaffoldCompose(wizardContext: Partial<ScaffoldingWizardContext>, apiInput?: ScaffoldingWizardContext): Promise<void> {
-    if (!vscode.workspace.isTrusted) {
-        throw new UserCancelledError('enforceTrust');
-    }
+import { copyWizardContext } from "./copyWizardContext";
+import { ChoosePlatformStep } from "./wizard/ChoosePlatformStep";
+import { ChooseWorkspaceFolderStep } from "./wizard/ChooseWorkspaceFolderStep";
+import { ScaffoldFileStep } from "./wizard/ScaffoldFileStep";
+import { ScaffoldingWizardContext } from "./wizard/ScaffoldingWizardContext";
+import { VerifyDockerfileStep } from "./wizard/VerifyDockerfileStep";
 
-    copyWizardContext(wizardContext, apiInput);
-    wizardContext.scaffoldType = 'compose';
-    wizardContext.scaffoldCompose = true;
+export async function scaffoldCompose(
+	wizardContext: Partial<ScaffoldingWizardContext>,
+	apiInput?: ScaffoldingWizardContext,
+): Promise<void> {
+	if (!vscode.workspace.isTrusted) {
+		throw new UserCancelledError("enforceTrust");
+	}
 
-    const promptSteps: AzureWizardPromptStep<ScaffoldingWizardContext>[] = [
-        new ChooseWorkspaceFolderStep(),
-        new ChoosePlatformStep(),
-        new VerifyDockerfileStep(),
-    ];
+	copyWizardContext(wizardContext, apiInput);
+	wizardContext.scaffoldType = "compose";
+	wizardContext.scaffoldCompose = true;
 
-    const executeSteps: AzureWizardExecuteStep<ScaffoldingWizardContext>[] = [
-        new ScaffoldFileStep('docker-compose.yml', 'ask', 300),
-        new ScaffoldFileStep('docker-compose.debug.yml', 'ask', 400),
-    ];
+	const promptSteps: AzureWizardPromptStep<ScaffoldingWizardContext>[] = [
+		new ChooseWorkspaceFolderStep(),
+		new ChoosePlatformStep(),
+		new VerifyDockerfileStep(),
+	];
 
-    const wizard = new AzureWizard<ScaffoldingWizardContext>(wizardContext as ScaffoldingWizardContext, {
-        promptSteps: promptSteps,
-        executeSteps: executeSteps,
-        title: vscode.l10n.t('Add Docker Compose Files'),
-    });
+	const executeSteps: AzureWizardExecuteStep<ScaffoldingWizardContext>[] = [
+		new ScaffoldFileStep("docker-compose.yml", "ask", 300),
+		new ScaffoldFileStep("docker-compose.debug.yml", "ask", 400),
+	];
 
-    await wizard.prompt();
-    await wizard.execute();
+	const wizard = new AzureWizard<ScaffoldingWizardContext>(
+		wizardContext as ScaffoldingWizardContext,
+		{
+			promptSteps: promptSteps,
+			executeSteps: executeSteps,
+			title: vscode.l10n.t("Add Docker Compose Files"),
+		},
+	);
+
+	await wizard.prompt();
+	await wizard.execute();
 }

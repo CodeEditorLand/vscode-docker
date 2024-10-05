@@ -3,45 +3,58 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IActionContext } from '@microsoft/vscode-azext-utils';
-import * as vscode from 'vscode';
-import { ext } from '../../../extensionVariables';
-import { FileTreeItem } from '../../../tree/containers/files/FileTreeItem';
-import { multiSelectNodes } from '../../../utils/multiSelectNodes';
-import { getCancelPromise } from '../../../utils/promiseUtils';
+import { IActionContext } from "@microsoft/vscode-azext-utils";
+import * as vscode from "vscode";
 
-export async function openContainerFile(context: IActionContext, node?: FileTreeItem, nodes?: FileTreeItem[]): Promise<void> {
-    nodes = await multiSelectNodes(
-        { ...context, noItemFoundErrorMessage: vscode.l10n.t('No files are available to open.') },
-        ext.containersTree,
-        'containerFile',
-        node,
-        nodes
-    );
+import { ext } from "../../../extensionVariables";
+import { FileTreeItem } from "../../../tree/containers/files/FileTreeItem";
+import { multiSelectNodes } from "../../../utils/multiSelectNodes";
+import { getCancelPromise } from "../../../utils/promiseUtils";
 
-    await vscode.window.withProgress(
-        {
-            location: vscode.ProgressLocation.Notification,
-            title: vscode.l10n.t('Opening File(s)...'),
-            cancellable: true
-        },
-        async (task, token) => {
-            const filesPromise = Promise.all(
-                nodes.map(
-                    async n => {
-                        const document = await vscode.workspace.openTextDocument(n.uri.uri);
+export async function openContainerFile(
+	context: IActionContext,
+	node?: FileTreeItem,
+	nodes?: FileTreeItem[],
+): Promise<void> {
+	nodes = await multiSelectNodes(
+		{
+			...context,
+			noItemFoundErrorMessage: vscode.l10n.t(
+				"No files are available to open.",
+			),
+		},
+		ext.containersTree,
+		"containerFile",
+		node,
+		nodes,
+	);
 
-                        if (token.isCancellationRequested) {
-                            return;
-                        }
+	await vscode.window.withProgress(
+		{
+			location: vscode.ProgressLocation.Notification,
+			title: vscode.l10n.t("Opening File(s)..."),
+			cancellable: true,
+		},
+		async (task, token) => {
+			const filesPromise = Promise.all(
+				nodes.map(async (n) => {
+					const document = await vscode.workspace.openTextDocument(
+						n.uri.uri,
+					);
 
-                        // NOTE: If only a single file is opened, use "preview mode" which replaces the document with next opened (the default for opening files in VS Code).
-                        //       If multiple files are opened, do not use preview mode so that each document will be shown (otherwise only the last would only be shown).
-                        await vscode.window.showTextDocument(document, { preview: nodes.length === 1 });
-                    }
-                )
-            );
+					if (token.isCancellationRequested) {
+						return;
+					}
 
-            await Promise.race([filesPromise, getCancelPromise(token)]);
-        });
+					// NOTE: If only a single file is opened, use "preview mode" which replaces the document with next opened (the default for opening files in VS Code).
+					//       If multiple files are opened, do not use preview mode so that each document will be shown (otherwise only the last would only be shown).
+					await vscode.window.showTextDocument(document, {
+						preview: nodes.length === 1,
+					});
+				}),
+			);
+
+			await Promise.race([filesPromise, getCancelPromise(token)]);
+		},
+	);
 }

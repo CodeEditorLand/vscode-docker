@@ -3,8 +3,18 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CommonRegistry, CommonRepository, CommonTag, isDockerHubRegistry, isGitHubRegistry, isRegistry, isRepository, isTag } from "@microsoft/vscode-docker-registries";
+import {
+	CommonRegistry,
+	CommonRepository,
+	CommonTag,
+	isDockerHubRegistry,
+	isGitHubRegistry,
+	isRegistry,
+	isRepository,
+	isTag,
+} from "@microsoft/vscode-docker-registries";
 import { l10n } from "vscode";
+
 import { getResourceGroupFromId } from "../../utils/azureUtils";
 import { AzureRegistryItem } from "./Azure/AzureRegistryDataProvider";
 
@@ -13,12 +23,12 @@ import { AzureRegistryItem } from "./Azure/AzureRegistryDataProvider";
  * ex: hello-world:latest
  */
 export function getImageNameFromRegistryTagItem(tag: CommonTag): string {
-    if (!isTag(tag) || !isRepository(tag.parent)) {
-        throw new Error(l10n.t('Unable to get image name'));
-    }
+	if (!isTag(tag) || !isRepository(tag.parent)) {
+		throw new Error(l10n.t("Unable to get image name"));
+	}
 
-    const repository = tag.parent as CommonRepository;
-    return `${repository.label.toLowerCase()}:${tag.label}`; // Tag is case sensitive but repository must be lowercase
+	const repository = tag.parent as CommonRepository;
+	return `${repository.label.toLowerCase()}:${tag.label}`; // Tag is case sensitive but repository must be lowercase
 }
 
 /**
@@ -29,17 +39,17 @@ export function getImageNameFromRegistryTagItem(tag: CommonTag): string {
  *     localhost:5000        (Local)
  */
 export function getBaseImagePathFromRegistry(registry: CommonRegistry): string {
-    if (!isRegistry(registry)) {
-        throw new Error(l10n.t('Unable to get base image path'));
-    }
+	if (!isRegistry(registry)) {
+		throw new Error(l10n.t("Unable to get base image path"));
+	}
 
-    const baseUrl = registry.baseUrl.authority;
+	const baseUrl = registry.baseUrl.authority;
 
-    if (isDockerHubRegistry(registry) || isGitHubRegistry(registry)) {
-        return `${baseUrl}/${registry.label}`;
-    }
+	if (isDockerHubRegistry(registry) || isGitHubRegistry(registry)) {
+		return `${baseUrl}/${registry.label}`;
+	}
 
-    return baseUrl;
+	return baseUrl;
 }
 
 /**
@@ -51,24 +61,24 @@ export function getBaseImagePathFromRegistry(registry: CommonRegistry): string {
  *     localhost:5000/hello-world:latest        (Local)
  */
 export function getFullImageNameFromRegistryTagItem(tag: CommonTag): string {
-    if (!isTag(tag) || !isRegistry(tag.parent.parent)) {
-        throw new Error(l10n.t('Unable to get full image name'));
-    }
+	if (!isTag(tag) || !isRegistry(tag.parent.parent)) {
+		throw new Error(l10n.t("Unable to get full image name"));
+	}
 
-    const baseImageName = getBaseImagePathFromRegistry(tag.parent.parent);
-    let imageName = getImageNameFromRegistryTagItem(tag);
+	const baseImageName = getBaseImagePathFromRegistry(tag.parent.parent);
+	let imageName = getImageNameFromRegistryTagItem(tag);
 
-    // For GitHub, the image name is prefixed with the registry name so we
-    // need to remove it since it is already in the base image name
-    if (isGitHubRegistry(tag.parent.parent)) {
-        const regex = /\/(.*)$/; // Match "/" followed by anything until the end
-        const match = imageName.match(regex);
-        if (match) {
-            imageName = match[1];
-        }
-    }
+	// For GitHub, the image name is prefixed with the registry name so we
+	// need to remove it since it is already in the base image name
+	if (isGitHubRegistry(tag.parent.parent)) {
+		const regex = /\/(.*)$/; // Match "/" followed by anything until the end
+		const match = imageName.match(regex);
+		if (match) {
+			imageName = match[1];
+		}
+	}
 
-    return `${baseImageName}/${imageName}`;
+	return `${baseImageName}/${imageName}`;
 }
 
 /**
@@ -78,32 +88,36 @@ export function getFullImageNameFromRegistryTagItem(tag: CommonTag): string {
  *     ghcr.io/myregistry/hello-world     (GitHub)
  *     localhost:5000/hello-world         (Local)
  */
-export function getFullRepositoryNameFromRepositoryItem(repository: CommonRepository): string {
-    if (!isRepository(repository) || !isRegistry(repository.parent)) {
-        throw new Error(l10n.t('Unable to get full repository name'));
-    }
+export function getFullRepositoryNameFromRepositoryItem(
+	repository: CommonRepository,
+): string {
+	if (!isRepository(repository) || !isRegistry(repository.parent)) {
+		throw new Error(l10n.t("Unable to get full repository name"));
+	}
 
-    let imageName = repository.label.toLowerCase();
-    const baseImageName = getBaseImagePathFromRegistry(repository.parent);
-    // For GitHub, the image name is prefixed with the registry name so we
-    // need to remove it since it is already in the base image name
-    if (isGitHubRegistry(repository.parent)) {
-        const regex = /\/(.*)$/; // Match "/" followed by anything until the end
-        const match = imageName.match(regex);
-        if (match) {
-            imageName = match[1];
-        }
-    }
-    return `${baseImageName}/${imageName}`;
+	let imageName = repository.label.toLowerCase();
+	const baseImageName = getBaseImagePathFromRegistry(repository.parent);
+	// For GitHub, the image name is prefixed with the registry name so we
+	// need to remove it since it is already in the base image name
+	if (isGitHubRegistry(repository.parent)) {
+		const regex = /\/(.*)$/; // Match "/" followed by anything until the end
+		const match = imageName.match(regex);
+		if (match) {
+			imageName = match[1];
+		}
+	}
+	return `${baseImageName}/${imageName}`;
 }
 
 /**
  * Returns the resource group from an Azure registry item
  */
-export function getResourceGroupFromAzureRegistryItem(node: AzureRegistryItem): string {
-    if (!isRegistry(node)) {
-        throw new Error('Unable to get resource group');
-    }
+export function getResourceGroupFromAzureRegistryItem(
+	node: AzureRegistryItem,
+): string {
+	if (!isRegistry(node)) {
+		throw new Error("Unable to get resource group");
+	}
 
-    return getResourceGroupFromId(node.id);
+	return getResourceGroupFromId(node.id);
 }

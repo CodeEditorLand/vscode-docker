@@ -5,23 +5,27 @@
 
 import { ListNetworkItem } from "@microsoft/vscode-container-client";
 import { ThemeIcon } from "vscode";
+
 import { LocalGroupTreeItemBase } from "../LocalGroupTreeItemBase";
 import { getCommonGroupIcon } from "../settings/CommonProperties";
 import { NetworkProperty } from "./NetworkProperties";
 
-export class NetworkGroupTreeItem extends LocalGroupTreeItemBase<ListNetworkItem, NetworkProperty> {
-    public static readonly contextValue: string = 'networkGroup';
-    public readonly contextValue: string = NetworkGroupTreeItem.contextValue;
-    public childTypeLabel: string = 'network';
+export class NetworkGroupTreeItem extends LocalGroupTreeItemBase<
+	ListNetworkItem,
+	NetworkProperty
+> {
+	public static readonly contextValue: string = "networkGroup";
+	public readonly contextValue: string = NetworkGroupTreeItem.contextValue;
+	public childTypeLabel: string = "network";
 
-    public get iconPath(): ThemeIcon {
-        switch (this.parent.groupBySetting) {
-            case 'NetworkDriver':
-            case 'NetworkId':
-            case 'NetworkName':
-                return new ThemeIcon('repo-forked');
-            default:
-                return getCommonGroupIcon(this.parent.groupBySetting);
-        }
-    }
+	public get iconPath(): ThemeIcon {
+		switch (this.parent.groupBySetting) {
+			case "NetworkDriver":
+			case "NetworkId":
+			case "NetworkName":
+				return new ThemeIcon("repo-forked");
+			default:
+				return getCommonGroupIcon(this.parent.groupBySetting);
+		}
+	}
 }

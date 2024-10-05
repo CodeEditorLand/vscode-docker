@@ -4,5 +4,5 @@
  *--------------------------------------------------------------------------------------------*/
 
 export function convertToMB(bytes: number): number {
-    return Math.round(bytes / 1000000);
+	return Math.round(bytes / 1000000);
 }

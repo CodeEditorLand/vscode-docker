@@ -5,10 +5,10 @@
 
 import { ITreePropertyInfo } from "../settings/ITreeSettingInfo";
 
-export type ContextProperty = 'Name' | 'Description' | 'DockerEndpoint';
+export type ContextProperty = "Name" | "Description" | "DockerEndpoint";
 
 export const contextProperties: ITreePropertyInfo<ContextProperty>[] = [
-    { property: 'Name', exampleValue: 'my-context' },
-    { property: 'Description', exampleValue: 'remote linux VM on Azure' },
-    { property: 'DockerEndpoint', exampleValue: 'ssh://user1@55.55.5.222' }
+	{ property: "Name", exampleValue: "my-context" },
+	{ property: "Description", exampleValue: "remote linux VM on Azure" },
+	{ property: "DockerEndpoint", exampleValue: "ssh://user1@55.55.5.222" },
 ];

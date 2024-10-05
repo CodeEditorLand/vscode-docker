@@ -3,29 +3,43 @@
  *  Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { AzureWizard, AzureWizardPromptStep, UserCancelledError } from '@microsoft/vscode-azext-utils';
-import * as vscode from 'vscode';
-import { ScaffoldingWizardContext } from '../ScaffoldingWizardContext';
-import { NetContainerBuildOption, NetSdkChooseBuildStep } from './NetSdkChooseBuildStep';
+import {
+	AzureWizard,
+	AzureWizardPromptStep,
+	UserCancelledError,
+} from "@microsoft/vscode-azext-utils";
+import * as vscode from "vscode";
+
+import { ScaffoldingWizardContext } from "../ScaffoldingWizardContext";
+import {
+	NetContainerBuildOption,
+	NetSdkChooseBuildStep,
+} from "./NetSdkChooseBuildStep";
 
 export interface NetChooseBuildTypeContext extends ScaffoldingWizardContext {
-    containerBuildOption?: NetContainerBuildOption;
+	containerBuildOption?: NetContainerBuildOption;
 }
 
-export async function netContainerBuild(wizardContext: Partial<NetChooseBuildTypeContext>, apiInput?: NetChooseBuildTypeContext): Promise<void> {
-    if (!vscode.workspace.isTrusted) {
-        throw new UserCancelledError('enforceTrust');
-    }
+export async function netContainerBuild(
+	wizardContext: Partial<NetChooseBuildTypeContext>,
+	apiInput?: NetChooseBuildTypeContext,
+): Promise<void> {
+	if (!vscode.workspace.isTrusted) {
+		throw new UserCancelledError("enforceTrust");
+	}
 
-    const promptSteps: AzureWizardPromptStep<NetChooseBuildTypeContext>[] = [
-        new NetSdkChooseBuildStep()
-    ];
+	const promptSteps: AzureWizardPromptStep<NetChooseBuildTypeContext>[] = [
+		new NetSdkChooseBuildStep(),
+	];
 
-    const wizard = new AzureWizard<NetChooseBuildTypeContext>(wizardContext as NetChooseBuildTypeContext, {
-        promptSteps: promptSteps,
-        title: vscode.l10n.t('Initialize for Debugging'),
-    });
+	const wizard = new AzureWizard<NetChooseBuildTypeContext>(
+		wizardContext as NetChooseBuildTypeContext,
+		{
+			promptSteps: promptSteps,
+			title: vscode.l10n.t("Initialize for Debugging"),
+		},
+	);
 
-    await wizard.prompt();
-    await wizard.execute();
+	await wizard.prompt();
+	await wizard.execute();
 }
