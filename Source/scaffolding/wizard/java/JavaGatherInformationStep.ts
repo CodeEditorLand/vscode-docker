@@ -39,13 +39,14 @@ export class JavaGatherInformationStep extends GatherInformationStep<JavaScaffol
 			if (/pom.xml$/i.test(wizardContext.artifact)) {
 				// If it's a POM file, parse as XML
 				this.javaProjectType = "pom";
-				const pomObject = <PomContents>(
-					await xml2js.parseStringPromise(contents, {
+				const pomObject = <PomContents>await xml2js.parseStringPromise(
+					contents,
+					{
 						trim: true,
 						normalizeTags: true,
 						normalize: true,
 						mergeAttrs: true,
-					})
+					},
 				);
 
 				wizardContext.version = pomObject?.project?.version || "0.0.1";

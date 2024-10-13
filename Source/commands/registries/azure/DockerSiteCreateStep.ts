@@ -8,7 +8,8 @@ import type {
 	Site,
 	SiteConfig,
 	WebSiteManagementClient,
-} from "@azure/arm-appservice"; // These are only dev-time imports so don't need to be lazy
+} from "@azure/arm-appservice";
+// These are only dev-time imports so don't need to be lazy
 import type { CustomLocation } from "@microsoft/vscode-azext-azureappservice"; // These are only dev-time imports so don't need to be lazy
 import type { AzExtLocation } from "@microsoft/vscode-azext-azureutils"; // These are only dev-time imports so don't need to be lazy
 import {

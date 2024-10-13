@@ -12,7 +12,8 @@ import type {
 	OS as AcrOS,
 	Run as AcrRun,
 	ContainerRegistryManagementClient,
-} from "@azure/arm-containerregistry"; // These are only dev-time imports so don't need to be lazy
+} from "@azure/arm-containerregistry";
+// These are only dev-time imports so don't need to be lazy
 import {
 	IActionContext,
 	IAzureQuickPickItem,

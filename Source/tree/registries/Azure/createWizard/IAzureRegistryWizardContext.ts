@@ -6,7 +6,8 @@
 import type {
 	Registry as AcrRegistry,
 	SkuName as AcrSkuName,
-} from "@azure/arm-containerregistry"; // These are only dev-time imports so don't need to be lazy
+} from "@azure/arm-containerregistry";
+// These are only dev-time imports so don't need to be lazy
 import type { AzureSubscription } from "@microsoft/vscode-azext-azureauth";
 import type { IResourceGroupWizardContext } from "@microsoft/vscode-azext-azureutils";
 

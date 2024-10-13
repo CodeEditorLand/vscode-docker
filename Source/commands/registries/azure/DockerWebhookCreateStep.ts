@@ -7,7 +7,8 @@ import type { Site } from "@azure/arm-appservice"; // These are only dev-time im
 import type {
 	Webhook,
 	WebhookCreateParameters,
-} from "@azure/arm-containerregistry"; // These are only dev-time imports so don't need to be lazy
+} from "@azure/arm-containerregistry";
+// These are only dev-time imports so don't need to be lazy
 import type { IAppServiceWizardContext } from "@microsoft/vscode-azext-azureappservice"; // These are only dev-time imports so don't need to be lazy
 import {
 	AzureWizardExecuteStep,
