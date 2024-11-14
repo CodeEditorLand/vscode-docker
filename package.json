@@ -2942,7 +2942,7 @@
 		"@types/xml2js": "0.4.14",
 		"chai": "5.1.2",
 		"glob": "11.0.0",
-		"node-loader": "2.0.0",
+		"node-loader": "2.1.0",
 		"ts-loader": "9.5.1",
 		"umd-compat-loader": "2.1.2"
 	},
