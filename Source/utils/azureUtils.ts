@@ -13,6 +13,7 @@ function parseResourceId(id: string): RegExpMatchArray {
 	const matches: RegExpMatchArray | null = id.match(
 		/\/subscriptions\/(.*)\/resourceGroups\/(.*)\/providers\/(.*)\/(.*)/i,
 	);
+
 	if (matches === null || matches.length < 3) {
 		throw new Error(l10n.t("Invalid Azure Resource Id"));
 	}
@@ -27,6 +28,7 @@ export async function createAzureContainerRegistryClient(
 	subscriptionItem: AzureSubscription,
 ): Promise<ContainerRegistryManagementClient> {
 	const armContainerRegistry = await getArmContainerRegistry();
+
 	return new armContainerRegistry.ContainerRegistryManagementClient(
 		subscriptionItem.credential,
 		subscriptionItem.subscriptionId,

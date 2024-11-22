@@ -34,6 +34,7 @@ export class DockerExtensionApi
 		const disposable =
 			ext.registriesTree.registerProvider(registryDataProvider);
 		void ext.registriesTree.refresh();
+
 		return disposable;
 	}
 

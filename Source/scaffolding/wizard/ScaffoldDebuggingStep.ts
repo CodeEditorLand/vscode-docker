@@ -44,6 +44,7 @@ export class ScaffoldDebuggingStep extends AzureWizardExecuteStep<ScaffoldingWiz
 						package: wizardContext.artifact,
 					},
 				);
+
 				break;
 
 			case ".NET: ASP.NET Core":
@@ -61,6 +62,7 @@ export class ScaffoldDebuggingStep extends AzureWizardExecuteStep<ScaffoldingWiz
 						).netCorePlatformOS,
 					},
 				);
+
 				break;
 
 			case "Python: Django":
@@ -79,6 +81,7 @@ export class ScaffoldDebuggingStep extends AzureWizardExecuteStep<ScaffoldingWiz
 						).pythonArtifact,
 					},
 				);
+
 				break;
 
 			default:

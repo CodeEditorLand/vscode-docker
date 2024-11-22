@@ -46,6 +46,7 @@ export interface DockerDebugScaffoldContext extends DockerTaskScaffoldContext {}
 
 export interface ResolvedDebugConfigurationOptions {
 	containerName?: string;
+
 	dockerServerReadyAction?: DockerServerReadyAction;
 	removeContainerAfterDebug?: boolean;
 }
@@ -92,6 +93,7 @@ export async function addDebugConfiguration(
 ): Promise<boolean> {
 	// Using config API instead of tasks API means no wasted perf on re-resolving the tasks, and avoids confusion on resolved type !== true type
 	const workspaceLaunch = workspace.getConfiguration("launch", folder.uri);
+
 	const allConfigs =
 		(workspaceLaunch &&
 			(workspaceLaunch.configurations as DebugConfiguration[])) ||
@@ -100,6 +102,7 @@ export async function addDebugConfiguration(
 	const existingConfigIndex = allConfigs.findIndex(
 		(c) => c.name === newConfig.name,
 	);
+
 	if (existingConfigIndex >= 0) {
 		// If a task of the same label exists already
 		if (overwrite) {
@@ -118,6 +121,7 @@ export async function addDebugConfiguration(
 		allConfigs,
 		ConfigurationTarget.WorkspaceFolder,
 	);
+
 	return true;
 }
 

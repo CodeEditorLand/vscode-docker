@@ -23,6 +23,7 @@ export interface DebugConfigurationBase extends DebugConfiguration {
 
 export interface DockerDebugConfigurationBase extends DebugConfigurationBase {
 	containerName?: string;
+
 	dockerServerReadyAction?: DockerServerReadyAction;
 	removeContainerAfterDebug?: boolean;
 }

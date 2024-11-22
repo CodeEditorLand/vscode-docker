@@ -58,6 +58,7 @@ export interface ComposeVersionKeys {
 }
 
 let dockerfileLanguageClient: LanguageClient;
+
 let composeLanguageClient: LanguageClient;
 
 const DOCUMENT_SELECTOR: DocumentSelector = [
@@ -208,6 +209,7 @@ function registerEnvironmentVariableContributions(): void {
 
 			if (e.affectsConfiguration("docker.environment")) {
 				logDockerEnvironment(ext.outputChannel);
+
 				setEnvironmentVariableContributions();
 			}
 		},
@@ -233,6 +235,7 @@ function setEnvironmentVariableContributions(): void {
 function registerDockerClients(): void {
 	// Create the clients
 	const dockerClient = new AutoConfigurableDockerClient();
+
 	const composeClient = new AutoConfigurableDockerComposeClient();
 
 	// Register the clients
@@ -268,6 +271,7 @@ namespace Configuration {
 		params: ConfigurationParams,
 	): vscode.WorkspaceConfiguration[] {
 		const result: vscode.WorkspaceConfiguration[] = [];
+
 		for (const item of params.items) {
 			let config: vscode.WorkspaceConfiguration;
 
@@ -310,6 +314,7 @@ function activateDockerfileLanguageClient(ctx: vscode.ExtensionContext): void {
 		"docker.languageclient.activate",
 		async (context: IActionContext) => {
 			context.telemetry.properties.isActivationEvent = "true";
+
 			const serverModule = ctx.asAbsolutePath(
 				path.join(
 					"dist",
@@ -357,6 +362,7 @@ function activateDockerfileLanguageClient(ctx: vscode.ExtensionContext): void {
 				serverOptions,
 				clientOptions,
 			);
+
 			dockerfileLanguageClient.registerProposedFeatures();
 
 			ctx.subscriptions.push(dockerfileLanguageClient);
@@ -374,6 +380,7 @@ function activateComposeLanguageClient(ctx: vscode.ExtensionContext): void {
 			context.telemetry.properties.isActivationEvent = "true";
 
 			const config = vscode.workspace.getConfiguration("docker");
+
 			if (!config.get("enableDockerComposeLanguageService", true)) {
 				throw new UserCancelledError("languageServiceDisabled");
 			}

@@ -37,6 +37,7 @@ export async function deleteRemoteImage(
 	}
 
 	const provider = node.provider as unknown as CommonRegistryDataProvider;
+
 	if (typeof provider.deleteTag !== "function") {
 		throw new Error(
 			l10n.t("Deleting remote images is not supported on this registry."),
@@ -44,6 +45,7 @@ export async function deleteRemoteImage(
 	}
 
 	const tagName = getImageNameFromRegistryTagItem(node.wrappedItem);
+
 	const confirmDelete = l10n.t(
 		'Are you sure you want to delete image "{0}"? This will delete all images that have the same digest.',
 		tagName,
@@ -64,6 +66,7 @@ export async function deleteRemoteImage(
 			} catch (error) {
 				const errorType: string =
 					parseError(error).errorType.toLowerCase();
+
 				if (errorType === "405" || errorType === "unsupported") {
 					// Don't wait
 					// eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -71,6 +74,7 @@ export async function deleteRemoteImage(
 						"Deleting remote images is not supported on this registry. It may need to be enabled.",
 						{ learnMoreLink: "https://aka.ms/AA7jsql" },
 					);
+
 					throw new UserCancelledError();
 				} else {
 					throw error;

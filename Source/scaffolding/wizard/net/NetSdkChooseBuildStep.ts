@@ -40,6 +40,7 @@ export class NetSdkChooseBuildStep extends TelemetryPromptStep<NetChooseBuildTyp
 		// only remember if it was 'Use .NET SDK', otherwise prompt again
 		if (containerBuildOption === AllNetContainerBuildOptions[1]) {
 			wizardContext.containerBuildOption = containerBuildOption;
+
 			return;
 		}
 
@@ -53,6 +54,7 @@ export class NetSdkChooseBuildStep extends TelemetryPromptStep<NetChooseBuildTyp
 
 		const buildOptions =
 			AllNetContainerBuildOptions as readonly NetContainerBuildOption[];
+
 		const items = buildOptions.map(
 			(p) =>
 				<IAzureQuickPickItem<NetContainerBuildOption>>{
@@ -98,6 +100,7 @@ export class NetSdkChooseBuildStep extends TelemetryPromptStep<NetChooseBuildTyp
 						),
 				},
 			];
+
 			throw err;
 		}
 	}

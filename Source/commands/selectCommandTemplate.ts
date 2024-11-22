@@ -75,6 +75,7 @@ export async function selectRunCommand(
 	exposedPorts?: PortBinding[],
 ): Promise<VoidCommandResponse> {
 	let portsString: string = "";
+
 	if (exposedPorts) {
 		portsString = exposedPorts
 			.map(
@@ -150,13 +151,18 @@ export async function selectComposeCommand(
 	switch (composeCommand) {
 		case "up":
 			template = "composeUp";
+
 			break;
+
 		case "down":
 			template = "composeDown";
+
 			break;
+
 		case "upSubset":
 		default:
 			template = "composeUpSubset";
+
 			break;
 	}
 
@@ -164,7 +170,9 @@ export async function selectComposeCommand(
 	// or `docker` + first argument `compose` (compose v2)
 	// Command customization wants the answer to that as one string
 	let fullComposeCommand: string;
+
 	const orchestratorClient = await ext.orchestratorManager.getClient();
+
 	if (
 		isDockerComposeClient(orchestratorClient) &&
 		orchestratorClient.composeV2
@@ -207,11 +215,13 @@ export async function selectCommandTemplate(
 ): Promise<VoidCommandResponse> {
 	// Get the configured settings values
 	const commandSettings = getCommandSettings();
+
 	const userTemplates: CommandTemplate[] = toCommandTemplateArray(
 		commandSettings.workspaceFolderValue ??
 			commandSettings.workspaceValue ??
 			commandSettings.globalValue,
 	);
+
 	const defaultTemplates: CommandTemplate[] = toCommandTemplateArray(
 		commandSettings.defaultValue,
 	);
@@ -247,6 +257,7 @@ export async function selectCommandTemplate(
 
 	// Select the template to use
 	let selectedTemplate: CommandTemplate;
+
 	for (const templates of templateMatrix) {
 		// Skip any empty group
 		if (templates.length === 0) {
@@ -256,6 +267,7 @@ export async function selectCommandTemplate(
 		// Choose a template from the first non-empty group
 		// If only one matches there will be no prompt
 		selectedTemplate = await quickPickTemplate(templates, templatePicker);
+
 		break;
 	}
 
@@ -354,6 +366,7 @@ function isMatchConstraintSatisfied(
 
 	try {
 		const matcher = new RegExp(match, "i");
+
 		return matchContext.some((m) => matcher.test(m));
 	} catch {
 		// Don't wait

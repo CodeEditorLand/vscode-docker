@@ -48,6 +48,7 @@ const ContainerEventActions: EventAction[] = [
 	"unpause",
 	"update",
 ];
+
 const ImageEventActions: EventAction[] = [
 	"delete",
 	"import",
@@ -57,7 +58,9 @@ const ImageEventActions: EventAction[] = [
 	"tag",
 	"untag",
 ];
+
 const NetworkEventActions: EventAction[] = ["create", "destroy", "remove"];
+
 const VolumeEventActions: EventAction[] = ["create", "destroy", "prune"]; // Unlike containers/images/networks, when pruning volumes, no `destroy` event is fired, only `prune`, so we listen to that too
 
 export class RefreshManager extends vscode.Disposable {
@@ -158,6 +161,7 @@ export class RefreshManager extends vscode.Disposable {
 					"network",
 					"volume",
 				];
+
 				const eventActionsToWatch: EventAction[] = Array.from(
 					new Set<EventAction>([
 						...ContainerEventActions,
@@ -169,7 +173,9 @@ export class RefreshManager extends vscode.Disposable {
 
 				// Try at most `eventListenerTries` times to (re)connect to the event stream
 				let errorCount = 0;
+
 				let eventsSinceTimestamp = Math.round(Date.now() / 1000);
+
 				while (errorCount < eventListenerTries) {
 					const eventsUntilTimestamp =
 						eventsSinceTimestamp + eventListenerLifetimeSeconds;
@@ -192,16 +198,24 @@ export class RefreshManager extends vscode.Disposable {
 							switch (event.type) {
 								case "container":
 									await this.refresh("containers", "event");
+
 									break;
+
 								case "image":
 									await this.refresh("images", "event");
+
 									break;
+
 								case "network":
 									await this.refresh("networks", "event");
+
 									break;
+
 								case "volume":
 									await this.refresh("volumes", "event");
+
 									break;
+
 								default:
 									// Ignore other events
 									break;
@@ -281,11 +295,14 @@ export class RefreshManager extends vscode.Disposable {
 					vscode.Uri.file(os.homedir()),
 					".docker",
 				);
+
 				const dockerConfigFile = "config.json";
+
 				const dockerConfigFileUri = vscode.Uri.joinPath(
 					dockerConfigFolderUri,
 					dockerConfigFile,
 				);
+
 				const dockerContextsFolderUri = vscode.Uri.joinPath(
 					dockerConfigFolderUri,
 					"contexts",
@@ -310,6 +327,7 @@ export class RefreshManager extends vscode.Disposable {
 
 					// Changes to this file tend to happen several times in succession, so we debounce
 					const debounceTimerMs = 500;
+
 					let lastTime = Date.now();
 					this.autoRefreshDisposables.push(
 						configWatcher.onDidChange(async () => {
@@ -393,26 +411,39 @@ export class RefreshManager extends vscode.Disposable {
 					context.telemetry.properties.refreshTarget = target;
 
 					let callback: () => Promise<void>;
+
 					switch (target) {
 						case "containers":
 							callback = () =>
 								ext.containersRoot.refresh(context);
+
 							break;
+
 						case "images":
 							callback = () => ext.imagesRoot.refresh(context);
+
 							break;
+
 						case "networks":
 							callback = () => ext.networksRoot.refresh(context);
+
 							break;
+
 						case "registries":
 							callback = () => ext.registriesRoot.refresh();
+
 							break;
+
 						case "volumes":
 							callback = () => ext.volumesRoot.refresh(context);
+
 							break;
+
 						case "contexts":
 							callback = () => ext.contextsRoot.refresh(context);
+
 							break;
+
 						default:
 							throw new RangeError(
 								`Unexpected view type: ${target}`,

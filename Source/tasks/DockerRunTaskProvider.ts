@@ -63,6 +63,7 @@ export class DockerRunTaskProvider extends DockerTaskProvider {
 
 		if (helper && helper.preRun) {
 			await helper.preRun(context, definition);
+
 			throwIfCancellationRequested(context);
 		}
 
@@ -71,6 +72,7 @@ export class DockerRunTaskProvider extends DockerTaskProvider {
 				context,
 				definition,
 			);
+
 			throwIfCancellationRequested(context);
 		}
 
@@ -79,6 +81,7 @@ export class DockerRunTaskProvider extends DockerTaskProvider {
 		const client = await ext.runtimeManager.getClient();
 
 		const options = definition.dockerRun;
+
 		const command = await client.runContainer({
 			detached: true,
 			publishAllPorts:
@@ -107,6 +110,7 @@ export class DockerRunTaskProvider extends DockerTaskProvider {
 		});
 
 		context.containerId = await runner(command);
+
 		throwIfCancellationRequested(context);
 
 		if (helper && helper.postRun) {

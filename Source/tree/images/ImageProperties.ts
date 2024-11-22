@@ -49,15 +49,19 @@ export function getImageGroupIcon(
 	switch (property) {
 		case "Registry":
 			return new ThemeIcon("briefcase");
+
 		case "Repository":
 		case "RepositoryName":
 			return new ThemeIcon("repo");
+
 		case "FullTag":
 		case "ImageId":
 		case "RepositoryNameAndTag":
 			return new ThemeIcon("multiple-windows");
+
 		case "Tag":
 			return new ThemeIcon("bookmark");
+
 		default:
 			return getCommonGroupIcon(property);
 	}
@@ -70,30 +74,46 @@ export function getImagePropertyValue(
 	const normalizedImageNameInfo = new NormalizedImageNameInfo(item.image);
 
 	let result: string;
+
 	switch (property) {
 		case "FullTag":
 			result = normalizedImageNameInfo.fullTag;
+
 			break;
+
 		case "ImageId":
 			result = item.id.replace("sha256:", "").slice(0, 12);
+
 			break;
+
 		case "Registry":
 			result = normalizedImageNameInfo.normalizedRegistry;
+
 			break;
+
 		case "Repository":
 			result = normalizedImageNameInfo.normalizedRegistryAndImageName;
+
 			break;
+
 		case "RepositoryName":
 			result = normalizedImageNameInfo.normalizedImageName;
+
 			break;
+
 		case "RepositoryNameAndTag":
 			result = normalizedImageNameInfo.normalizedImageNameAndTag;
+
 			break;
+
 		case "Tag":
 			result = normalizedImageNameInfo.normalizedTag;
+
 			break;
+
 		default:
 			result = getCommonPropertyValue(item, property);
+
 			break;
 	}
 
@@ -110,14 +130,17 @@ export function getImagePropertyValue(
 
 function truncateRegistry(registry: string): string {
 	const config = workspace.getConfiguration(configPrefix);
+
 	const truncateLongRegistryPaths = config.get<boolean>(
 		"truncateLongRegistryPaths",
 	);
+
 	if (
 		typeof truncateLongRegistryPaths === "boolean" &&
 		truncateLongRegistryPaths
 	) {
 		let truncateMaxLength = config.get<number>("truncateMaxLength");
+
 		if (typeof truncateMaxLength !== "number" || truncateMaxLength < 1) {
 			truncateMaxLength = 10;
 		}

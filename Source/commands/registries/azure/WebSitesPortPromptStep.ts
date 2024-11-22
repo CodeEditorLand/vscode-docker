@@ -13,8 +13,11 @@ export class WebSitesPortPromptStep extends AzureWizardPromptStep<IAppServiceCon
 		context: IAppServiceContainerWizardContext,
 	): Promise<void> {
 		const prompt: string = l10n.t("What port does your app listen on?");
+
 		const placeHolder: string = "80";
+
 		const value: string = "80";
+
 		const portString: string = await context.ui.showInputBox({
 			prompt,
 			placeHolder,
@@ -32,6 +35,7 @@ export class WebSitesPortPromptStep extends AzureWizardPromptStep<IAppServiceCon
 function validateInput(value: string | undefined): string | undefined {
 	if (Number(value)) {
 		const port: number = parseInt(value, 10);
+
 		if (port >= 1 && port <= 65535) {
 			return undefined;
 		}

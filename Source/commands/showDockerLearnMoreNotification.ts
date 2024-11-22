@@ -11,12 +11,14 @@ export async function showDockerLearnMoreNotification(): Promise<void> {
 	const learnMoreMessage = vscode.l10n.t(
 		"Docker is not installed. Would you like to learn more about installing Docker?",
 	);
+
 	const confirmationPrompt = vscode.l10n.t("Learn more");
 
 	const response = await vscode.window.showInformationMessage(
 		learnMoreMessage,
 		...[confirmationPrompt],
 	);
+
 	if (response) {
 		await openDockerDownloadPage();
 	}

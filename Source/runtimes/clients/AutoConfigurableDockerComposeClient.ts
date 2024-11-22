@@ -52,6 +52,7 @@ export class AutoConfigurableDockerComposeClient
 			// User has explicitly set a compose command, so we will respect it
 
 			let isComposeV2 = false;
+
 			if (/^docker(\s+compose\s*)?$/i.test(composeCommand)) {
 				// Normalize both "docker" and "docker compose" to "docker", with `isComposeV2` true
 				composeCommand = "docker";

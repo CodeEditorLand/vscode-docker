@@ -116,11 +116,13 @@ export class NetCoreDebugHelper implements DebugHelper {
 					context,
 					debugConfiguration,
 				);
+
 			case "attach":
 				return this.resolveAttachDebugConfiguration(
 					context,
 					debugConfiguration,
 				);
+
 			default:
 				throw Error(
 					l10n.t(
@@ -144,9 +146,11 @@ export class NetCoreDebugHelper implements DebugHelper {
 
 		const { configureSsl, containerName, platformOS } =
 			await this.loadExternalInfo(context, debugConfiguration);
+
 		const appOutput =
 			debugConfiguration.netCore?.appOutput ||
 			(await this.inferAppOutput(debugConfiguration));
+
 		if (
 			context.cancellationToken &&
 			context.cancellationToken.isCancellationRequested
@@ -156,6 +160,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 		}
 
 		await this.acquireDebuggers(platformOS);
+
 		if (
 			context.cancellationToken &&
 			context.cancellationToken.isCancellationRequested
@@ -170,6 +175,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 				debugConfiguration,
 				appOutput,
 			);
+
 			if (
 				context.cancellationToken &&
 				context.cancellationToken.isCancellationRequested
@@ -258,6 +264,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 			await this.acquireDebuggers(
 				containerOS === "windows" ? "Windows" : "Linux",
 			);
+
 			const debuggerDirectory =
 				containerOS === "windows"
 					? "C:\\remote_debugger"
@@ -271,11 +278,13 @@ export class NetCoreDebugHelper implements DebugHelper {
 							"vsdbg.exe",
 						)
 					: path.posix.join(debuggerDirectory, "vsdbg");
+
 			const isDebuggerInstalled: boolean = await this.isDebuggerInstalled(
 				containerName,
 				debuggerPath,
 				containerOS,
 			);
+
 			if (!isDebuggerInstalled) {
 				await this.copyDebuggerToContainer(
 					context.actionContext,
@@ -316,6 +325,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 	): Promise<string> {
 		const projectProperties =
 			await this.getProjectProperties(debugConfiguration);
+
 		return projectProperties.appOutput;
 	}
 
@@ -410,6 +420,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 			"netCore",
 			"vsdbg",
 		);
+
 		const destPath = path.join(vsDbgInstallBasePath, "vsdbg");
 		await fse.copyFile(debuggerScriptPath, destPath);
 		await fse.chmod(destPath, 0o755); // Give all read and execute permissions
@@ -421,6 +432,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 		appOutput: string,
 	): Promise<void> {
 		const appOutputName = path.parse(appOutput).name;
+
 		const certificateExportPath = path.join(
 			getHostSecretsFolders().hostCertificateFolder,
 			`${appOutputName}.pfx`,
@@ -439,6 +451,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 			platformOS === "Windows"
 				? ["C:\\.nuget\\packages", "C:\\.nuget\\fallbackpackages"]
 				: ["/root/.nuget/packages", "/root/.nuget/fallbackpackages"];
+
 		return additionalProbingPaths
 			.map((probingPath) => `--additionalProbingPath ${probingPath}`)
 			.join(" ");
@@ -459,6 +472,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 
 			if (inspectInfo?.isolation === "hyperv") {
 				context.errorHandling.suppressReportIssue = true;
+
 				throw new Error(
 					l10n.t(
 						"Attaching a debugger to a Hyper-V container is not supported.",
@@ -468,15 +482,18 @@ export class NetCoreDebugHelper implements DebugHelper {
 		}
 
 		const yesItem: MessageItem = DialogResponses.yes;
+
 		const message = l10n.t(
 			"Attaching to container requires .NET debugger in the container. Do you want to copy the debugger to the container?",
 		);
+
 		const install =
 			yesItem ===
 			(await window.showInformationMessage(
 				message,
 				...[DialogResponses.yes, DialogResponses.no],
 			));
+
 		if (!install) {
 			throw new UserCancelledError();
 		}
@@ -514,7 +531,9 @@ export class NetCoreDebugHelper implements DebugHelper {
 		containerOS: ContainerOS,
 	): Promise<boolean> {
 		let containerCommand: string;
+
 		let containerCommandArgs: CommandLineArgs;
+
 		if (containerOS === "windows") {
 			containerCommand = "cmd";
 			containerCommandArgs = composeArgs(
@@ -543,6 +562,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 						interactive: true,
 					}) as Promise<VoidCommandResponse>,
 			);
+
 			return true;
 		} catch {
 			return false;
@@ -553,6 +573,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 		context: IActionContext,
 	): Promise<string> {
 		await ext.containersTree.refresh(context);
+
 		const containerItem: ContainerTreeItem =
 			await ext.containersTree.showTreeItemPicker(
 				ContainerTreeItem.runningContainerRegExp,
@@ -563,6 +584,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 					),
 				},
 			);
+
 		return containerItem.containerName;
 	}
 }

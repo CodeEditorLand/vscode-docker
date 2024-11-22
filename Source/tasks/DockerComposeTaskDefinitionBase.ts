@@ -14,11 +14,13 @@ export interface DockerComposeUpOptions {
 		profiles?: string[];
 		customOptions?: string;
 	};
+
 	down?: never;
 }
 
 export interface DockerComposeDownOptions {
 	up?: never;
+
 	down?: {
 		removeImages?: "all" | "local";
 		removeVolumes?: boolean;

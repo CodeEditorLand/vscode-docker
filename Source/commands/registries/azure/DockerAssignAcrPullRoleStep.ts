@@ -46,17 +46,23 @@ export class DockerAssignAcrPullRoleStep extends AzureWizardExecuteStep<IAppServ
 		progress.report({ message: message });
 
 		const azExtAzureUtils = await getAzExtAzureUtils();
+
 		const vscAzureAppService = await getAzExtAppService();
+
 		const armAuth = await getArmAuth();
+
 		const armContainerRegistry = await getArmContainerRegistry();
+
 		const authClient = azExtAzureUtils.createAzureClient(
 			context,
 			armAuth.AuthorizationManagementClient,
 		);
+
 		const crmClient = azExtAzureUtils.createAzureClient(
 			context,
 			armContainerRegistry.ContainerRegistryManagementClient,
 		);
+
 		const appSvcClient =
 			await vscAzureAppService.createWebSiteClient(context);
 

@@ -194,6 +194,7 @@ export class ContainerTreeItem
 			...containerInspection,
 			normalizedName: this.containerName,
 		};
+
 		return resolveTooltipMarkdown(
 			containerTooltipTemplate,
 			handlebarsContext,

@@ -41,6 +41,7 @@ export const extensionId: string = "ms-azuretools.vscode-docker";
 
 export const extensionVersion = new Lazy<string | undefined>(() => {
 	const extension = vscode.extensions.getExtension(extensionId);
+
 	return extension?.packageJSON?.version;
 });
 

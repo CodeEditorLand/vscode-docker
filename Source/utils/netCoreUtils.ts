@@ -22,6 +22,7 @@ export async function getNetCoreProjectInfo(
 		"netCore",
 		`${target}.targets`,
 	);
+
 	const outputFile = getTempFileName();
 
 	const command = `dotnet build /r:false /t:${target} /p:CustomAfterMicrosoftCommonTargets="${targetsFile}" /p:CustomAfterMicrosoftCommonCrossTargetingTargets="${targetsFile}" /p:InfoOutputPath="${outputFile}" ${additionalProperties || ""} "${project}"`;
@@ -31,6 +32,7 @@ export async function getNetCoreProjectInfo(
 			await execAsync(command, { timeout: 20000 });
 		} catch (err) {
 			const error = parseError(err);
+
 			throw new Error(
 				l10n.t(
 					"Unable to determine project information for target '{0}' on project '{1}' {2}",

@@ -20,6 +20,7 @@ export class AutoConfigurableDockerClient
 
 	public reconfigure(): void {
 		const config = vscode.workspace.getConfiguration("docker");
+
 		const dockerCommand =
 			config.get<string | undefined>("dockerPath") || "docker";
 		this.commandName = dockerCommand;

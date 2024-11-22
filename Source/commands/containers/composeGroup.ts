@@ -103,12 +103,16 @@ async function composeGroup<TOptions extends CommonOrchestratorCommandOptions>(
 	}
 
 	const workingDirectory = getComposeWorkingDirectory(node);
+
 	const orchestratorFiles = getComposeFiles(node);
+
 	const projectName = getComposeProjectName(node);
+
 	const envFile = getComposeEnvFile(node);
 
 	if (!workingDirectory || !orchestratorFiles || !projectName) {
 		context.errorHandling.suppressReportIssue = true;
+
 		throw new Error(
 			l10n.t(
 				"Unable to determine compose project info for container group '{0}'.",
@@ -125,6 +129,7 @@ async function composeGroup<TOptions extends CommonOrchestratorCommandOptions>(
 	} as TOptions;
 
 	const client = await ext.orchestratorManager.getClient();
+
 	const taskCRF = new TaskCommandRunnerFactory({
 		taskName: client.displayName,
 		cwd: workingDirectory,
@@ -140,6 +145,7 @@ function getComposeWorkingDirectory(
 	const container = (node.ChildTreeItems as ContainerTreeItem[]).find(
 		(c) => c.labels?.["com.docker.compose.project.working_dir"],
 	);
+
 	return container?.labels?.["com.docker.compose.project.working_dir"];
 }
 
@@ -164,6 +170,7 @@ function getComposeProjectName(
 	const container = (node.ChildTreeItems as ContainerTreeItem[]).find(
 		(c) => c.labels?.["com.docker.compose.project"],
 	);
+
 	return container?.labels?.["com.docker.compose.project"];
 }
 
@@ -172,5 +179,6 @@ function getComposeEnvFile(node: ContainerGroupTreeItem): string | undefined {
 	const container = (node.ChildTreeItems as ContainerTreeItem[]).find(
 		(c) => c.labels?.["com.docker.compose.project.environment_file"],
 	);
+
 	return container?.labels?.["com.docker.compose.project.environment_file"];
 }

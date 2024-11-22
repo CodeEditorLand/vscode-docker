@@ -32,9 +32,11 @@ export async function buildImage(
 
 	const configOptions: vscode.WorkspaceConfiguration =
 		vscode.workspace.getConfiguration("docker");
+
 	const defaultContextPath = configOptions.get("imageBuildContextPath", "");
 
 	let rootFolder: vscode.WorkspaceFolder;
+
 	if (dockerFileUri) {
 		rootFolder = vscode.workspace.getWorkspaceFolder(dockerFileUri);
 	}
@@ -53,6 +55,7 @@ export async function buildImage(
 		dockerFileUri,
 		rootFolder,
 	);
+
 	const task = await getOfficialBuildTaskForDockerfile(
 		context,
 		dockerFileItem.absoluteFilePath,
@@ -78,7 +81,9 @@ export async function buildImage(
 				rootFolder.uri.fsPath,
 				dockerFileItem.relativeFilePath,
 			);
+
 			const dockerFileKey = `buildTag_${absFilePath}`;
+
 			const prevImageName: string | undefined =
 				ext.context.workspaceState.get(dockerFileKey);
 
@@ -94,6 +99,7 @@ export async function buildImage(
 			await delay(500);
 
 			addImageTaggingTelemetry(context, suggestedImageName, ".before");
+
 			const imageName: string = await getTagFromUserInput(
 				context,
 				suggestedImageName,
@@ -108,6 +114,7 @@ export async function buildImage(
 		}
 
 		const client = await ext.runtimeManager.getClient();
+
 		const taskCRF = new TaskCommandRunnerFactory({
 			taskName: client.displayName,
 			workspaceFolder: rootFolder,

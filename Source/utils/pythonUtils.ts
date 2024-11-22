@@ -43,6 +43,7 @@ export function inferPythonArgs(
 				"--nothreading",
 				"--noreload",
 			];
+
 		case "fastapi":
 			return [
 				"--host",
@@ -50,6 +51,7 @@ export function inferPythonArgs(
 				"--port",
 				`${ports !== undefined ? ports[0] : PythonDefaultPorts.get(projectType)}`,
 			];
+
 		case "flask":
 			return [
 				"run",
@@ -60,6 +62,7 @@ export function inferPythonArgs(
 				"--port",
 				`${ports !== undefined ? ports[0] : PythonDefaultPorts.get(projectType)}`,
 			];
+
 		default:
 			return undefined;
 	}
@@ -71,12 +74,16 @@ export function getPythonProjectType(
 	switch (platform) {
 		case "Python: Django":
 			return "django";
+
 		case "Python: FastAPI":
 			return "fastapi";
+
 		case "Python: Flask":
 			return "flask";
+
 		case "Python: General":
 			return "general";
+
 		default:
 			return undefined;
 	}

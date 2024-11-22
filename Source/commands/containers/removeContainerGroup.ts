@@ -30,6 +30,7 @@ export async function removeContainerGroup(
 	);
 
 	let confirmRemove: string;
+
 	if (nodes.length === 1) {
 		confirmRemove = vscode.l10n.t(
 			'Are you sure you want to remove container group "{0}"?',

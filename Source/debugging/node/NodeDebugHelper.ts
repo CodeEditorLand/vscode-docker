@@ -94,7 +94,9 @@ export class NodeDebugHelper implements DebugHelper {
 			options.package,
 			context.folder,
 		);
+
 		const nodePackage = await readPackage(packagePath);
+
 		const packageName = await inferPackageName(nodePackage, packagePath);
 
 		const containerName = inferContainerName(

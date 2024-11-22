@@ -31,6 +31,7 @@ export interface ScaffoldingWizardContext extends IActionContext {
 
 	// Additional info that depends on artifact and platform, guaranteed to be defined after the prompt phase.
 	dockerBuildContext?: string;
+
 	dockerfileDirectory?: string;
 
 	// These are calculated depending on platform, with defaults

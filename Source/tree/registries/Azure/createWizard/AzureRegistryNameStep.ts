@@ -19,6 +19,7 @@ export class AzureRegistryNameStep extends AzureNameStep<IAzureRegistryWizardCon
 		name: string,
 	): Promise<boolean> {
 		const azExtAzureUtils = await getAzExtAzureUtils();
+
 		return await azExtAzureUtils.ResourceGroupListStep.isNameAvailable(
 			context,
 			name,
@@ -27,7 +28,9 @@ export class AzureRegistryNameStep extends AzureNameStep<IAzureRegistryWizardCon
 
 	public async prompt(context: IAzureRegistryWizardContext): Promise<void> {
 		const azExtAzureUtils = await getAzExtAzureUtils();
+
 		const armContainerRegistry = await getArmContainerRegistry();
+
 		const client = azExtAzureUtils.createAzureClient(
 			context,
 			armContainerRegistry.ContainerRegistryManagementClient,
@@ -61,7 +64,9 @@ async function validateRegistryName(
 	name = name ? name.trim() : "";
 
 	const min = 5;
+
 	const max = 50;
+
 	if (name.length < min || name.length > max) {
 		return l10n.t(
 			"The name must be between {0} and {1} characters.",
@@ -75,6 +80,7 @@ async function validateRegistryName(
 			name,
 			type: "Microsoft.ContainerRegistry/registries",
 		});
+
 		return nameStatus.message;
 	}
 }

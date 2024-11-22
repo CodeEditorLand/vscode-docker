@@ -15,7 +15,9 @@ import { ext } from "../../extensionVariables";
 const currentSurveys: Survey[] = [];
 
 const surveyRespondedKeyPrefix = "vscode-docker.surveys.response";
+
 const surveyFlightPrefix = "vscode-docker.surveys";
+
 const lastToastedSessionKey = "vscode-docker.surveys.lastSession";
 
 // A random value between 0 and slushTime will be added to / subtracted from the activation delay
@@ -59,11 +61,14 @@ export class SurveyManager {
 							ext.context.globalState.get<string>(
 								lastToastedSessionKey,
 							) === vscode.env.sessionId;
+
 						const responded = ext.context.globalState.get<boolean>(
 							`${surveyRespondedKeyPrefix}.${survey.id}`,
 							false,
 						);
+
 						const eligible = await survey.isEligible();
+
 						const flighted =
 							await ext.experimentationService.isCachedFlightEnabled(
 								`${surveyFlightPrefix}.${survey.id}`,

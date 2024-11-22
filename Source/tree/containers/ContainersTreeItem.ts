@@ -155,7 +155,9 @@ export class ContainersTreeItem extends LocalRootTreeItemBase<
 				l10n.t("Tutorial: Get started with Docker"),
 				"https://aka.ms/getstartedwithdocker",
 			);
+
 			dockerTutorialTreeItem.iconPath = new ThemeIcon("link-external");
+
 			return [dockerTutorialTreeItem];
 		}
 		return super.getTreeItemForEmptyList();

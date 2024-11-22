@@ -26,6 +26,7 @@ import { registryExperience } from "../../../utils/registryExperience";
 import { addImageTaggingTelemetry } from "../../images/tagImage";
 
 const acaExtensionId = "ms-azuretools.vscode-azurecontainerapps";
+
 const minimumAcaExtensionVersion = "0.4.0";
 
 // The interface of the command options passed to the Azure Container Apps extension's deployImageToAca command
@@ -109,6 +110,7 @@ function isAcaExtensionInstalled(): boolean {
 	}
 
 	const acaVersion = semver.coerce(acaExtension.packageJSON.version);
+
 	const minVersion = semver.coerce(minimumAcaExtensionVersion);
 
 	return semver.gte(acaVersion, minVersion);

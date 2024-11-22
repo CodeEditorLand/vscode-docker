@@ -104,6 +104,7 @@ export interface TaskHelper {
 		context: DockerBuildTaskContext,
 		buildDefinition: DockerBuildTaskDefinition,
 	): Promise<void>;
+
 	getDockerBuildOptions(
 		context: DockerBuildTaskContext,
 		buildDefinition: DockerBuildTaskDefinition,
@@ -117,6 +118,7 @@ export interface TaskHelper {
 		context: DockerRunTaskContext,
 		runDefinition: DockerRunTaskDefinition,
 	): Promise<void>;
+
 	getDockerRunOptions(
 		context: DockerRunTaskContext,
 		runDefinition: DockerRunTaskDefinition,
@@ -166,9 +168,11 @@ export function registerTaskProviders(ctx: ExtensionContext): void {
 
 export function hasTask(taskLabel: string, folder: WorkspaceFolder): boolean {
 	const workspaceTasks = workspace.getConfiguration("tasks", folder);
+
 	const allTasks =
 		(workspaceTasks && (workspaceTasks.tasks as TaskDefinitionBase[])) ||
 		[];
+
 	return allTasks.findIndex((t) => t.label === taskLabel) > -1;
 }
 
@@ -179,6 +183,7 @@ export async function addTask(
 ): Promise<boolean> {
 	// Using config API instead of tasks API means no wasted perf on re-resolving the tasks, and avoids confusion on resolved type !== true type
 	const workspaceTasks = workspace.getConfiguration("tasks", folder);
+
 	const allTasks =
 		(workspaceTasks && (workspaceTasks.tasks as TaskDefinitionBase[])) ||
 		[];
@@ -186,6 +191,7 @@ export async function addTask(
 	const existingTaskIndex = allTasks.findIndex(
 		(t) => t.label === newTask.label,
 	);
+
 	if (existingTaskIndex >= 0) {
 		// If a task of the same label exists already
 		if (overwrite) {
@@ -204,6 +210,7 @@ export async function addTask(
 		allTasks,
 		ConfigurationTarget.WorkspaceFolder,
 	);
+
 	return true;
 }
 
@@ -213,6 +220,7 @@ export async function getAssociatedDockerRunTask(
 ): Promise<DockerRunTaskDefinition | undefined> {
 	// Using config API instead of tasks API means no wasted perf on re-resolving the tasks (not just our tasks), and avoids confusion on resolved type !== true type
 	const workspaceTasks = workspace.getConfiguration("tasks", folder);
+
 	const allTasks: TaskDefinitionBase[] =
 		(workspaceTasks && (workspaceTasks.tasks as TaskDefinitionBase[])) ||
 		[];
@@ -230,6 +238,7 @@ export async function getAssociatedDockerBuildTask(
 ): Promise<DockerBuildTaskDefinition | undefined> {
 	// Using config API instead of tasks API means no wasted perf on re-resolving the tasks (not just our tasks), and avoids confusion on resolved type !== true type
 	const workspaceTasks = workspace.getConfiguration("tasks", folder);
+
 	const allTasks: TaskDefinitionBase[] =
 		(workspaceTasks && (workspaceTasks.tasks as TaskDefinitionBase[])) ||
 		[];
@@ -264,6 +273,7 @@ export async function getOfficialBuildTaskForDockerfile(
 				folder,
 			),
 		);
+
 		const taskContext = pathNormalize(
 			resolveVariables(
 				buildTask.definition?.dockerBuild?.context ?? "",
@@ -276,6 +286,7 @@ export async function getOfficialBuildTaskForDockerfile(
 				taskContext,
 				taskDockerfile,
 			);
+
 			return (
 				taskDockerfileAbsPath === resolvedDockerfile &&
 				buildTask.scope === folder
@@ -303,6 +314,7 @@ export async function getOfficialBuildTaskForDockerfile(
 		const item = await context.ui.showQuickPick(items, {
 			placeHolder: l10n.t("Choose the Docker Build definition."),
 		});
+
 		return buildTasks.find((t) => t.name === item.label);
 	}
 
@@ -330,6 +342,7 @@ export function getDefaultImageName(
 	tag?: "dev" | "latest",
 ): string {
 	tag = tag || "latest";
+
 	return getValidImageNameWithTag(nameHint, tag);
 }
 
@@ -338,6 +351,7 @@ export function getDefaultContainerName(
 	tag?: "dev" | "latest",
 ): string {
 	tag = tag || "dev";
+
 	return `${getValidImageName(nameHint)}-${tag}`;
 }
 
@@ -354,6 +368,7 @@ export async function recursiveFindTaskByType(
 	if (node.preLaunchTask) {
 		// node is a debug configuration
 		const next = await findTaskByLabel(allTasks, node.preLaunchTask);
+
 		return await recursiveFindTaskByType(allTasks, type, next);
 	} else if (node.type === type) {
 		// node is the task we want
@@ -373,7 +388,9 @@ export async function recursiveFindTaskByType(
 			return undefined;
 		} else {
 			const nextType = node.dependsOn.type;
+
 			const next = await findTaskByType(allTasks, nextType);
+
 			return await recursiveFindTaskByType(allTasks, type, next);
 		}
 	}
@@ -391,6 +408,7 @@ export function addVolumeWithoutConflicts(
 	}
 
 	volumes.push(volume);
+
 	return true;
 }
 
@@ -420,6 +438,7 @@ export function normalizePlatform(
 ): ContainerPlatform | undefined {
 	if (platform && typeof platform === "string") {
 		const [os, ...architectureParts] = platform.split("/");
+
 		const architecture = architectureParts.join("/");
 
 		if (!os || !architecture) {

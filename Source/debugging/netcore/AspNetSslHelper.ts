@@ -15,6 +15,7 @@ import { isMac, isWindows } from "../../utils/osUtils";
 import { PlatformOS } from "../../utils/platform";
 
 const knownConfiguredProjects = new Set<string>();
+
 let alreadyTrustedOrSkipped: boolean = false;
 
 export async function trustCertificateIfNecessary(
@@ -27,6 +28,7 @@ export async function trustCertificateIfNecessary(
 	if (isWindows()) {
 		if (!(await isCertificateTrusted())) {
 			const trust: MessageItem = { title: l10n.t("Trust") };
+
 			const message = l10n.t(
 				'The ASP.NET Core HTTPS development certificate is not trusted. To trust the certificate, run `dotnet dev-certs https --trust`, or click "Trust" below.',
 			);
@@ -138,6 +140,7 @@ export function getContainerSecretsFolders(
 async function isCertificateTrusted(): Promise<boolean> {
 	try {
 		await execAsync("dotnet dev-certs https --check --trust");
+
 		return true;
 	} catch (err) {
 		const error = parseError(err);

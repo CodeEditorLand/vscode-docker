@@ -23,6 +23,7 @@ export function registerLocalCommand(
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		async (context, ...args: any[]) => {
 			await verifyIsRunningLocally(context);
+
 			return callback(context, ...args);
 		},
 		debounce,
@@ -34,6 +35,7 @@ async function verifyIsRunningLocally(context: IActionContext): Promise<void> {
 
 	if (remoteInfo.extensionKind !== DockerExtensionKind.local) {
 		context.errorHandling.suppressReportIssue = true;
+
 		throw new Error(
 			l10n.t("This command cannot be used in a remote session."),
 		);

@@ -23,6 +23,7 @@ export async function runAzureCliImage(context: IActionContext): Promise<void> {
 		const message = l10n.t(
 			"Currently, you can only run the Azure CLI when running Linux based containers.",
 		);
+
 		if (
 			(await vscode.window.showErrorMessage(
 				message,
@@ -43,6 +44,7 @@ export async function runAzureCliImage(context: IActionContext): Promise<void> {
 		await addHomedirFolderVolumeIfExists(volumes, ".kube");
 
 		const workspaceFolder = vscode.workspace?.workspaceFolders?.[0];
+
 		if (workspaceFolder) {
 			volumes.push({
 				source: workspaceFolder.uri.fsPath,
@@ -53,6 +55,7 @@ export async function runAzureCliImage(context: IActionContext): Promise<void> {
 		}
 
 		const client = await ext.runtimeManager.getClient();
+
 		const taskCRF = new TaskCommandRunnerFactory({
 			taskName: "Azure CLI",
 			focus: true,

@@ -34,8 +34,11 @@ export async function openInAzurePortal(
 	}
 
 	const azureRegistryItem = node.wrappedItem;
+
 	const azExtAzureUtils = await getAzExtAzureUtils();
+
 	let subscriptionContext = undefined;
+
 	if (isAzureSubscriptionRegistryItem(azureRegistryItem)) {
 		subscriptionContext = createSubscriptionContext(
 			azureRegistryItem.subscription,

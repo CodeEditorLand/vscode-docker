@@ -98,6 +98,7 @@ export class ImagesTreeItem extends LocalRootTreeItemBase<
 			danglingImagesMementoKey,
 			false,
 		);
+
 		const options: ListImagesCommandOptions = {
 			// Dangling images are included by default, so if `includeDangling` is true, use `dangling` option `undefined`
 			// If `includeDangling` is false, explicitly exclude the images using `dangling` option `false`

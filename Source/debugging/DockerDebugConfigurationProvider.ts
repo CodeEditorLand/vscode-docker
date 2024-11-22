@@ -118,6 +118,7 @@ export class DockerDebugConfigurationProvider
 
 					if (!folder) {
 						actionContext.errorHandling.suppressReportIssue = true;
+
 						throw new Error(
 							l10n.t(
 								"To debug with Docker you must first open a folder or workspace in VS Code.",
@@ -182,6 +183,7 @@ export class DockerDebugConfigurationProvider
 			context.runDefinition ? "true" : "false";
 
 		const helper = this.getHelper(context.platform);
+
 		const resolvedConfiguration = await helper.resolveDebugConfiguration(
 			context,
 			originalConfiguration,
@@ -199,6 +201,7 @@ export class DockerDebugConfigurationProvider
 			context,
 			originalConfiguration,
 		);
+
 		return resolvedConfiguration;
 	}
 
@@ -265,6 +268,7 @@ export class DockerDebugConfigurationProvider
 						}),
 					)
 				)?.[0];
+
 				const portMappings: string[] = [];
 
 				for (const binding of inspectInfo?.ports ?? []) {
@@ -304,6 +308,7 @@ export class DockerDebugConfigurationProvider
 			CSPROJ_GLOB_PATTERN,
 			FSPROJ_GLOB_PATTERN,
 		]);
+
 		if (csProjUris) {
 			return await netSdkDebugHelper.provideDebugConfigurations({
 				actionContext,
@@ -313,6 +318,7 @@ export class DockerDebugConfigurationProvider
 		} else {
 			// for now, we scaffold docker files
 			await commands.executeCommand("vscode-docker.configure");
+
 			throw new UserCancelledError();
 		}
 		// TODO: (potentially) in the future, we can add more support for ambient tasks for other types of projects

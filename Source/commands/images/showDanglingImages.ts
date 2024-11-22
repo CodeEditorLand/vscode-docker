@@ -10,12 +10,14 @@ import { ext } from "../../extensionVariables";
 
 export const danglingImagesMementoKey =
 	"vscode-docker.images.showDanglingImages";
+
 const danglingImagesContextKey = "vscode-docker:danglingShown";
 
 export async function showDanglingImages(
 	context: IActionContext,
 ): Promise<void> {
 	await ext.context.globalState.update(danglingImagesMementoKey, true);
+
 	setDanglingContextValue(true);
 	void ext.imagesTree.refresh(context);
 }
@@ -24,6 +26,7 @@ export async function hideDanglingImages(
 	context: IActionContext,
 ): Promise<void> {
 	await ext.context.globalState.update(danglingImagesMementoKey, false);
+
 	setDanglingContextValue(false);
 	void ext.imagesTree.refresh(context);
 }

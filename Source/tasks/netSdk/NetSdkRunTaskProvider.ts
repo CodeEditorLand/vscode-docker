@@ -44,7 +44,9 @@ export class NetSdkRunTaskProvider extends DockerTaskProvider {
 		task: DockerRunTask,
 	): Promise<void> {
 		const projectPath = task.definition.netCore?.appProject;
+
 		const isProjectWebApp = await NetCoreTaskHelper.isWebApp(projectPath);
+
 		const projectFolderPath = path.dirname(projectPath);
 
 		// use dotnet to build the image
@@ -76,6 +78,7 @@ export class NetSdkRunTaskProvider extends DockerTaskProvider {
 		options?: Omit<NetSdkRunTaskDefinition, "type">,
 	): { task: Task; promise: Promise<number> } {
 		let task: Task;
+
 		const definition = {
 			...options,
 			type: NetSdkRunTaskType,

@@ -34,11 +34,13 @@ export async function createAzureRegistry(
 	const subscriptionContext = createSubscriptionContext(
 		registryItem.subscription,
 	);
+
 	const wizardContext: IAzureRegistryWizardContext = {
 		...context,
 		...subscriptionContext,
 		azureSubscription: registryItem.subscription,
 	};
+
 	const azExtAzureUtils = await getAzExtAzureUtils();
 
 	const promptSteps = [
@@ -55,6 +57,7 @@ export async function createAzureRegistry(
 	});
 
 	await wizard.prompt();
+
 	const newRegistryName: string = nonNullProp(
 		wizardContext,
 		"newRegistryName",

@@ -54,6 +54,7 @@ export class NormalizedImageNameInfo {
 	 */
 	public get normalizedNamespace(): string | undefined {
 		let i: number;
+
 		if ((i = this.normalizedImageName.lastIndexOf("/")) >= 0) {
 			return this.normalizedImageName.substring(0, i);
 		} else if (this.normalizedRegistry === "docker.io") {

@@ -69,6 +69,7 @@ export class ImageTreeItem extends ToolTipTreeItem {
 		switch (ext.imagesRoot.labelSetting) {
 			case "Tag":
 				return new ThemeIcon("bookmark");
+
 			default:
 				return new ThemeIcon("window");
 		}
@@ -101,11 +102,13 @@ export class ImageTreeItem extends ToolTipTreeItem {
 		const imagePromise = ext.runWithDefaults((client) =>
 			client.inspectImages({ imageRefs: [this.imageId] }),
 		);
+
 		const containersPromise = ext.runWithDefaults((client) =>
 			client.listContainers({ imageAncestors: [this.imageId] }),
 		);
 
 		const imageInspection = (await imagePromise)?.[0];
+
 		const associatedContainers = await containersPromise;
 
 		const handlebarsContext = {
@@ -114,6 +117,7 @@ export class ImageTreeItem extends ToolTipTreeItem {
 			normalizedSize: getCommonPropertyValue(this._item, "Size"),
 			containers: associatedContainers,
 		};
+
 		return resolveTooltipMarkdown(imageTooltipTemplate, handlebarsContext);
 	}
 }

@@ -46,6 +46,7 @@ export function logDockerEnvironment(
 			outputChannel.debug(
 				`--- Docker Environment (${Object.getOwnPropertyNames(settingValue).length}) ---`,
 			);
+
 			for (const key of Object.keys(settingValue)) {
 				outputChannel.debug(`${key}: ${settingValue[key]}`);
 			}
@@ -56,6 +57,7 @@ export function logDockerEnvironment(
 }
 
 let loggedSystemInfo: boolean = false;
+
 let systemInfoDisposable: vscode.Disposable;
 export function logSystemInfo(outputChannel: vscode.LogOutputChannel): void {
 	if (loggedSystemInfo) {

@@ -55,7 +55,9 @@ export class DockerComposeTaskProvider extends DockerTaskProvider {
 		const client = await ext.orchestratorManager.getClient();
 
 		const options = definition.dockerCompose;
+
 		let command: VoidCommandResponse;
+
 		if (definition.dockerCompose.up) {
 			command = await client.up({
 				files: options.files,
@@ -85,6 +87,7 @@ export class DockerComposeTaskProvider extends DockerTaskProvider {
 		});
 
 		await runner(command);
+
 		throwIfCancellationRequested(context);
 	}
 

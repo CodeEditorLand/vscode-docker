@@ -25,6 +25,7 @@ export class ImageGroupTreeItem extends LocalGroupTreeItemBase<
 
 	public async deleteTreeItemImpl(context: IActionContext): Promise<void> {
 		const images = this.ChildTreeItems;
+
 		const errors = [];
 
 		for (const image of images) {

@@ -13,6 +13,7 @@ import { httpRequest } from "./utils/httpRequest";
 
 export function tagsForImage(image: IHubSearchResponseResult): string {
 	const tags: string[] = [];
+
 	if (image.is_automated) {
 		tags.push("Automated");
 	} else if (image.is_trusted) {
@@ -220,5 +221,6 @@ async function doFetchHttpsJson<T>(url: string): Promise<T> {
 	};
 
 	const response = await httpRequest<T>(url.toString(), options);
+
 	return response.json();
 }

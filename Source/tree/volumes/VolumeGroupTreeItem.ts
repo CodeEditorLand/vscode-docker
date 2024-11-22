@@ -22,6 +22,7 @@ export class VolumeGroupTreeItem extends LocalGroupTreeItemBase<
 		switch (this.parent.groupBySetting) {
 			case "VolumeName":
 				return new ThemeIcon("file-symlink-directory");
+
 			default:
 				return getCommonGroupIcon(this.parent.groupBySetting);
 		}

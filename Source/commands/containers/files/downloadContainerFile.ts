@@ -73,6 +73,7 @@ export async function downloadContainerFile(
 
 	const files = nodes.map((n) => {
 		const containerFileUri = n.uri;
+
 		const fileName = path.posix.basename(containerFileUri.path);
 
 		return {

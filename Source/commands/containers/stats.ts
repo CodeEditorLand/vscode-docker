@@ -10,6 +10,7 @@ import { TaskCommandRunnerFactory } from "../../runtimes/runners/TaskCommandRunn
 
 export async function stats(context: IActionContext): Promise<void> {
 	const client = await ext.runtimeManager.getClient();
+
 	const taskCRF = new TaskCommandRunnerFactory({
 		taskName: "stats",
 	});

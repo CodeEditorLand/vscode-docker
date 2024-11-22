@@ -30,6 +30,7 @@ export async function inspectRemoteImageManifest(
 	}
 
 	const v2DataProvider = node.provider as unknown as RegistryV2DataProvider;
+
 	const manifest = await v2DataProvider.getManifestV1(node.wrappedItem);
 
 	await openReadOnlyJson(

@@ -52,6 +52,7 @@ export class ScaffoldFileStep<
 		const outputPath = await this.getOutputPath(wizardContext);
 
 		const input = await fse.readFile(inputPath, "utf-8");
+
 		const template = handlebars.compile(input);
 
 		const output = template(wizardContext);
@@ -79,45 +80,64 @@ export class ScaffoldFileStep<
 
 	private async getInputPath(wizardContext: TWizardContext): Promise<string> {
 		const config = vscode.workspace.getConfiguration("docker");
+
 		const settingsTemplatesPath = config.get<string | undefined>(
 			"scaffolding.templatePath",
 			undefined,
 		);
+
 		const defaultTemplatesPath = path.join(
 			ext.context.asAbsolutePath("resources"),
 			"templates",
 		);
 
 		let subPath: string;
+
 		switch (wizardContext.platform) {
 			case "Node.js":
 				subPath = path.join("node", `${this.fileType}.template`);
+
 				break;
+
 			case ".NET: ASP.NET Core":
 			case ".NET: Console":
 				subPath = path.join("netCore", `${this.fileType}.template`);
+
 				break;
+
 			case "Python: Django":
 			case "Python: FastAPI":
 			case "Python: Flask":
 			case "Python: General":
 				subPath = path.join("python", `${this.fileType}.template`);
+
 				break;
+
 			case "Java":
 				subPath = path.join("java", `${this.fileType}.template`);
+
 				break;
+
 			case "C++":
 				subPath = path.join("cpp", `${this.fileType}.template`);
+
 				break;
+
 			case "Go":
 				subPath = path.join("go", `${this.fileType}.template`);
+
 				break;
+
 			case "Ruby":
 				subPath = path.join("ruby", `${this.fileType}.template`);
+
 				break;
+
 			case "Other":
 				subPath = path.join("other", `${this.fileType}.template`);
+
 				break;
+
 			default:
 				throw new Error(
 					vscode.l10n.t(
@@ -143,6 +163,7 @@ export class ScaffoldFileStep<
 		maxDepth: number = 1,
 	): Promise<string> {
 		const fileName = path.basename(file);
+
 		let currentFile = file;
 
 		for (let i = 0; i <= maxDepth; i++) {
@@ -169,11 +190,13 @@ export class ScaffoldFileStep<
 					wizardContext.dockerfileDirectory,
 					this.fileType,
 				);
+
 			case ".dockerignore":
 				return path.join(
 					wizardContext.dockerBuildContext,
 					this.fileType,
 				);
+
 			default:
 				// All other files go to the root
 				return path.join(
@@ -208,9 +231,11 @@ export class ScaffoldFileStep<
 			"Do you want to overwrite '{0}'?",
 			this.fileType,
 		);
+
 		const overwrite: vscode.MessageItem = {
 			title: vscode.l10n.t("Overwrite"),
 		};
+
 		const overwriteAll: vscode.MessageItem = {
 			title: vscode.l10n.t("Overwrite All"),
 		};

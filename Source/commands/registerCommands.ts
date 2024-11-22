@@ -125,11 +125,13 @@ export function registerCommand(
 			const commandReasonArgIndex = args.findIndex(
 				(a) => (<CommandReasonArgument>a)?.commandReason,
 			);
+
 			if (commandReasonArgIndex >= 0) {
 				const commandReason = (<CommandReasonArgument>(
 					args[commandReasonArgIndex]
 				)).commandReason;
 				context.telemetry.properties.commandReason = commandReason;
+
 				if (commandReason === "install") {
 					context.telemetry.properties.isActivationEvent = "true";
 				}
@@ -221,6 +223,7 @@ export function registerCommands(): void {
 	registerCommand("vscode-docker.images.prune", pruneImages);
 	registerCommand("vscode-docker.images.showDangling", showDanglingImages);
 	registerCommand("vscode-docker.images.hideDangling", hideDanglingImages);
+
 	setInitialDanglingContextValue();
 	registerWorkspaceCommand("vscode-docker.images.pull", pullImage);
 	registerWorkspaceCommand("vscode-docker.images.push", pushImage);

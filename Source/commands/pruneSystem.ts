@@ -29,17 +29,21 @@ export async function pruneSystem(context: IActionContext): Promise<void> {
 			const containersResult = await ext.runWithDefaults((client) =>
 				client.pruneContainers({}),
 			);
+
 			const imagesResult = await ext.runWithDefaults((client) =>
 				client.pruneImages({}),
 			);
+
 			const networksResult = await ext.runWithDefaults((client) =>
 				client.pruneNetworks({}),
 			);
+
 			const volumesResult = await ext.runWithDefaults((client) =>
 				client.pruneVolumes({}),
 			);
 
 			let message: string;
+
 			if (
 				Number.isInteger(containersResult?.spaceReclaimed) &&
 				Number.isInteger(imagesResult?.spaceReclaimed) &&

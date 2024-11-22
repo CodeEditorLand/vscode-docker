@@ -21,6 +21,7 @@ export class NetCoreChooseOsStep extends TelemetryPromptStep<NetCoreScaffoldingW
 		};
 
 		const OSes: PlatformOS[] = ["Linux", "Windows"];
+
 		const items = OSes.map(
 			(p) => <IAzureQuickPickItem<PlatformOS>>{ label: p, data: p },
 		);

@@ -113,6 +113,7 @@ export async function getHandlebarsWithHelpers(): Promise<typeof Handlebars> {
 					/\/run\/desktop\/mnt\/host\/(?<driveLetter>[a-z])\/(?<path>.*)/i.exec(
 						hostPath,
 					)?.groups as { driveLetter?: string; path?: string };
+
 				if (match && match.driveLetter && match.path) {
 					hostPath = `${match.driveLetter.toUpperCase()}:\\${match.path.replace("/", "\\")}`;
 				}
@@ -128,6 +129,7 @@ export async function getHandlebarsWithHelpers(): Promise<typeof Handlebars> {
 						DockerExtensionKind.local
 				) {
 					const clickableUri = `command:revealFileInOS?${encodeURIComponent(JSON.stringify(uri.toJSON()))}`;
+
 					return `[${hostPath}](${clickableUri})`;
 				}
 			} catch {

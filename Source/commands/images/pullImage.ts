@@ -31,6 +31,7 @@ export async function pullImage(
 	let noneTagWarningShown = false;
 
 	const client = await ext.runtimeManager.getClient();
+
 	const taskCRF = new TaskCommandRunnerFactory({
 		taskName: l10n.t("Pull images"),
 	});

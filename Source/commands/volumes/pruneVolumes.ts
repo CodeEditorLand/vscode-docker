@@ -31,6 +31,7 @@ export async function pruneVolumes(context: IActionContext): Promise<void> {
 			);
 
 			let message: string;
+
 			if (
 				result?.volumesDeleted?.length &&
 				Number.isInteger(result?.spaceReclaimed)

@@ -59,16 +59,19 @@ export function getContainerStateIcon(state: string): ThemeIcon {
 				"debug-stop",
 				new ThemeColor("debugIcon.stopForeground"),
 			);
+
 		case "paused":
 			return new ThemeIcon(
 				"debug-pause",
 				new ThemeColor("debugIcon.pauseForeground"),
 			);
+
 		case "restarting":
 			return new ThemeIcon(
 				"debug-restart",
 				new ThemeColor("debugIcon.restartForeground"),
 			);
+
 		case "running":
 		default:
 			return new ThemeIcon(
@@ -83,20 +86,26 @@ export function getContainerPropertyValue(
 	property: ContainerProperty,
 ): string {
 	const networks = item.networks?.length > 0 ? item.networks : ["<none>"];
+
 	const ports =
 		item.ports?.length > 0 ? item.ports.map((p) => p.hostPort) : ["<none>"];
 
 	switch (property) {
 		case "ContainerId":
 			return item.id.slice(0, 12);
+
 		case "ContainerName":
 			return item.name;
+
 		case "Networks":
 			return networks.join(",");
+
 		case "Ports":
 			return ports.join(",");
+
 		case "State":
 			return item.state;
+
 		case "Status":
 			// The rapidly-refreshing status during a container's first minute causes a lot of problems with excessive refreshing
 			// This normalizes things like "10 seconds" and "Less than a second" to "Less than a minute", meaning the refreshes don't happen constantly
@@ -104,14 +113,17 @@ export function getContainerPropertyValue(
 				/(\d+ seconds?)|(Less than a second)/i,
 				l10n.t("Less than a minute"),
 			);
+
 		case "Compose Project Name":
 			return getLabelGroup(
 				item,
 				"com.docker.compose.project",
 				NonComposeGroupName,
 			);
+
 		case "Image":
 			return item.image.originalName;
+
 		case "Label":
 			return getLabelGroup(
 				item,
@@ -122,6 +134,7 @@ export function getContainerPropertyValue(
 					>("containers.groupByLabel", undefined),
 				NonLabelGroupName,
 			);
+
 		default:
 			return getCommonPropertyValue(item, property);
 	}
@@ -140,5 +153,6 @@ export function getLabelGroup(
 	}
 
 	const containerLabels = container?.labels;
+
 	return containerLabels?.[label] || defaultGroupName;
 }

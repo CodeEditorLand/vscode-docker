@@ -52,6 +52,7 @@ export class DockerBuildTaskProvider extends DockerTaskProvider {
 
 		if (helper && helper.preBuild) {
 			await helper.preBuild(context, definition);
+
 			throwIfCancellationRequested(context);
 		}
 
@@ -60,6 +61,7 @@ export class DockerBuildTaskProvider extends DockerTaskProvider {
 				context,
 				definition,
 			);
+
 			throwIfCancellationRequested(context);
 		}
 
@@ -68,6 +70,7 @@ export class DockerBuildTaskProvider extends DockerTaskProvider {
 		const client = await ext.runtimeManager.getClient();
 
 		const options = definition.dockerBuild;
+
 		const command = await client.buildImage({
 			pull: options.pull,
 			file: options.dockerfile,
@@ -86,6 +89,7 @@ export class DockerBuildTaskProvider extends DockerTaskProvider {
 		});
 
 		await runner(command);
+
 		throwIfCancellationRequested(context);
 
 		context.imageName = definition.dockerBuild.tag;

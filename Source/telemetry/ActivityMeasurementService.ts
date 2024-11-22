@@ -11,6 +11,7 @@ export type ActivityType = "overall" | "overallnoedit";
 
 export interface IActivityMeasurementService {
 	recordActivity(type: ActivityType): Promise<void>;
+
 	getActivityMeasurement(type: ActivityType): ActivityMeasurement;
 }
 
@@ -55,6 +56,7 @@ export class ActivityMeasurementService implements IActivityMeasurementService {
 					type,
 					new AsyncLazy(async () => {
 						const currentValue = this.getActivityMeasurement(type);
+
 						const now = Date.now();
 
 						// No need to increment if it's been done already today
@@ -108,6 +110,7 @@ export class ActivityMeasurementService implements IActivityMeasurementService {
 				`vscode-docker.activity.${type}`,
 				defaultMeasurement,
 			);
+
 			const now = Date.now();
 
 			// If the last session was not in this month, reset the monthly session count
@@ -133,6 +136,7 @@ function sameDate(
 	}
 
 	const a2 = new Date(a);
+
 	const b2 = new Date(b);
 
 	const sameMonth =

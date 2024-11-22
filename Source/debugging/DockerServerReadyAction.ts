@@ -41,6 +41,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 	public detectPattern(s: string): boolean {
 		if (!this.hasFired) {
 			const matches = this.regexp.exec(s);
+
 			if (matches && matches.length >= 1) {
 				/* eslint-disable-next-line @typescript-eslint/no-floating-promises */
 				this.openExternalWithString(
@@ -59,7 +60,9 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 		captureString: string,
 	): Promise<void> {
 		const configuration = <ResolvedDebugConfiguration>session.configuration;
+
 		const args = configuration.dockerOptions.dockerServerReadyAction;
+
 		const format = args.uriFormat || URI_FORMAT;
 
 		if (!args || !args.containerName) {
@@ -89,6 +92,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 						void vscode.window.showErrorMessage(errMsg, {
 							modal: true,
 						});
+
 						return;
 					}
 					captureString = format;
@@ -96,6 +100,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 					// looks like a port number -> use the uriFormat and substitute a single "%s" with the port
 					// verify that format only contains a single '%s'
 					const s = format.split("%s");
+
 					if (s.length !== 2) {
 						const errMsg = vscode.l10n.t(
 							"Format uri ('{0}') must contain exactly one substitution placeholder.",
@@ -104,10 +109,12 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 						void vscode.window.showErrorMessage(errMsg, {
 							modal: true,
 						});
+
 						return;
 					}
 
 					const containerPort = Number.parseInt(captureString, 10);
+
 					const hostPort = await this.getHostPortForContainerPort(
 						args.containerName,
 						containerPort,
@@ -125,11 +132,13 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 						void vscode.window.showErrorMessage(errMsg, {
 							modal: true,
 						});
+
 						return;
 					}
 
 					const containerProtocol =
 						this.getContainerProtocol(captureString);
+
 					const hostPort = await this.getHostPortForContainerPort(
 						args.containerName,
 						containerPort,
@@ -155,6 +164,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 						void vscode.window.showErrorMessage(errMsg, {
 							modal: true,
 						});
+
 						return;
 					}
 				}
@@ -172,6 +182,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 
 	private getContainerPort(containerUrl: string): number | undefined {
 		const portRegex = /:([\d]+)(?![\]:\da-f])/i;
+
 		const result = containerUrl.match(portRegex);
 
 		if (result && result.length > 1) {
@@ -190,6 +201,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 				client.inspectContainers({ containers: [containerName] }),
 			)
 		)?.[0];
+
 		const hostPort = containerInspectInfo?.ports.find(
 			(p) => p.containerPort === containerPort,
 		)?.hostPort;
@@ -212,12 +224,16 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 		uri: string,
 	): void {
 		const configuration = <ResolvedDebugConfiguration>session.configuration;
+
 		const args = configuration.dockerOptions.dockerServerReadyAction;
+
 		switch (args.action || "openExternally") {
 			case "openExternally":
 				/* eslint-disable-next-line @typescript-eslint/no-floating-promises */
 				vscode.env.openExternal(vscode.Uri.parse(uri));
+
 				break;
+
 			case "debugWithChrome":
 				if (
 					vscode.env["remoteName"] === "wsl" ||
@@ -241,6 +257,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 					});
 				}
 				break;
+
 			default:
 			// not supported
 		}
@@ -297,6 +314,7 @@ class DockerLogsTracker extends vscode.Disposable {
 			this.lineReader = readline.createInterface({
 				input: stream.Readable.from(generator),
 			});
+
 			for await (const line of this.lineReader) {
 				this.detector.detectPattern(line);
 			}
@@ -332,7 +350,9 @@ class DockerDebugAdapterTracker
 				case "stderr":
 				case "stdout":
 					this.detector.detectPattern(m.body.output);
+
 					break;
+
 				default:
 			}
 		}
@@ -389,12 +409,14 @@ class DockerDebugAdapterTrackerFactory
 		session: vscode.DebugSession,
 	): DockerDebugAdapterTracker | undefined {
 		const configuration = <ResolvedDebugConfiguration>session.configuration;
+
 		if (configuration?.dockerOptions?.dockerServerReadyAction) {
 			const realSessionId =
 				DockerDebugAdapterTrackerFactory.getRealSessionId(session);
 
 			let tracker =
 				DockerDebugAdapterTrackerFactory.trackers.get(realSessionId);
+
 			if (!tracker) {
 				tracker = new MultiOutputDockerServerReadyManager(session);
 				DockerDebugAdapterTrackerFactory.trackers.set(
@@ -412,6 +434,7 @@ class DockerDebugAdapterTrackerFactory
 	public static stop(session: vscode.DebugSession): void {
 		const realSessionId =
 			DockerDebugAdapterTrackerFactory.getRealSessionId(session);
+
 		const tracker =
 			DockerDebugAdapterTrackerFactory.trackers.get(realSessionId);
 

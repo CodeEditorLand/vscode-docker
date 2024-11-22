@@ -20,6 +20,7 @@ export class CreatePickAcrPromptStep extends AzureWizardPromptStep<PushImageWiza
 		const acrs = (await ext.registriesRoot.getChildren(
 			wizardContext.azureSubscriptionNode,
 		)) as UnifiedRegistryItem<CommonRegistry>[];
+
 		const picks: IAzureQuickPickItem<
 			string | UnifiedRegistryItem<CommonRegistry>
 		>[] = acrs.map(
@@ -51,6 +52,7 @@ export class CreatePickAcrPromptStep extends AzureWizardPromptStep<PushImageWiza
 			const acrNodes = (await ext.registriesRoot.getChildren(
 				wizardContext.azureSubscriptionNode,
 			)) as UnifiedRegistryItem<CommonRegistry>[];
+
 			const selectedAcrNode = acrNodes.find(
 				(acrNode) => acrNode.wrappedItem.label === createdAcrName,
 			);

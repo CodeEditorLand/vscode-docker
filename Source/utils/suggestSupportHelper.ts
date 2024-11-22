@@ -15,6 +15,7 @@ export class SuggestSupportHelper {
 		return searchImagesInRegistryHub(word, true).then((results) => {
 			return results.map((image) => {
 				let stars = "";
+
 				if (image.star_count > 0) {
 					stars =
 						" " +

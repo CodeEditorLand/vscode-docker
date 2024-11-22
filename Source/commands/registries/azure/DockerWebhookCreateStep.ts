@@ -53,9 +53,13 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 	): Promise<void> {
 		const vscAzureAppService = await getAzExtAppService();
 		vscAzureAppService.registerAppServiceExtensionVariables(ext);
+
 		const site: Site = nonNullProp(context, "site");
+
 		const parsedSite = new vscAzureAppService.ParsedSite(site, context);
+
 		const siteClient = await parsedSite.createClient(context);
+
 		const appUri: string = (await siteClient.getWebAppPublishCredential())
 			.scmUri;
 
@@ -66,6 +70,7 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 			);
 			ext.outputChannel.info(creatingNewWebhook);
 			progress.report({ message: creatingNewWebhook });
+
 			const webhook = await this.createWebhookForApp(
 				context,
 				context.site,
@@ -82,12 +87,14 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 			);
 		} else if (isDockerHubRepository(this.tagItem.parent.wrappedItem)) {
 			const registryName = this.tagItem.parent.parent.wrappedItem.label;
+
 			const repoName = (
 				this.tagItem.parent as unknown as CommonRepository
 			).wrappedItem.label;
 			// point to dockerhub to create a webhook
 			// http://cloud.docker.com/repository/docker/<registryName>/<repoName>/webHooks
 			const dockerhubPrompt: string = vscode.l10n.t("Copy & Open");
+
 			const dockerhubUri: string = `https://cloud.docker.com/repository/docker/${registryName}/${repoName}/webHooks`;
 
 			// NOTE: The response to the information message is not awaited but handled independently of the wizard steps.
@@ -129,6 +136,7 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 		appUri: string,
 	): Promise<Webhook | undefined> {
 		const maxLength: number = 50;
+
 		const numRandomChars: number = 6;
 
 		let webhookName: string = site.name;
@@ -143,12 +151,16 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 		const registryTreeItem: UnifiedRegistryItem<AzureRegistry> = this
 			.tagItem.parent
 			.parent as unknown as UnifiedRegistryItem<AzureRegistry>;
+
 		const armContainerRegistry = await getArmContainerRegistry();
+
 		const azExtAzureUtils = await getAzExtAzureUtils();
+
 		const crmClient = azExtAzureUtils.createAzureClient(
 			context,
 			armContainerRegistry.ContainerRegistryManagementClient,
 		);
+
 		const webhookCreateParameters: WebhookCreateParameters = {
 			location: registryTreeItem.wrappedItem.registryProperties.location,
 			serviceUri: appUri,
@@ -156,9 +168,11 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 			actions: ["push"],
 			status: "enabled",
 		};
+
 		const resourceGroup = getResourceGroupFromAzureRegistryItem(
 			registryTreeItem.wrappedItem,
 		);
+
 		return await crmClient.webhooks.beginCreateAndWait(
 			resourceGroup,
 			registryTreeItem.wrappedItem.label,

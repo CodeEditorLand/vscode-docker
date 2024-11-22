@@ -74,17 +74,20 @@ export class VolumeTreeItem
 		const volumePromise = ext.runWithDefaults((client) =>
 			client.inspectVolumes({ volumes: [this.volumeName] }),
 		);
+
 		const containersPromise = ext.runWithDefaults((client) =>
 			client.listContainers({ volumes: [this.volumeName] }),
 		);
 
 		const volumeInspection = (await volumePromise)?.[0];
+
 		const associatedContainers = await containersPromise;
 
 		const handlebarsContext = {
 			...volumeInspection,
 			containers: associatedContainers,
 		};
+
 		return resolveTooltipMarkdown(volumeTooltipTemplate, handlebarsContext);
 	}
 }

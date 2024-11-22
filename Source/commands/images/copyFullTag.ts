@@ -27,5 +27,6 @@ export async function copyFullTag(
 	}
 	// eslint-disable-next-line @typescript-eslint/no-floating-promises
 	vscode.env.clipboard.writeText(node.fullTag);
+
 	return node.fullTag;
 }

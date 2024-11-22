@@ -24,11 +24,13 @@ export async function logOutOfDockerCli(
 	const serverUrl = (
 		await node.provider.getLoginInformation?.(node.wrappedItem)
 	)?.server;
+
 	if (!serverUrl) {
 		throw new Error(l10n.t("Unable to get server URL"));
 	}
 
 	const client = await ext.runtimeManager.getClient();
+
 	const taskCRF = new TaskCommandRunnerFactory({
 		taskName: "Docker",
 	});

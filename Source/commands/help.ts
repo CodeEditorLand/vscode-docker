@@ -44,6 +44,7 @@ export async function help(context: IActionContext): Promise<void> {
 		canPickMany: false,
 		suppressPersistence: true,
 	};
+
 	const selectedItem: HelpMenuItem = await context.ui.showQuickPick(
 		items,
 		options,

@@ -143,6 +143,7 @@ async function transformXmlBlazorManifest(
 	os: PlatformOS,
 ): Promise<void> {
 	const contents = (await fse.readFile(inputManifest)).toString();
+
 	const manifest = <XmlManifest>await xml2js.parseStringPromise(contents);
 
 	if (!manifest?.StaticWebAssets) {

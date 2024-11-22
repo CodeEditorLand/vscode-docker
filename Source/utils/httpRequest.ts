@@ -19,6 +19,7 @@ export async function httpRequest<T>(
 	errorHandling: ErrorHandling = ErrorHandling.ThrowOnError,
 ): Promise<HttpResponse<T>> {
 	const requestOptions: RequestInit = options;
+
 	if (options?.form) {
 		// URLSearchParams is a silly way to say "it's form data"
 		requestOptions.body = new URLSearchParams(options.form);
@@ -58,6 +59,7 @@ export class HttpResponse<T> implements ResponseLike {
 			get: (key: string) => {
 				if (!this.normalizedHeaders) {
 					this.normalizedHeaders = {};
+
 					for (const key of this.innerResponse.headers.keys()) {
 						this.normalizedHeaders[key] =
 							this.innerResponse.headers.get(key);
@@ -131,6 +133,7 @@ export interface RequestLike {
 
 export interface HeadersLike {
 	get(header: string): string | string[];
+
 	set(header: string, value: string): void;
 }
 
@@ -181,6 +184,7 @@ export async function streamToFile(
 
 export function basicAuthHeader(username: string, password: string): string {
 	const buffer = Buffer.from(`${username}:${password}`);
+
 	return `Basic ${buffer.toString("base64")}`;
 }
 
@@ -195,7 +199,9 @@ export interface IOAuthContext {
 }
 
 const realmRegExp = /realm="([^"]+)"/i;
+
 const serviceRegExp = /service="([^"]+)"/i;
+
 const scopeRegExp = /scope="([^"]+)"/i;
 
 export function getWwwAuthenticateContext(
@@ -207,7 +213,9 @@ export function getWwwAuthenticateContext(
 		) as string;
 
 		const realmMatch = wwwAuthHeader?.match(realmRegExp);
+
 		const serviceMatch = wwwAuthHeader?.match(serviceRegExp);
+
 		const scopeMatch = wwwAuthHeader?.match(scopeRegExp);
 
 		const realmUrl = new URL(realmMatch?.[1]);

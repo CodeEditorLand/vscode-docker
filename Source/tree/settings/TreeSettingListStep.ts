@@ -17,6 +17,7 @@ import {
 export class TreeSettingListStep extends AzureWizardPromptStep<ITreeSettingsWizardContext> {
 	public async prompt(context: ITreeSettingsWizardContext): Promise<void> {
 		const placeHolder = l10n.t("Select a setting to change.");
+
 		const picks: IAzureQuickPickItem<ITreeSettingWizardInfo | undefined>[] =
 			context.infoList.map((info) => {
 				return {

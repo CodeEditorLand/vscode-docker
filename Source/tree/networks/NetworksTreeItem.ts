@@ -66,6 +66,7 @@ export class NetworksTreeItem extends LocalRootTreeItemBase<
 
 	public async getItems(context: IActionContext): Promise<ListNetworkItem[]> {
 		const config = workspace.getConfiguration(configPrefix);
+
 		const showBuiltInNetworks: boolean = config.get<boolean>(
 			"networks.showBuiltInNetworks",
 		);
@@ -90,10 +91,13 @@ export class NetworksTreeItem extends LocalRootTreeItemBase<
 		switch (property) {
 			case "NetworkDriver":
 				return item.driver;
+
 			case "NetworkId":
 				return item.id.slice(0, 12);
+
 			case "NetworkName":
 				return item.name;
+
 			default:
 				return getCommonPropertyValue(item, property);
 		}

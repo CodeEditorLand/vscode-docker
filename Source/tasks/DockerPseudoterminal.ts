@@ -35,7 +35,9 @@ import { DockerTaskProvider } from "./DockerTaskProvider";
 import { DockerTaskExecutionContext } from "./TaskHelper";
 
 const DEFAULT = "0m";
+
 const DEFAULTBOLD = "0;1m";
+
 const YELLOW = "33m";
 
 export class DockerPseudoterminal implements Pseudoterminal {
@@ -144,7 +146,9 @@ export class DockerPseudoterminal implements Pseudoterminal {
 		const quotedArgs = Shell.getShellOrDefault().quote(
 			options.commandResponse.args,
 		);
+
 		const resolvedQuotedArgs = resolveVariables(quotedArgs, options.folder);
+
 		const commandLine = [
 			options.commandResponse.command,
 			...resolvedQuotedArgs,

@@ -40,50 +40,72 @@ import { AzExtLogOutputChannelWrapper } from "./utils/AzExtLogOutputChannelWrapp
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ext {
 	export let context: ExtensionContext;
+
 	export let outputChannel: AzExtLogOutputChannelWrapper;
 
 	export let experimentationService: IExperimentationServiceAdapter;
+
 	export let activityMeasurementService: IActivityMeasurementService;
 
 	export let treeInitError: unknown;
+
 	export const ignoreBundle = !/^(false|0)?$/i.test(
 		process.env.AZCODE_DOCKER_IGNORE_BUNDLE || "",
 	);
 
 	export let imagesTree: AzExtTreeDataProvider;
+
 	export let imagesTreeView: TreeView<AzExtTreeItem>;
+
 	export let imagesRoot: ImagesTreeItem;
 
 	export let containersTree: AzExtTreeDataProvider;
+
 	export let containersTreeView: TreeView<AzExtTreeItem>;
+
 	export let containersRoot: ContainersTreeItem;
 
 	export let networksTree: AzExtTreeDataProvider;
+
 	export let networksTreeView: TreeView<AzExtTreeItem>;
+
 	export let networksRoot: NetworksTreeItem;
 
 	export const prefix: string = "docker";
 
 	export let registriesTree: UnifiedRegistryTreeDataProvider;
+
 	export let registriesTreeView: TreeView<UnifiedRegistryItem<unknown>>;
+
 	export let registriesRoot: UnifiedRegistryTreeDataProvider;
+
 	export let genericRegistryV2DataProvider: GenericRegistryV2DataProvider;
+
 	export let azureRegistryDataProvider: AzureRegistryDataProvider;
+
 	export let dockerHubRegistryDataProvider: DockerHubRegistryDataProvider;
+
 	export let githubRegistryDataProvider: GitHubRegistryDataProvider;
 
 	export let volumesTree: AzExtTreeDataProvider;
+
 	export let volumesTreeView: TreeView<AzExtTreeItem>;
+
 	export let volumesRoot: VolumesTreeItem;
 
 	export let contextsTree: AzExtTreeDataProvider;
+
 	export let contextsTreeView: TreeView<AzExtTreeItem>;
+
 	export let contextsRoot: ContextsTreeItem;
 
 	// Container runtime related items
 	export let runtimeManager: ContainerRuntimeManager;
+
 	export let orchestratorManager: OrchestratorRuntimeManager;
+
 	export const runWithDefaults = runWithDefaultsImpl;
+
 	export const streamWithDefaults = streamWithDefaultsImpl;
 
 	export let dockerContextStatusBarItem: StatusBarItem;

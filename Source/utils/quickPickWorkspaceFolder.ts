@@ -25,6 +25,7 @@ export async function quickPickWorkspaceFolder(
 		vscode.workspace.workspaceFolders.length > 1
 	) {
 		const selected = await vscode.window.showWorkspaceFolderPick();
+
 		if (!selected) {
 			throw new UserCancelledError();
 		}
@@ -48,6 +49,7 @@ export async function quickPickWorkspaceFolder(
 				title: vscode.l10n.t("Open Folder"),
 			},
 		];
+
 		throw new Error(noWorkspacesMessage);
 	}
 }

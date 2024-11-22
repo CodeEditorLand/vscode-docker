@@ -62,6 +62,7 @@ export class ContainerFilesProvider
 		uri: vscode.Uri,
 	): Promise<[string, vscode.FileType][]> {
 		const dockerUri = DockerUri.parse(uri);
+
 		const containerOS =
 			dockerUri.options?.containerOS || (await getDockerOSType());
 
@@ -85,10 +86,12 @@ export class ContainerFilesProvider
 
 	public async readFile(uri: vscode.Uri): Promise<Uint8Array> {
 		const dockerUri = DockerUri.parse(uri);
+
 		const containerOS =
 			dockerUri.options?.containerOS || (await getDockerOSType());
 
 		const accumulator = new AccumulatorStream();
+
 		const targetStream =
 			containerOS === "windows"
 				? accumulator
@@ -126,8 +129,10 @@ export class ContainerFilesProvider
 				actionContext.errorHandling.rethrow = true; // Rethrow to hit the try/catch outside this block.
 
 				const dockerUri = DockerUri.parse(uri);
+
 				const containerOS =
 					dockerUri.options?.containerOS || (await getDockerOSType());
+
 				const containerId = dockerUri.containerId;
 
 				if (containerOS === "windows") {
@@ -163,10 +168,15 @@ export class ContainerFilesProvider
 				);
 
 				const atime = new Date(fileStats?.atime ?? Date.now());
+
 				const mtime = new Date(fileStats?.mtime ?? Date.now());
+
 				const ctime = new Date(fileStats?.ctime ?? Date.now());
+
 				const mode = fileStats?.mode;
+
 				const gid = fileStats?.gid;
+
 				const uid = fileStats?.uid;
 
 				await ext.runWithDefaults(

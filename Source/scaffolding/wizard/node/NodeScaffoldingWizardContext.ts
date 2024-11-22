@@ -16,7 +16,9 @@ import { ScaffoldingWizardContext } from "../ScaffoldingWizardContext";
 import { NodeGatherInformationStep } from "./NodeGatherInformationStep";
 
 const choosePackageFile = l10n.t("Choose a package.json file");
+
 const nodeGlobPatterns = ["**/{[Pp][Aa][Cc][Kk][Aa][Gg][Ee].[Jj][Ss][Oo][Nn]}"];
+
 const noPackageFile = l10n.t(
 	"No package.json files were found in the workspace.",
 );

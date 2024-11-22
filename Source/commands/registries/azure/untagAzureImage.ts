@@ -28,6 +28,7 @@ export async function untagAzureImage(
 	}
 
 	const fullTag = getFullImageNameFromRegistryTagItem(node.wrappedItem);
+
 	const confirmUntag: string = l10n.t(
 		'Are you sure you want to untag image "{0}"? This does not delete the manifest referenced by the tag.',
 		fullTag,

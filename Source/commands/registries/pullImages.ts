@@ -66,6 +66,7 @@ async function pullImages(
 	await logInToDockerCli(context, registryNode);
 
 	const client = await ext.runtimeManager.getClient();
+
 	const taskCRF = new TaskCommandRunnerFactory({
 		taskName: client.displayName,
 	});

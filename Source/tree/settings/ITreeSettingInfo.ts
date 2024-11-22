@@ -5,11 +5,13 @@
 
 export interface ITreeSettingInfo<T extends string> {
 	properties: ITreePropertyInfo<T>[];
+
 	defaultProperty: T;
 }
 
 export interface ITreeArraySettingInfo<T extends string> {
 	properties: ITreePropertyInfo<T>[];
+
 	defaultProperty: T[];
 }
 

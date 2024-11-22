@@ -56,15 +56,19 @@ export class ContainerGroupTreeItem extends LocalGroupTreeItemBase<
 			case "ContainerName":
 			case "Networks":
 				return new ThemeIcon("repo-forked");
+
 			case "Ports":
 			case "Status":
 			case "Compose Project Name":
 				return new ThemeIcon("multiple-windows");
+
 			case "State":
 				return getContainerStateIcon(this.group);
+
 			case "Image":
 			case "Label":
 				return new ThemeIcon("multiple-windows");
+
 			default:
 				return getCommonGroupIcon(this.parent.groupBySetting);
 		}
@@ -89,6 +93,7 @@ export class ContainerGroupTreeItem extends LocalGroupTreeItemBase<
 
 	public async deleteTreeItemImpl(context: IActionContext): Promise<void> {
 		const containers = this.ChildTreeItems;
+
 		const errors = [];
 
 		for (const container of containers) {

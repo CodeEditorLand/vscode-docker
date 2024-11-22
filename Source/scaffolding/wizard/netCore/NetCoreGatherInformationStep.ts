@@ -20,11 +20,15 @@ import {
 
 // All supported .NET versions no longer have "core" in the name
 const aspNetBaseImage = "mcr.microsoft.com/dotnet/aspnet";
+
 const consoleNetBaseImage = "mcr.microsoft.com/dotnet/runtime";
+
 const netSdkImage = "mcr.microsoft.com/dotnet/sdk";
 
 const cSharpConfigId = "csharp";
+
 const cSharpPromptSetting = "suppressBuildAssetsNotification";
+
 const NetCorePreviewVersion = 10;
 
 export class NetCoreGatherInformationStep extends GatherInformationStep<NetCoreScaffoldingWizardContext> {
@@ -139,6 +143,7 @@ export class NetCoreGatherInformationStep extends GatherInformationStep<NetCoreS
 		wizardContext: NetCoreScaffoldingWizardContext,
 	): Promise<void> {
 		let cSharpExtensionExports: CSharpExtensionExports;
+
 		try {
 			cSharpExtensionExports = await getMinimumCSharpExtensionExports();
 		} catch (err) {
@@ -154,6 +159,7 @@ export class NetCoreGatherInformationStep extends GatherInformationStep<NetCoreS
 						),
 				},
 			];
+
 			throw err;
 		}
 
@@ -165,6 +171,7 @@ export class NetCoreGatherInformationStep extends GatherInformationStep<NetCoreS
 		// Get the settings for the C# asset generation prompt...
 		const cSharpPromptConfig =
 			vscode.workspace.getConfiguration(cSharpConfigId);
+
 		const oldSuppressSettings =
 			cSharpPromptConfig.inspect<boolean>(cSharpPromptSetting);
 

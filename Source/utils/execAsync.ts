@@ -33,15 +33,19 @@ export async function execAsync(
 	progress?: Progress,
 ): Promise<ExecAsyncOutput> {
 	const stdoutFinal = new AccumulatorStream();
+
 	const stderrFinal = new AccumulatorStream();
 
 	let stdinPipe: stream.Readable | undefined;
+
 	if (options?.stdin) {
 		stdinPipe = stream.Readable.from(options.stdin);
 	}
 
 	let stdoutIntermediate: stream.PassThrough | undefined;
+
 	let stderrIntermediate: stream.PassThrough | undefined;
+
 	if (progress) {
 		stdoutIntermediate = new stream.PassThrough();
 		stdoutIntermediate.on("data", (chunk: Buffer) => {

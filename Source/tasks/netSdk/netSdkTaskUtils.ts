@@ -35,6 +35,7 @@ export type RidCpuArchitecture =
 	| string;
 
 export const NetSdkRunTaskType = "dotnet-container-sdk";
+
 const NetSdkDefaultImageTag = "dev"; // intentionally default to dev tag for phase 1 of this feature
 
 export async function getNetSdkBuildCommand(
@@ -60,6 +61,7 @@ export async function getNetSdkBuildCommand(
 	)();
 
 	const quotedArgs = Shell.getShellOrDefault().quote(args);
+
 	return quotedArgs.join(" ");
 }
 
@@ -83,8 +85,11 @@ export async function getNetSdkRunCommand(
 	};
 
 	const command = await client.runContainer(options);
+
 	const quotedArgs = Shell.getShellOrDefault().quote(command.args);
+
 	const commandLine = [client.commandName, ...quotedArgs].join(" ");
+
 	return commandLine;
 }
 
@@ -94,6 +99,7 @@ export async function getNetSdkRunCommand(
  */
 export async function normalizeOsToRidOs(): Promise<"linux" | "win"> {
 	const dockerOsType = await getDockerOSType();
+
 	return dockerOsType === "windows" ? "win" : "linux";
 }
 
@@ -103,10 +109,12 @@ export async function normalizeOsToRidOs(): Promise<"linux" | "win"> {
  */
 export async function normalizeArchitectureToRidArchitecture(): Promise<RidCpuArchitecture> {
 	const architecture = os.arch();
+
 	switch (architecture) {
 		case "x32":
 		case "ia32":
 			return "x86";
+
 		default:
 			return architecture;
 	}
@@ -128,5 +136,6 @@ async function getRemoteDebuggerMount(): Promise<
 				: "/remote_debugger",
 		readOnly: true,
 	};
+
 	return [debuggerVolume];
 }

@@ -22,8 +22,10 @@ type VsDbgRuntime =
 	| "win7-x64";
 
 const scriptAcquiredDateKey = "vscode-docker.vsdbgHelper.scriptAcquiredDate";
+
 const scriptExecutedDateKeyPrefix =
 	"vscode-docker.vsdbgHelper.scriptExecutedDate";
+
 const dayInMs = 24 * 60 * 60 * 1000;
 
 export const vsDbgInstallBasePath = path.join(os.homedir(), ".vsdbg");
@@ -31,6 +33,7 @@ export const vsDbgInstallBasePath = path.join(os.homedir(), ".vsdbg");
 const acquisition: {
 	url: string;
 	scriptPath: string;
+
 	getShellCommand(runtime: VsDbgRuntime, version: VsDbgVersion): string;
 } = isWindows()
 	? {
@@ -100,6 +103,7 @@ async function getLatestAcquisitionScriptIfNecessary(): Promise<boolean> {
 
 	await ext.context.globalState.update(scriptAcquiredDateKey, Date.now());
 	ext.outputChannel.info(l10n.t("Script acquired."));
+
 	return true;
 }
 

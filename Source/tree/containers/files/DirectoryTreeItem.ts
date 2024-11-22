@@ -50,7 +50,9 @@ export class DirectoryTreeItem extends AzExtParentTreeItem {
 		}
 
 		const containerOS = await this.containerOSProvider(context);
+
 		const actualUri = this.uri.with({ containerOS });
+
 		const items = await this.fs.readDirectory(actualUri.uri);
 
 		return items.map((item) =>
@@ -83,6 +85,7 @@ export class DirectoryTreeItem extends AzExtParentTreeItem {
 		parentUri: DockerUri,
 	): AzExtTreeItem {
 		const name = item[0];
+
 		const fileType = item[1];
 
 		const itemUri = DockerUri.joinPath(parentUri, name);

@@ -22,5 +22,6 @@ export async function copyRemoteFullTag(
 	}
 	const fullTag = getFullImageNameFromRegistryTagItem(node.wrappedItem);
 	void vscode.env.clipboard.writeText(fullTag);
+
 	return fullTag;
 }

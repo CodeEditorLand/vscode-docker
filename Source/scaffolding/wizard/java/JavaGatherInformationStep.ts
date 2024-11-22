@@ -39,6 +39,7 @@ export class JavaGatherInformationStep extends GatherInformationStep<JavaScaffol
 			if (/pom.xml$/i.test(wizardContext.artifact)) {
 				// If it's a POM file, parse as XML
 				this.javaProjectType = "pom";
+
 				const pomObject = <PomContents>await xml2js.parseStringPromise(
 					contents,
 					{
@@ -57,6 +58,7 @@ export class JavaGatherInformationStep extends GatherInformationStep<JavaScaffol
 			} else {
 				// Otherwise it's a gradle file, parse with that
 				this.javaProjectType = "gradle";
+
 				const gradleObject = <GradleContents>(
 					await gradleParser.parseText(contents)
 				);

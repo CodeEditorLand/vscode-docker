@@ -31,6 +31,7 @@ export async function pruneImages(context: IActionContext): Promise<void> {
 			);
 
 			let message: string;
+
 			if (
 				result?.imageRefsDeleted?.length &&
 				Number.isInteger(result?.spaceReclaimed)

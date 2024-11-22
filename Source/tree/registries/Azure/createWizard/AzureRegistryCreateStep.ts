@@ -30,6 +30,7 @@ export class AzureRegistryCreateStep extends AzureWizardExecuteStep<IAzureRegist
 		);
 
 		const azExtAzureUtils = await getAzExtAzureUtils();
+
 		const creating: string = l10n.t(
 			'Creating registry "{0}"...',
 			newRegistryName,
@@ -39,8 +40,11 @@ export class AzureRegistryCreateStep extends AzureWizardExecuteStep<IAzureRegist
 
 		const location: AzExtLocation =
 			await azExtAzureUtils.LocationListStep.getLocation(context);
+
 		const locationName: string = nonNullProp(location, "name");
+
 		const resourceGroup = nonNullProp(context, "resourceGroup");
+
 		try {
 			context.registry = await client.registries.beginCreateAndWait(
 				nonNullProp(resourceGroup, "name"),
@@ -54,6 +58,7 @@ export class AzureRegistryCreateStep extends AzureWizardExecuteStep<IAzureRegist
 			);
 		} catch (err) {
 			const parsedError = parseError(err);
+
 			if (parsedError.errorType === "MissingSubscriptionRegistration") {
 				context.errorHandling.suppressReportIssue = true;
 			}

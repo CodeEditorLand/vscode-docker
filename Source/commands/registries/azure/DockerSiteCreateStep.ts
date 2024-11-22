@@ -52,17 +52,21 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 		);
 		ext.outputChannel.info(creatingNewApp);
 		progress.report({ message: creatingNewApp });
+
 		const siteConfig = await this.getNewSiteConfig(context);
 
 		const azExtAzureUtils = await getAzExtAzureUtils();
+
 		const vscAzureAppService = await getAzExtAppService();
 
 		const location: AzExtLocation =
 			await azExtAzureUtils.LocationListStep.getLocation(context);
+
 		const locationName: string = nonNullProp(location, "name");
 
 		const client: WebSiteManagementClient =
 			await vscAzureAppService.createWebSiteClient(context);
+
 		const siteEnvelope: Site = {
 			name: context.newSiteName,
 			location: locationName,
@@ -97,8 +101,11 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 			.parent.parent as unknown as UnifiedRegistryItem<CommonRegistry>;
 
 		let username: string | undefined;
+
 		let password: string | undefined;
+
 		let registryUrl: string | undefined;
+
 		const appSettings: NameValuePair[] = [];
 
 		// Scenarios:
@@ -124,6 +131,7 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 			const cred = await (
 				registryTI.provider as unknown as AzureRegistryDataProvider
 			).tryGetAdminCredentials(registryTI.wrappedItem);
+
 			if (!cred?.username || !cred?.passwords?.[0]?.value) {
 				throw new Error(
 					l10n.t(

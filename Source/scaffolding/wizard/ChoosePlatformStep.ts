@@ -57,16 +57,20 @@ export class ChoosePlatformStep extends TelemetryPromptStep<ScaffoldingWizardCon
 		switch (wizardContext.platform) {
 			case "Node.js":
 				return getNodeSubWizardOptions(wizardContext);
+
 			case ".NET: ASP.NET Core":
 			case ".NET: Console":
 				return getNetCoreSubWizardOptions(wizardContext);
+
 			case "Python: Django":
 			case "Python: FastAPI":
 			case "Python: Flask":
 			case "Python: General":
 				return getPythonSubWizardOptions(wizardContext);
+
 			case "Java":
 				return getJavaSubWizardOptions(wizardContext);
+
 			case "Go":
 			case "Ruby":
 				// Too simple to justify having their own methods

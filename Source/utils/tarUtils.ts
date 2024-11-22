@@ -16,6 +16,7 @@ export function tarUnpackStream(
 	destination: NodeJS.WritableStream,
 ): NodeJS.WritableStream {
 	let entryCounter = 0;
+
 	return new tar.Parse({
 		filter: () => {
 			return entryCounter < 1;
@@ -52,6 +53,7 @@ export function tarPackStream(
 	uid?: number,
 ): NodeJS.ReadableStream {
 	const tarPack = new tar.Pack({ portable: true });
+
 	const readEntry = new tar.ReadEntry({
 		path: sourceFileName,
 		type: "File",

@@ -16,6 +16,7 @@ export async function installExtension(
 	message: string,
 ): Promise<void> {
 	const extension = vscode.extensions.getExtension(extensionId);
+
 	if (extension) {
 		// Extension is already installed
 		return;

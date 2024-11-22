@@ -30,6 +30,7 @@ export async function removeVolume(
 	);
 
 	let confirmRemove: string;
+
 	if (nodes.length === 1) {
 		confirmRemove = vscode.l10n.t(
 			'Are you sure you want to remove volume "{0}"?',

@@ -120,6 +120,7 @@ async function* streamWithDefaultsInternal<TClient extends ClientIdentity, T>(
 
 	try {
 		const runner = factory.getStreamingCommandRunner();
+
 		const generator = runner(callback(client));
 
 		for await (const element of generator) {
@@ -150,6 +151,7 @@ class DefaultEnvStreamCommandRunnerFactory<
 		const errAccumulator = new AccumulatorStream();
 
 		let stdOutPipe: NodeJS.WritableStream | undefined;
+
 		if (ext.outputChannel.isDebugLoggingEnabled) {
 			stdOutPipe = new stream.PassThrough();
 			stdOutPipe.on("data", (chunk: Buffer) => {
@@ -173,6 +175,7 @@ class DefaultEnvStreamCommandRunnerFactory<
 
 		const onCommand = (command) => {
 			ext.outputChannel.debug(command);
+
 			if (typeof options?.onCommand === "function") {
 				options.onCommand(command);
 			}

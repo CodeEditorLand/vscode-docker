@@ -37,6 +37,7 @@ export async function inferCommand(
 	inspectPort: number,
 ): Promise<string[]> {
 	const inspectArg = inspectMode === "break" ? "--inspect-brk" : "--inspect";
+
 	const inspectArgWithPort = `${inspectArg}=0.0.0.0:${inspectPort}`;
 
 	if (nodePackage) {

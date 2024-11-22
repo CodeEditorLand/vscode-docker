@@ -20,7 +20,9 @@ import { NetCoreGatherInformationStep } from "./NetCoreGatherInformationStep";
 import { NetCoreTryGetRandomPortStep } from "./NetCoreTryGetRandomPortStep";
 
 const chooseProjectFile = l10n.t("Choose a project file");
+
 const netCoreGlobPatterns = [CSPROJ_GLOB_PATTERN, FSPROJ_GLOB_PATTERN];
+
 const noProjectFile = l10n.t(
 	"No C# or F# project files were found in the workspace.",
 );

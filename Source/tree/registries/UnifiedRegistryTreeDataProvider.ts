@@ -99,6 +99,7 @@ export class UnifiedRegistryTreeDataProvider
 				}
 
 				const roots = await provider.getChildren(undefined);
+
 				if (!roots) {
 					continue;
 				}
@@ -142,6 +143,7 @@ export class UnifiedRegistryTreeDataProvider
 		provider: RegistryDataProvider<unknown>,
 	): vscode.Disposable {
 		this.providers.set(provider.id, provider);
+
 		const disposable = provider.onDidChangeTreeData((child) => {
 			if (canReferenceWrapper(child) && child._urtdp_wrapper) {
 				this.onDidChangeTreeDataEmitter.fire(child._urtdp_wrapper);
@@ -193,9 +195,11 @@ export class UnifiedRegistryTreeDataProvider
 					: vscode.l10n.t(
 							"No registry providers are available for connection",
 						);
+
 			const picked = await vscode.window.showQuickPick(picks, {
 				placeHolder: pickPrompt,
 			});
+
 			if (!picked) {
 				return;
 			}
@@ -216,6 +220,7 @@ export class UnifiedRegistryTreeDataProvider
 			ConnectedRegistryProvidersKey,
 			[],
 		);
+
 		const connectedProviderIdsSet: Set<string> = new Set(
 			connectedProviderIds,
 		);
@@ -252,6 +257,7 @@ export class UnifiedRegistryTreeDataProvider
 		imageBaseName?: string,
 	): Promise<UnifiedRegistryItem<CommonRegistry>[]> {
 		let registryRoots = await this.getChildren();
+
 		let findAzureRegistryOnly = false;
 
 		// filter out registry roots that don't match the image base name

@@ -33,6 +33,7 @@ export class ACROAuthProvider implements AuthenticationProvider {
 			scopes.join(" "),
 			this.subscription,
 		);
+
 		const { sub, jti } = this.parseToken(oauthToken);
 
 		return {
@@ -51,6 +52,7 @@ export class ACROAuthProvider implements AuthenticationProvider {
 		options?: vscode.AuthenticationGetSessionOptions,
 	): Promise<LoginInformation> {
 		const refreshToken = await this.getRefreshToken(options);
+
 		return {
 			username: NULL_GUID,
 			secret: refreshToken,
@@ -60,9 +62,11 @@ export class ACROAuthProvider implements AuthenticationProvider {
 
 	private parseToken(accessToken: string): { sub: string; jti: string } {
 		const tokenParts = accessToken.split(".");
+
 		const tokenBody = JSON.parse(
 			Buffer.from(tokenParts[1], "base64").toString("utf8"),
 		);
+
 		return {
 			sub: tokenBody.sub,
 			jti: tokenBody.jti,
@@ -146,9 +150,11 @@ export class ACROAuthProvider implements AuthenticationProvider {
 		options?: vscode.AuthenticationGetSessionOptions,
 	): Promise<string> {
 		const accessToken = await this.getAccessToken(this.subscription);
+
 		const registryString = this.registryUri.toString();
 
 		let refreshToken: string;
+
 		if (
 			!options?.forceNewSession &&
 			this.refreshTokenCache.has(registryString)

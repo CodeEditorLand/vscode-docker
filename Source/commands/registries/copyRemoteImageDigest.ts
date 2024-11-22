@@ -28,6 +28,7 @@ export async function copyRemoteImageDigest(
 	}
 
 	const v2DataProvider = node.provider as unknown as RegistryV2DataProvider;
+
 	const digest = await v2DataProvider.getImageDigest(node.wrappedItem);
 
 	void vscode.env.clipboard.writeText(digest);

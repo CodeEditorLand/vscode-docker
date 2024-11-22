@@ -14,6 +14,7 @@ class RuntimeInstallStatusProvider {
 		this.isRuntimeInstalledLazy = new AsyncLazy<boolean>(async () => {
 			const runtimeInstalled =
 				await this.isRuntimeInstalledRealTimeCheck();
+
 			if (runtimeInstalled) {
 				// once runtime is installed, lets assume that it will not be uninstalled.
 				// It is unlikely user will uninstall the runtime, in which case user has open a new workspace to get the updated status.
@@ -30,6 +31,7 @@ class RuntimeInstallStatusProvider {
 	public async isRuntimeInstalledRealTimeCheck(): Promise<boolean> {
 		try {
 			await ext.runWithDefaults((client) => client.checkInstall({}));
+
 			return true; // As long as the -v command did't throw exception, assume it is installed.
 		} catch (error) {
 			return false; // runtime not installed

@@ -142,6 +142,7 @@ export class AzureRegistryDataProvider
 					"azure",
 				];
 			});
+
 			return registries;
 		} else {
 			const children = await super.getChildren(element);
@@ -175,6 +176,7 @@ export class AzureRegistryDataProvider
 		const acrClient = await createAzureContainerRegistryClient(
 			subscriptionItem.subscription,
 		);
+
 		const registries: AcrRegistry[] = [];
 
 		for await (const registry of acrClient.registries.list()) {
@@ -221,9 +223,11 @@ export class AzureRegistryDataProvider
 		const authenticationProvider = this.getAuthenticationProvider(
 			item.parent as unknown as AzureRegistryItem,
 		);
+
 		const requestUrl = item.baseUrl.with({
 			path: `v2/_acr/${item.label}/repository`,
 		});
+
 		const reponse = await registryV2Request({
 			method: "DELETE",
 			requestUri: requestUrl,
@@ -242,6 +246,7 @@ export class AzureRegistryDataProvider
 		const client = await createAzureContainerRegistryClient(
 			item.subscription,
 		);
+
 		const resourceGroup = getResourceGroupFromId(item.id);
 		await client.registries.beginDeleteAndWait(resourceGroup, item.label);
 	}
@@ -250,9 +255,11 @@ export class AzureRegistryDataProvider
 		const authenticationProvider = this.getAuthenticationProvider(
 			item.parent.parent as unknown as AzureRegistryItem,
 		);
+
 		const requestUrl = item.baseUrl.with({
 			path: `v2/_acr/${item.parent.label}/tags/${item.label}`,
 		});
+
 		const reponse = await registryV2Request({
 			method: "DELETE",
 			requestUri: requestUrl,
@@ -272,6 +279,7 @@ export class AzureRegistryDataProvider
 			const client = await createAzureContainerRegistryClient(
 				azureRegistry.subscription,
 			);
+
 			return await client.registries.listCredentials(
 				getResourceGroupFromId(azureRegistry.id),
 				azureRegistry.label,
@@ -316,6 +324,7 @@ export class AzureRegistryDataProvider
 					await this.subscriptionProvider.getSubscriptions(false);
 
 				const tenantSet = new Set<string>();
+
 				const subscriptionSet = new Set<string>();
 				subscriptions.forEach((sub) => {
 					tenantSet.add(sub.tenantId);

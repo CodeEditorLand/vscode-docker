@@ -14,7 +14,9 @@ import { ext } from "../extensionVariables";
 // An interface is needed so unit tests can mock this
 export interface IContextManager {
 	onContextChanged: vscode.Event<ListContextItem | undefined>;
+
 	getContexts(): Promise<ListContextItem[]>;
+
 	getCurrentContext(): Promise<ListContextItem | undefined>;
 	useContext(name: string): Promise<void>;
 	removeContext(name: string): Promise<void>;
@@ -50,6 +52,7 @@ export class ContextManager implements IContextManager, vscode.Disposable {
 		const allContexts =
 			(await ext.runWithDefaults((client) => client.listContexts({}))) ||
 			[];
+
 		const currentContext: ListContextItem | undefined =
 			this.tryGetCurrentContext(allContexts);
 
@@ -85,6 +88,7 @@ export class ContextManager implements IContextManager, vscode.Disposable {
 		const result = await ext.runWithDefaults((client) =>
 			client.inspectContexts({ contexts: [name] }),
 		);
+
 		return result?.[0];
 	}
 

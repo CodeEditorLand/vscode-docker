@@ -17,6 +17,7 @@ export class ImagePushStep extends AzureWizardExecuteStep<PushImageWizardContext
 		addImageTaggingTelemetry(wizardContext, wizardContext.finalTag, "");
 
 		const client = await ext.runtimeManager.getClient();
+
 		const taskCRF = new TaskCommandRunnerFactory({
 			taskName: wizardContext.finalTag,
 		});

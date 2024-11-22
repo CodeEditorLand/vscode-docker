@@ -28,7 +28,9 @@ export class DockerUri {
 
 	public static parse(uri: vscode.Uri): DockerUri {
 		const containerId = uri.authority;
+
 		const path = uri.path;
+
 		const query = queryFromURLSearchParams(new URLSearchParams(uri.query));
 
 		return DockerUri.create(containerId, path, query);

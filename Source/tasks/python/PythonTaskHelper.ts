@@ -92,9 +92,11 @@ export class PythonTaskHelper implements TaskHelper {
 			runOptions.file = undefined;
 		} else if (options.projectType === "fastapi") {
 			const basename = path.basename(runOptions.file, ".py");
+
 			const dirname = path
 				.dirname(runOptions.file)
 				.replace(path.sep, ".");
+
 			if (dirname !== ".") {
 				runOptions.args.unshift(`${dirname}.${basename}:app`);
 			} else {
@@ -138,6 +140,7 @@ export class PythonTaskHelper implements TaskHelper {
 		runDefinition: DockerRunTaskDefinition,
 	): Promise<DockerRunOptions> {
 		const runOptions: DockerRunOptions = runDefinition.dockerRun;
+
 		const launcherFolder: string =
 			await PythonExtensionHelper.getLauncherFolderPath();
 
@@ -171,6 +174,7 @@ export class PythonTaskHelper implements TaskHelper {
 		}
 
 		const volumes = runOptions?.volumes ? [...runOptions.volumes] : [];
+
 		const dbgVolume: DockerContainerVolume = {
 			localPath: launcherFolder,
 			containerPath: "/debugpy",

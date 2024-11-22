@@ -42,6 +42,7 @@ export function registerDockerContextStatusBarEvent(
 
 async function showStatusBarItemIfNeeded() {
 	const config = vscode.workspace.getConfiguration("docker");
+
 	let currentDockerContext: ListContextItem | undefined;
 	// if dockerContextStatusBarItem is created, then we dispose
 	ext.dockerContextStatusBarItem?.dispose();

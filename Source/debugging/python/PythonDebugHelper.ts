@@ -79,6 +79,7 @@ export class PythonDebugHelper implements DebugHelper {
 		debugConfiguration: PythonDockerDebugConfiguration,
 	): Promise<ResolvedDebugConfiguration | undefined> {
 		const pyExt = await PythonExtensionHelper.getPythonExtension();
+
 		if (!pyExt) {
 			return undefined;
 		}
@@ -88,7 +89,9 @@ export class PythonDebugHelper implements DebugHelper {
 			context,
 			context.folder.name,
 		);
+
 		const projectType = debugConfiguration.python.projectType;
+
 		const pythonRunTaskOptions =
 			(context.runDefinition as PythonRunTaskDefinition)?.python || {};
 
@@ -109,6 +112,7 @@ export class PythonDebugHelper implements DebugHelper {
 			await ext.runtimeManager.getCommand(),
 			containerName,
 		];
+
 		const launcherPath = path.join(
 			ext.context.asAbsolutePath("resources"),
 			"python",
@@ -174,10 +178,13 @@ export class PythonDebugHelper implements DebugHelper {
 		switch (projectType) {
 			case "django":
 				return "Starting development server at (https?://\\S+|[0-9]+)";
+
 			case "fastapi":
 				return "Uvicorn running on (https?://\\S+|[0-9]+)";
+
 			case "flask":
 				return "Running on (https?://\\S+|[0-9]+)";
+
 			default:
 				return undefined;
 		}

@@ -33,7 +33,9 @@ export async function buildImageInAzure(
 	);
 
 	let run = await getRun();
+
 	const { KnownRunStatus } = await getArmContainerRegistry();
+
 	while (
 		run.status === KnownRunStatus.Started ||
 		run.status === KnownRunStatus.Queued ||

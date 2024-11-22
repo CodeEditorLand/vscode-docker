@@ -17,6 +17,7 @@ export async function getDockerOSType(): Promise<ContainerOS> {
 		return "linux";
 	} else {
 		const info = await ext.runWithDefaults((client) => client.info({}));
+
 		return info?.osType || "linux";
 	}
 }

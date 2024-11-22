@@ -15,6 +15,7 @@ import { IAzureRegistryWizardContext } from "./IAzureRegistryWizardContext";
 export class AzureRegistrySkuStep extends AzureWizardPromptStep<IAzureRegistryWizardContext> {
 	public async prompt(context: IAzureRegistryWizardContext): Promise<void> {
 		const skus: AcrSkuName[] = ["Basic", "Standard", "Premium"];
+
 		const picks: IAzureQuickPickItem<AcrSkuName>[] = skus.map((s) => {
 			return { label: s, data: s };
 		});

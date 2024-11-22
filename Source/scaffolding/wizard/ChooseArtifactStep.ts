@@ -26,6 +26,7 @@ export class ChooseArtifactStep<
 
 		if (!items) {
 			wizardContext.errorHandling.suppressReportIssue = true;
+
 			throw new Error(this.noItemsMessage);
 		} else if (items.length === 1) {
 			wizardContext.artifact = items[0].absoluteFilePath;

@@ -31,6 +31,7 @@ import { VolumesTreeItem } from "./volumes/VolumesTreeItem";
 
 export function registerTrees(): void {
 	ext.containersRoot = new ContainersTreeItem(undefined);
+
 	const containersLoadMore = "vscode-docker.containers.loadMore";
 	ext.containersTree = new AzExtTreeDataProvider(
 		ext.containersRoot,
@@ -48,6 +49,7 @@ export function registerTrees(): void {
 	);
 
 	ext.networksRoot = new NetworksTreeItem(undefined);
+
 	const networksLoadMore = "vscode-docker.networks.loadMore";
 	ext.networksTree = new AzExtTreeDataProvider(
 		ext.networksRoot,
@@ -65,6 +67,7 @@ export function registerTrees(): void {
 	);
 
 	ext.imagesRoot = new ImagesTreeItem(undefined);
+
 	const imagesLoadMore = "vscode-docker.images.loadMore";
 	ext.imagesTree = new AzExtTreeDataProvider(ext.imagesRoot, imagesLoadMore);
 	ext.imagesTreeView = vscode.window.createTreeView("dockerImages", {
@@ -89,6 +92,7 @@ export function registerTrees(): void {
 	void migrateRegistriesData(ext.context);
 
 	ext.volumesRoot = new VolumesTreeItem(undefined);
+
 	const volumesLoadMore = "vscode-docker.volumes.loadMore";
 	ext.volumesTree = new AzExtTreeDataProvider(
 		ext.volumesRoot,
@@ -106,6 +110,7 @@ export function registerTrees(): void {
 	);
 
 	ext.contextsRoot = new ContextsTreeItem(undefined);
+
 	const contextsLoadMore = "vscode-docker.contexts.loadMore";
 	ext.contextsTree = new AzExtTreeDataProvider(
 		ext.contextsRoot,
@@ -123,10 +128,12 @@ export function registerTrees(): void {
 	);
 
 	const helpRoot = new HelpsTreeItem(undefined);
+
 	const helpTreeDataProvider = new AzExtTreeDataProvider(
 		helpRoot,
 		"vscode-docker.help.loadMore",
 	);
+
 	const helpTreeView = vscode.window.createTreeView(
 		"vscode-docker.views.help",
 		{ treeDataProvider: helpTreeDataProvider, canSelectMany: false },

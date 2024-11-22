@@ -24,6 +24,7 @@ export class NetworkGroupTreeItem extends LocalGroupTreeItemBase<
 			case "NetworkId":
 			case "NetworkName":
 				return new ThemeIcon("repo-forked");
+
 			default:
 				return getCommonGroupIcon(this.parent.groupBySetting);
 		}

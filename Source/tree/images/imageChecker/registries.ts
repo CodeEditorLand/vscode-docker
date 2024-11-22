@@ -32,6 +32,7 @@ export const registries: ImageRegistry[] = [
 			const normalizedImageNameInfo = new NormalizedImageNameInfo(
 				imageNameInfo,
 			);
+
 			return (
 				!!imageNameInfo.originalName &&
 				normalizedImageNameInfo.normalizedRegistry === "docker.io" &&
@@ -86,9 +87,11 @@ export const registries: ImageRegistry[] = [
 				url.toString(),
 				authRequestOptions,
 			);
+
 			const token = (await tokenResponse.json()).token;
 
 			request.headers.set("Authorization", bearerAuthHeader(token));
+
 			return request;
 		},
 	},

@@ -15,11 +15,13 @@ import * as vscode from "vscode";
 import { ext } from "../../extensionVariables";
 
 const IsRegistriesDataMigratedKey = "isRegistryMigrated";
+
 const OldRegistriesProvidersKey = "docker.registryProviders";
 
 // constants for generic v2 storage, see link below for more info:
 // https://github.com/microsoft/vscode-docker-extensibility/blob/main/packages/vscode-docker-registries/src/clients/GenericRegistryV2/GenericRegistryV2DataProvider.ts
 const GenericV2StorageKey = "GenericV2ContainerRegistry";
+
 const TrackedRegistriesKey = `${GenericV2StorageKey}.TrackedRegistries`;
 
 /**
@@ -39,6 +41,7 @@ export async function migrateRegistriesData(
 		OldRegistriesProvidersKey,
 		[],
 	);
+
 	for (const oldRegistry of oldRegistries) {
 		if (!oldRegistry.id) {
 			continue;
@@ -56,13 +59,18 @@ export async function migrateRegistriesData(
 				credentialStorageKey = vscode.Uri.parse(
 					oldRegistry.url,
 				).toString();
+
 				break;
+
 			case "azure":
 				registryProviderId = ext.azureRegistryDataProvider.id;
+
 				break;
+
 			case "dockerHub":
 				registryProviderId = ext.dockerHubRegistryDataProvider.id;
 				credentialStorageKey = "DockerHub";
+
 				break;
 		}
 
@@ -105,6 +113,7 @@ export async function migrateRegistriesData(
 
 		// set the password for the old registry in the new secret storage
 		const password = await getRegistryPassword(oldRegistry);
+
 		if (password) {
 			await ctx.secrets.store(
 				`BasicAuthProvider.${credentialStorageKey}.secret`,

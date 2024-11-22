@@ -37,9 +37,11 @@ export async function tagImage(
 	}
 
 	addImageTaggingTelemetry(context, node.fullTag, ".before");
+
 	const baseImagePath = isRegistry(registry?.wrappedItem)
 		? getBaseImagePathFromRegistry(registry.wrappedItem)
 		: undefined;
+
 	const newTaggedName: string = await getTagFromUserInput(
 		context,
 		node.fullTag,
@@ -126,6 +128,7 @@ export function addImageTaggingTelemetry(
 		const knownRegistry = KnownRegistries.find(
 			(kr) => !!repository.match(kr.regex),
 		);
+
 		if (knownRegistry) {
 			properties.registryType = knownRegistry.type;
 		}

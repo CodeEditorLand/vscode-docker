@@ -19,6 +19,7 @@ export async function getMinimumCSharpExtensionExports(): Promise<CSharpExtensio
 	const cSharpExtension:
 		| vscode.Extension<CSharpExtensionExports>
 		| undefined = vscode.extensions.getExtension(cSharpExtensionId);
+
 	const cSharpExtensionVersion: semver.SemVer | undefined = cSharpExtension
 		? new semver.SemVer(
 				(<{ version: string }>cSharpExtension.packageJSON).version,

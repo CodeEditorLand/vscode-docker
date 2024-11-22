@@ -48,6 +48,7 @@ import {
 } from "../../../images/tagImage";
 
 const idPrecision = 6;
+
 const vcsIgnoreList = [
 	".git",
 	".gitignore",
@@ -72,8 +73,11 @@ export async function scheduleRunRequest(
 ): Promise<() => Promise<AcrRun>> {
 	// Acquire information.
 	let rootFolder: vscode.WorkspaceFolder;
+
 	let fileItem: Item;
+
 	let imageName: string;
+
 	if (requestType === "DockerBuildRequest") {
 		rootFolder = await quickPickWorkspaceFolder(
 			context,
@@ -109,12 +113,15 @@ export async function scheduleRunRequest(
 			registryFilter: { include: [ext.azureRegistryDataProvider.label] },
 			contextValueFilter: { include: /commonregistry/i },
 		});
+
 	const registryItem: AzureRegistryItem = node.wrappedItem;
+
 	const resourceGroup = getResourceGroupFromId(registryItem.id);
 
 	const osPick = ["Linux", "Windows"].map(
 		(item) => <IAzureQuickPickItem<AcrOS>>{ label: item, data: item },
 	);
+
 	const osType: AcrOS = (
 		await context.ui.showQuickPick(osPick, {
 			placeHolder: vscode.l10n.t("Select image base OS"),
@@ -128,6 +135,7 @@ export async function scheduleRunRequest(
 		ext.outputChannel.show();
 
 		let rootUri = rootFolder.uri;
+
 		if (rootStrategy === RootStrategy.DockerfileFolder) {
 			// changes the root to the folder where the Dockerfile is
 			// it is used by the ms-kubernetes-tools.aks-devx-tools extension (https://github.com/Azure/aks-devx-tools)
@@ -137,6 +145,7 @@ export async function scheduleRunRequest(
 		const azureRegistryClient = await createAzureContainerRegistryClient(
 			registryItem.subscription,
 		);
+
 		const uploadedSourceLocation: string = await uploadSourceCode(
 			azureRegistryClient,
 			registryItem.label,
@@ -149,6 +158,7 @@ export async function scheduleRunRequest(
 		);
 
 		let runRequest: AcrDockerBuildRequest | AcrFileTaskRunRequest;
+
 		if (requestType === "DockerBuildRequest") {
 			runRequest = {
 				type: requestType,
@@ -209,9 +219,12 @@ async function quickPickImageName(
 		rootFolder.uri.fsPath,
 		dockerFileItem.relativeFilePath,
 	);
+
 	const dockerFileKey = `ACR_buildTag_${absFilePath}`;
+
 	const prevImageName: string | undefined =
 		ext.context.workspaceState.get(dockerFileKey);
+
 	let suggestedImageName: string;
 
 	if (!prevImageName) {
@@ -219,6 +232,7 @@ async function quickPickImageName(
 		suggestedImageName = path
 			.basename(dockerFileItem.relativeFolderPath)
 			.toLowerCase();
+
 		if (suggestedImageName === ".") {
 			suggestedImageName = path
 				.basename(rootFolder.uri.fsPath)
@@ -235,6 +249,7 @@ async function quickPickImageName(
 	await delay(500);
 
 	addImageTaggingTelemetry(context, suggestedImageName, ".before");
+
 	const imageName: string = await getTagFromUserInput(
 		context,
 		suggestedImageName,
@@ -242,6 +257,7 @@ async function quickPickImageName(
 	addImageTaggingTelemetry(context, imageName, ".after");
 
 	await ext.context.workspaceState.update(dockerFileKey, imageName);
+
 	return imageName;
 }
 
@@ -255,22 +271,28 @@ async function uploadSourceCode(
 	ext.outputChannel.info(
 		vscode.l10n.t("   Sending source code to temp file"),
 	);
+
 	const source: string = rootFolder.fsPath;
+
 	let items = await fse.readdir(source);
 	items = items.filter((i) => !(i in vcsIgnoreList));
 	// tslint:disable-next-line:no-unsafe-any
 	tar.c({ cwd: source }, items).pipe(fse.createWriteStream(tarFilePath));
 
 	ext.outputChannel.info(vscode.l10n.t("   Getting build source upload URL"));
+
 	const sourceUploadLocation =
 		await client.registries.getBuildSourceUploadUrl(
 			resourceGroupName,
 			registryName,
 		);
+
 	const uploadUrl: string = sourceUploadLocation.uploadUrl;
+
 	const relativePath: string = sourceUploadLocation.relativePath;
 
 	const storageBlob = await getStorageBlob();
+
 	const blobClient = new storageBlob.BlockBlobClient(uploadUrl);
 	ext.outputChannel.info(vscode.l10n.t("   Creating block blob"));
 	await blobClient.uploadFile(tarFilePath);
@@ -279,6 +301,7 @@ async function uploadSourceCode(
 }
 
 const blobCheckInterval = 1000;
+
 const maxBlobChecks = 30;
 async function streamLogs(
 	context: IActionContext,
@@ -288,7 +311,9 @@ async function streamLogs(
 	const azureRegistryClient = await createAzureContainerRegistryClient(
 		registryItem.subscription,
 	);
+
 	const resourceGroup = getResourceGroupFromId(registryItem.id);
+
 	const result = await azureRegistryClient.runs.getLogSasUrl(
 		resourceGroup,
 		registryItem.label,
@@ -296,13 +321,16 @@ async function streamLogs(
 	);
 
 	const storageBlob = await getStorageBlob();
+
 	const blobClient = new storageBlob.BlobClient(
 		nonNullProp(result, "logLink"),
 	);
 
 	// Start streaming the response to the output channel
 	let byteOffset = 0;
+
 	let totalChecks = 0;
+
 	let exists = false;
 
 	await new Promise<void>((resolve, reject) => {
@@ -310,6 +338,7 @@ async function streamLogs(
 			try {
 				if (!exists && !(exists = await blobClient.exists())) {
 					totalChecks++;
+
 					if (totalChecks >= maxBlobChecks) {
 						clearInterval(timer);
 						reject("Not found");
@@ -317,6 +346,7 @@ async function streamLogs(
 				}
 
 				const properties = await blobClient.getProperties();
+
 				if (properties.contentLength > byteOffset) {
 					// New data available
 					const response = await blobClient.download(byteOffset);
@@ -325,6 +355,7 @@ async function streamLogs(
 					const lineReader = readline.createInterface(
 						response.readableStreamBody,
 					);
+
 					for await (const line of lineReader) {
 						const sanitizedLine = line
 							// eslint-disable-next-line no-control-regex
@@ -348,10 +379,13 @@ async function streamLogs(
 function getTempSourceArchivePath(): string {
 	/* tslint:disable-next-line:insecure-random */
 	const id: number = Math.floor(Math.random() * Math.pow(10, idPrecision));
+
 	const archive = `sourceArchive${id}.tar.gz`;
 	ext.outputChannel.info(
 		vscode.l10n.t("Setting up temp file with '{0}'", archive),
 	);
+
 	const tarFilePath: string = path.join(os.tmpdir(), archive);
+
 	return tarFilePath;
 }

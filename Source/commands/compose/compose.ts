@@ -49,6 +49,7 @@ async function compose(
 		));
 
 	let commandParameterFileUris: vscode.Uri[];
+
 	if (selectedComposeFileUris && selectedComposeFileUris.length) {
 		commandParameterFileUris = selectedComposeFileUris;
 	} else if (dockerComposeFileUri) {
@@ -60,6 +61,7 @@ async function compose(
 	let selectedItems: Item[] = commandParameterFileUris.map((uri) =>
 		createFileItem(folder, uri),
 	);
+
 	if (!selectedItems.length) {
 		// prompt for compose file
 		const selectedItem = await quickPickDockerComposeFileItem(
@@ -72,7 +74,9 @@ async function compose(
 
 	const configOptions: vscode.WorkspaceConfiguration =
 		vscode.workspace.getConfiguration("docker");
+
 	const build: boolean = configOptions.get("dockerComposeBuild", true);
+
 	const detached: boolean = configOptions.get("dockerComposeDetached", true);
 
 	for (const command of commands) {
@@ -99,6 +103,7 @@ async function compose(
 			);
 
 			const client = await ext.orchestratorManager.getClient();
+
 			const taskCRF = new TaskCommandRunnerFactory({
 				taskName: client.displayName,
 				workspaceFolder: folder,
@@ -166,6 +171,7 @@ export async function composeRestart(
 }
 
 const serviceListPlaceholder = /\${serviceList}/i;
+
 const profileListPlaceholder = /\${profileList}/i;
 async function addServicesOrProfilesIfNeeded(
 	context: IActionContext,
@@ -175,6 +181,7 @@ async function addServicesOrProfilesIfNeeded(
 	const commandWithoutPlaceholders = command
 		.replace(serviceListPlaceholder, "")
 		.replace(profileListPlaceholder, "");
+
 	if (
 		serviceListPlaceholder.test(command) &&
 		profileListPlaceholder.test(command)
@@ -185,6 +192,7 @@ async function addServicesOrProfilesIfNeeded(
 			workspaceFolder,
 			commandWithoutPlaceholders,
 		);
+
 		return command
 			.replace(serviceListPlaceholder, services)
 			.replace(profileListPlaceholder, profiles);

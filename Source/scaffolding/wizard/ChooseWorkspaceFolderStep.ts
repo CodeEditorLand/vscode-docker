@@ -23,6 +23,7 @@ export class ChooseWorkspaceFolderStep extends TelemetryPromptStep<ScaffoldingWi
 		} catch (err) {
 			// This will only fail if the user cancels or has no folder open. To prevent a common class of non-bugs from being filed, suppress report issue here.
 			wizardContext.errorHandling.suppressReportIssue = true;
+
 			throw err;
 		}
 	}

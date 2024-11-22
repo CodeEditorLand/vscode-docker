@@ -39,8 +39,10 @@ export class AzExtLogOutputChannelWrapper
 		options?: { resourceName?: string; date?: Date },
 	): void {
 		const enableOutputTimestampsSetting: string = "enableOutputTimestamps";
+
 		const projectConfiguration: vscode.WorkspaceConfiguration =
 			vscode.workspace.getConfiguration(this.extensionPrefix);
+
 		const result: boolean | undefined = projectConfiguration.get<boolean>(
 			enableOutputTimestampsSetting,
 		);

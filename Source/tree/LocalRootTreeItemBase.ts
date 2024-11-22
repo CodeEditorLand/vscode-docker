@@ -82,9 +82,11 @@ export type LocalChildGroupType<
 ) => LocalGroupTreeItemBase<TItem, TProperty>;
 
 const groupByKey: string = "groupBy";
+
 const sortByKey: string = "sortBy";
 export const labelKey: string = "label";
 export const descriptionKey: string = "description";
+
 let dockerInstallNotificationShownToUser: boolean = false;
 
 export abstract class LocalRootTreeItemBase<
@@ -168,6 +170,7 @@ export abstract class LocalRootTreeItemBase<
 			}
 
 			this.showDockerInstallNotificationIfNeeded();
+
 			return await this.getDockerErrorTreeItems(
 				context,
 				error,
@@ -177,6 +180,7 @@ export abstract class LocalRootTreeItemBase<
 
 		if (this._currentItems.length === 0) {
 			context.telemetry.properties.noItems = "true";
+
 			return this.getTreeItemForEmptyList();
 		} else {
 			this.groupBySetting = this.getTreeSetting(
@@ -247,6 +251,7 @@ export abstract class LocalRootTreeItemBase<
 
 	private async groupItems(items: TItem[]): Promise<AzExtTreeItem[]> {
 		let itemsWithNoGroup: TItem[] = [];
+
 		const groupMap = new Map<string, TItem[]>();
 
 		if (this.groupBySetting === "None") {
@@ -257,10 +262,12 @@ export abstract class LocalRootTreeItemBase<
 					item,
 					this.groupBySetting,
 				);
+
 				if (!groupName) {
 					itemsWithNoGroup.push(item);
 				} else {
 					const groupedItems = groupMap.get(groupName);
+
 					if (groupedItems) {
 						groupedItems.push(item);
 					} else {
@@ -276,6 +283,7 @@ export abstract class LocalRootTreeItemBase<
 			(itemOrGroup) => {
 				if (Array.isArray(itemOrGroup)) {
 					const [groupName, groupedItems] = itemOrGroup;
+
 					return new this.childGroupType(
 						this,
 						groupName,
@@ -288,6 +296,7 @@ export abstract class LocalRootTreeItemBase<
 			(itemOrGroup) => {
 				if (Array.isArray(itemOrGroup)) {
 					const [group] = itemOrGroup;
+
 					return group;
 				} else {
 					return getTreeId(itemOrGroup);
@@ -304,6 +313,7 @@ export abstract class LocalRootTreeItemBase<
 		const values: string[] = this.descriptionSetting.map((prop) =>
 			this.getPropertyValue(item, prop),
 		);
+
 		return values.join(" - ");
 	}
 
@@ -312,6 +322,7 @@ export abstract class LocalRootTreeItemBase<
 		settingInfo: ITreeSettingInfo<T>,
 	): T {
 		const value = this.config.get<T>(setting);
+
 		if (
 			value &&
 			settingInfo.properties.find(
@@ -329,6 +340,7 @@ export abstract class LocalRootTreeItemBase<
 		settingInfo: ITreeArraySettingInfo<T>,
 	): T[] {
 		const value = this.config.get<T[]>(setting);
+
 		if (
 			Array.isArray(value) &&
 			value.every(
@@ -377,10 +389,12 @@ export abstract class LocalRootTreeItemBase<
 
 	public async configureExplorer(context: IActionContext): Promise<void> {
 		const infoList = this.getSettingWizardInfoList();
+
 		const wizardContext: ITreeSettingsWizardContext = {
 			infoList,
 			...context,
 		};
+
 		const wizard = new AzureWizard(wizardContext, {
 			title: this.configureExplorerTitle,
 			promptSteps: [new TreeSettingListStep(), new TreeSettingStep()],
@@ -417,6 +431,7 @@ export abstract class LocalRootTreeItemBase<
 		dockerInstalled: boolean,
 	): Promise<AzExtTreeItem[]> {
 		const parsedError = parseError(error);
+
 		if (isCommandNotSupportedError(error)) {
 			return [
 				new GenericTreeItem(this, {
@@ -473,6 +488,7 @@ export abstract class LocalRootTreeItemBase<
 				];
 
 		const remoteInfo: IVSCodeRemoteInfo = getVSCodeRemoteInfo(context);
+
 		if (
 			remoteInfo.extensionKind === DockerExtensionKind.workspace &&
 			remoteInfo.remoteKind === RemoteKind.devContainer

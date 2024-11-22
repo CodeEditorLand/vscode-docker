@@ -46,6 +46,7 @@ export abstract class LocalGroupTreeItemBase<
 		clearCache: boolean,
 	): Promise<AzExtTreeItem[]> {
 		this._childTreeItems = this.getChildTreeItems();
+
 		return this._childTreeItems;
 	}
 

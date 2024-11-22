@@ -30,6 +30,7 @@ export async function removeImage(
 	);
 
 	let confirmRemove: string;
+
 	if (nodes.length === 1) {
 		confirmRemove = vscode.l10n.t(
 			'Are you sure you want to remove image "{0}"? If there are other tags or child images for this image, only the tag will be removed.',

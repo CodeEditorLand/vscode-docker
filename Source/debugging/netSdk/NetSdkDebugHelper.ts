@@ -106,6 +106,7 @@ export class NetSdkDebugHelper extends NetCoreDebugHelper {
 				NetContainerBuildOptionsKey,
 				"",
 			);
+
 			throw error;
 		}
 	}
@@ -181,8 +182,11 @@ export class NetSdkDebugHelper extends NetCoreDebugHelper {
 		folder?: WorkspaceFolder,
 	): Promise<NetSdkProjectProperties> {
 		const ridOS = await normalizeOsToRidOs();
+
 		const ridArchitecture = await normalizeArchitectureToRidArchitecture();
+
 		const additionalProperties = `/p:ContainerRuntimeIdentifier="${ridOS}-${ridArchitecture}"`;
+
 		const resolvedAppProject = resolveVariables(
 			debugConfiguration.netCore?.appProject,
 			folder,

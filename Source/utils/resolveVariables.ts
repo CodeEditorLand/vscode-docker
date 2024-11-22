@@ -10,7 +10,9 @@ import { window, workspace, WorkspaceFolder } from "vscode";
 import { cloneObject } from "../utils/cloneObject";
 
 const variableMatcher: RegExp = /\$\{[a-z.\-_:]+\}/gi;
+
 const configVariableMatcher: RegExp = /\$\{config:([a-z.\-_]+)\}/i;
+
 const envVariableMatcher: RegExp = /\$\{env:([\w\d]+)\}/i;
 
 export function resolveVariables<T>(
@@ -33,6 +35,7 @@ export function resolveVariables<T>(
 		) as unknown as T;
 	} else {
 		const result = cloneObject(target);
+
 		for (const key of Object.keys(target)) {
 			result[key] = resolveVariables(
 				target[key],
@@ -58,31 +61,38 @@ function resolveSingleVariable(
 			case "${workspaceFolder}":
 			case "${workspaceRoot}":
 				return path.normalize(folder.uri.fsPath);
+
 			case "${userHome}":
 				return os.homedir();
+
 			case "${relativeFile}":
 				return path.relative(
 					path.normalize(folder.uri.fsPath),
 					getActiveFilePath(),
 				);
+
 			default:
 		}
 	}
 
 	// Replace additional variables as specified by the caller
 	const variableNameOnly = variable.replace(/[${}]/gi, "");
+
 	const replacement =
 		additionalVariables?.[variable] ??
 		additionalVariables?.[variableNameOnly];
+
 	if (replacement !== undefined) {
 		return replacement;
 	}
 
 	// Replace config variables, e.g. ${config:foo.bar}
 	const configMatch = configVariableMatcher.exec(variable);
+
 	if (configMatch && configMatch.length > 1) {
 		const configName: string = configMatch[1]; // Index 1 is the "something.something" group of "${config:something.something}"
 		const config = workspace.getConfiguration();
+
 		const configValue = config.get(configName);
 
 		// If it's a simple value we'll return it
@@ -98,6 +108,7 @@ function resolveSingleVariable(
 
 	// Replace environment variables, e.g. ${env:FOO}
 	const envMatch = envVariableMatcher.exec(variable);
+
 	if (envMatch && envMatch.length > 1) {
 		const envVarName: string = envMatch[1]; // Index 1 is the "FOO" group of "${env:FOO}"
 		const envVarValue = process.env[envVarName];
@@ -111,6 +122,7 @@ function resolveSingleVariable(
 	switch (variable) {
 		case "${file}":
 			return getActiveFilePath();
+
 		default:
 	}
 

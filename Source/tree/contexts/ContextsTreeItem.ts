@@ -78,10 +78,13 @@ export class ContextsTreeItem extends LocalRootTreeItemBase<
 		switch (property) {
 			case "Name":
 				return item.name;
+
 			case "Description":
 				return item.description ?? "";
+
 			case "DockerEndpoint":
 				return item.containerEndpoint ?? "";
+
 			default:
 				// No other properties exist for DockerContext but all case statements must have a default
 				// So return empty string

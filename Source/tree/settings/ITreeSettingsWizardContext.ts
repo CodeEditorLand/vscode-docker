@@ -11,6 +11,7 @@ export interface ITreeSettingWizardInfo {
 	setting: string;
 	label: string;
 	description: string;
+
 	settingInfo: ITreeSettingInfo<string> | ITreeArraySettingInfo<string>;
 	currentValue: string | string[];
 }

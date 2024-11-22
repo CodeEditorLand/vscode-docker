@@ -45,6 +45,7 @@ export class GetRegistryTargetPromptStep extends AzureWizardPromptStep<PushImage
 					include: [/commonregistry/i, /azuresubscription/i],
 				},
 			});
+
 			if (isAzureSubscriptionRegistryItem(pickedNode.wrappedItem)) {
 				// An Azure subscription node was chosen. The CreatePickAcrPromptStep will be activated, instead of the generic RecursiveQuickPickStep that would normally be used.
 				wizardContext.azureSubscriptionNode =
@@ -76,6 +77,7 @@ export class GetRegistryTargetPromptStep extends AzureWizardPromptStep<PushImage
 		baseImagePath: string,
 	): Promise<UnifiedRegistryItem<CommonRegistry> | undefined> {
 		const baseImageNameInfo = parseDockerLikeImageName(baseImagePath);
+
 		const normalizedImageNameInfo = new NormalizedImageNameInfo(
 			baseImageNameInfo,
 		);

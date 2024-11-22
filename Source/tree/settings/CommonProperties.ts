@@ -37,10 +37,12 @@ export function getCommonPropertyValue(
 	switch (property) {
 		case "CreatedTime":
 			return !!item?.createdAt ? dayjs(item.createdAt).fromNow() : "";
+
 		case "Size":
 			return Number.isInteger(item?.size)
 				? `${convertToMB(item.size)} MB`
 				: "";
+
 		default:
 			throw new RangeError(
 				l10n.t('Unexpected property "{0}".', property),
@@ -52,10 +54,13 @@ export function getCommonGroupIcon(
 	property: CommonProperty | CommonGroupBy,
 ): ThemeIcon {
 	let icon: string;
+
 	switch (property) {
 		case "CreatedTime":
 			icon = "watch";
+
 			break;
+
 		default:
 			throw new RangeError(
 				l10n.t('Unexpected property "{0}".', property),

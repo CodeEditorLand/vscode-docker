@@ -31,6 +31,7 @@ export async function openDockerHubInBrowser(
 	}
 
 	let url = dockerHubUrl;
+
 	const dockerHubItem = node.wrappedItem;
 
 	if (isRegistry(dockerHubItem)) {

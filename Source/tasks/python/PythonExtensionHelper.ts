@@ -25,6 +25,7 @@ export namespace PythonExtensionHelper {
 
 	export async function getLauncherFolderPath(): Promise<string> {
 		const pyExt = await getPythonExtension();
+
 		const debuggerPath =
 			await pyExt?.exports?.debug?.getDebuggerPackagePath();
 
@@ -43,9 +44,11 @@ export namespace PythonExtensionHelper {
 		| Promise<vscode.Extension<PythonExtensionAPI>>
 		| undefined {
 		const pyExtensionId = "ms-python.python";
+
 		const minPyExtensionVersion = new semver.SemVer("2020.11.367453362");
 
 		const pyExt = vscode.extensions.getExtension(pyExtensionId);
+
 		const button = vscode.l10n.t("Open Extension");
 
 		if (!pyExt) {
@@ -74,6 +77,7 @@ export namespace PythonExtensionHelper {
 					"The installed Python extension does not meet the minimum requirements, please update to the latest version and try again.",
 				),
 			);
+
 			return undefined;
 		}
 

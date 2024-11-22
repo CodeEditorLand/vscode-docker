@@ -209,6 +209,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 		runDefinition: NetCoreRunTaskDefinition,
 	): Promise<DockerRunOptions> {
 		const runOptions = runDefinition.dockerRun;
+
 		const helperOptions = runDefinition.netCore || {};
 
 		helperOptions.appProject = await NetCoreTaskHelper.inferAppProject(
@@ -226,6 +227,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 			context.folder.name,
 			"dev",
 		);
+
 		if (helperOptions.enableDebugging) {
 			runOptions.entrypoint ??=
 				runOptions.os === "Windows" ? "cmd.exe" : "/bin/sh";
@@ -236,6 +238,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 			helperOptions.configureSsl === undefined
 				? "undefined"
 				: helperOptions.configureSsl.toString();
+
 		const userSecrets =
 			ssl === true ? true : await this.inferUserSecrets(helperOptions);
 
@@ -317,6 +320,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 		const contents = await fse.readFile(helperOptions.appProject);
 		// Remove comments so we don't match a commented tag
 		const noComments = contents.toString().replace(/<!--.*?-->/gs, "");
+
 		return UserSecretsRegex.test(noComments);
 	}
 
@@ -387,6 +391,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 			addVolumeWithoutConflicts(volumes, appVolume);
 			addVolumeWithoutConflicts(volumes, srcVolume);
 			addVolumeWithoutConflicts(volumes, debuggerVolume);
+
 			if (await fse.pathExists(nugetRootVolume.localPath)) {
 				addVolumeWithoutConflicts(volumes, nugetRootVolume);
 			}
@@ -401,6 +406,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 		if (userSecrets || ssl) {
 			// Try to get a container username from the image (best effort only)
 			let userName: string | undefined;
+
 			try {
 				const imageInspection = (
 					await ext.runWithDefaults((client) =>
@@ -413,6 +419,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 			}
 
 			const hostSecretsFolders = getHostSecretsFolders();
+
 			const containerSecretsFolders = getContainerSecretsFolders(
 				runOptions.os,
 				userName,

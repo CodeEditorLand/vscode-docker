@@ -25,15 +25,21 @@ export class PythonGatherInformationStep extends GatherInformationStep<PythonSca
 			case "Python: Django":
 				wizardContext.pythonProjectType = "django";
 				await this.getDjangoCmdParts(wizardContext);
+
 				break;
+
 			case "Python: FastAPI":
 				wizardContext.pythonProjectType = "fastapi";
 				await this.getFastAPICmdParts(wizardContext);
+
 				break;
+
 			case "Python: Flask":
 				wizardContext.pythonProjectType = "flask";
 				await this.getFlaskCmdParts(wizardContext);
+
 				break;
+
 			case "Python: General":
 			default:
 				wizardContext.pythonProjectType = "general";
@@ -72,6 +78,7 @@ export class PythonGatherInformationStep extends GatherInformationStep<PythonSca
 		);
 
 		let wsgiModule: string;
+
 		if (wsgiPaths?.length) {
 			const serviceName = path.basename(
 				path.dirname(wsgiPaths[0].fsPath),

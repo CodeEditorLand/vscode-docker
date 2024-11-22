@@ -67,15 +67,18 @@ function getDockerComposeFileGlobPatterns(): string[] {
 
 function getGlobPatterns(globPatterns: string[], languageId: string): string[] {
 	const result: string[] = globPatterns;
+
 	try {
 		const config = vscode.workspace
 			.getConfiguration("files")
 			.get<unknown>("associations");
+
 		if (config) {
 			for (const globPattern of Object.keys(config)) {
 				const associationLanguageId = <string | undefined>(
 					config[globPattern]
 				);
+
 				if (
 					languageId.toLowerCase() ===
 					associationLanguageId.toLowerCase()
@@ -145,6 +148,7 @@ export async function quickPickDockerFileItem(
 	}
 
 	let selectedDockerFile: Item;
+
 	const globPatterns: string[] = getDockerFileGlobPatterns();
 
 	while (!selectedDockerFile) {
@@ -152,12 +156,14 @@ export async function quickPickDockerFileItem(
 			rootFolder,
 			globPatterns,
 		);
+
 		const message = vscode.l10n.t("Choose a Dockerfile to build.");
 		selectedDockerFile = await quickPickFileItem(
 			context,
 			dockerFiles,
 			message,
 		);
+
 		if (!selectedDockerFile) {
 			const msg = vscode.l10n.t(
 				"Couldn't find a Dockerfile in your workspace. Would you like to add Docker files to the workspace?",
@@ -181,6 +187,7 @@ export async function quickPickDockerComposeFileItem(
 	message: string,
 ): Promise<Item | undefined> {
 	let selectedComposeFile: Item;
+
 	const globPatterns: string[] = getDockerComposeFileGlobPatterns();
 
 	while (!selectedComposeFile) {
@@ -188,6 +195,7 @@ export async function quickPickDockerComposeFileItem(
 			rootFolder,
 			globPatterns,
 		);
+
 		if (composeFiles) {
 			if (
 				(composeFiles.length === 1 &&
@@ -232,6 +240,7 @@ export async function quickPickDockerComposeFileItem(
 function isDefaultDockerComposeFile(fileName: string): boolean {
 	if (fileName) {
 		const lowerCasefileName: string = fileName.toLowerCase();
+
 		return (
 			lowerCasefileName === "docker-compose.yml" ||
 			lowerCasefileName === "docker-compose.yaml"
@@ -244,6 +253,7 @@ function isDefaultDockerComposeFile(fileName: string): boolean {
 function isDefaultDockerComposeOverrideFile(fileName: string): boolean {
 	if (fileName) {
 		const lowerCasefileName: string = fileName.toLowerCase();
+
 		return (
 			lowerCasefileName === "docker-compose.override.yml" ||
 			lowerCasefileName === "docker-compose.override.yaml"
@@ -266,6 +276,7 @@ export async function quickPickYamlFileItem(
 	const items: Item[] = await resolveFilesOfPattern(rootFolder, [
 		YAML_GLOB_PATTERN,
 	]);
+
 	const fileItem: Item = await quickPickFileItem(
 		context,
 		items,
@@ -292,6 +303,7 @@ export async function quickPickProjectFileItem(
 		CSPROJ_GLOB_PATTERN,
 		FSPROJ_GLOB_PATTERN,
 	]);
+
 	const fileItem: Item = await quickPickFileItem(
 		context,
 		items,

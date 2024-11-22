@@ -95,11 +95,14 @@ export class ContextTreeItem extends ToolTipTreeItem {
 		actionContext: IActionContext,
 	): Promise<MarkdownString> {
 		actionContext.telemetry.properties.tooltipType = "context";
+
 		const contextInspection = await this.inspect();
+
 		const handlebarsContext = {
 			...contextInspection,
 			containerEndpoint: this._item.containerEndpoint,
 		};
+
 		return resolveTooltipMarkdown(
 			contextTooltipTemplate,
 			handlebarsContext,

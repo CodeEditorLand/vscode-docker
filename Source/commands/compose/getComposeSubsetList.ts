@@ -31,6 +31,7 @@ export async function getComposeProfilesOrServices(
 	// If there any profiles, we need to ask the user whether they want profiles or services, since they are mutually exclusive to use
 	// Otherwise, if there are no profiles, we'll automatically assume services
 	let useProfiles = false;
+
 	if (profiles?.length) {
 		const profilesOrServices: IAzureQuickPickItem<SubsetType>[] = [
 			{
@@ -90,10 +91,12 @@ export async function getComposeProfileList(
 
 	// Fetch the previously chosen profiles list. By default, all will be selected.
 	const workspaceProfileListKey = `vscode-docker.composeProfiles.${workspaceFolder.name}`;
+
 	const previousChoices = ext.context.workspaceState.get<string[]>(
 		workspaceProfileListKey,
 		profiles,
 	);
+
 	const result = await pickSubsets(
 		context,
 		"profiles",
@@ -120,6 +123,7 @@ export async function getComposeServiceList(
 
 	if (!services?.length) {
 		context.errorHandling.suppressReportIssue = true;
+
 		throw new Error(
 			vscode.l10n.t(
 				"No services were found in the compose document(s). Did you mean to use profiles instead?",
@@ -129,10 +133,12 @@ export async function getComposeServiceList(
 
 	// Fetch the previously chosen services list. By default, all will be selected.
 	const workspaceServiceListKey = `vscode-docker.composeServices.${workspaceFolder.name}`;
+
 	const previousChoices = ext.context.workspaceState.get<string[]>(
 		workspaceServiceListKey,
 		services,
 	);
+
 	const result = await pickSubsets(
 		context,
 		"services",

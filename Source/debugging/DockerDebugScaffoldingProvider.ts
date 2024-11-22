@@ -106,7 +106,9 @@ export class DockerDebugScaffoldingProvider
 		let overwrite: boolean | undefined;
 
 		const buildTasks = await provideDockerBuildTasks();
+
 		const runTasks = await provideDockerRunTasks();
+
 		const debugConfigurations = await provideDebugConfigurations();
 
 		for (const buildTask of buildTasks) {

@@ -72,6 +72,7 @@ export class VolumesTreeItem extends LocalRootTreeItemBase<
 		switch (property) {
 			case "VolumeName":
 				return item.name;
+
 			default:
 				return getCommonPropertyValue(item, property);
 		}

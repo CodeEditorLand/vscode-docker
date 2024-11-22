@@ -37,6 +37,7 @@ export async function attachShellContainer(
 	context.telemetry.properties.dockerOSType = osType;
 
 	let shellCommand: string;
+
 	if (osType === "windows") {
 		// On Windows containers, always use cmd
 		shellCommand = "cmd";

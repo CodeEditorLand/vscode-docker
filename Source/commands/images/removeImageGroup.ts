@@ -30,6 +30,7 @@ export async function removeImageGroup(
 	);
 
 	let confirmRemove: string;
+
 	if (nodes.length === 1) {
 		confirmRemove = vscode.l10n.t(
 			'Are you sure you want to remove image group "{0}"? If there are other tags or child images under the selected group, only the tag will be removed.',

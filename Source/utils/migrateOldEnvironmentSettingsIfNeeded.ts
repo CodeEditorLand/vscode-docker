@@ -18,9 +18,11 @@ const oldSettingsMap = {
 
 export async function migrateOldEnvironmentSettingsIfNeeded(): Promise<void> {
 	const oldConfig = vscode.workspace.getConfiguration("docker");
+
 	const newConfig = oldConfig;
 
 	let alreadyPrompted = false;
+
 	for (const oldSetting of Object.keys(oldSettingsMap)) {
 		const settingValue: string | undefined =
 			oldConfig.get<string>(oldSetting);
@@ -62,6 +64,7 @@ async function migrateOldEnvironmentSetting(
 	newSetting: string,
 ): Promise<void> {
 	const oldValueInspection = oldConfig.inspect<string>(oldSetting);
+
 	const newValueInspection =
 		newConfig.inspect<NodeJS.ProcessEnv>("environment");
 

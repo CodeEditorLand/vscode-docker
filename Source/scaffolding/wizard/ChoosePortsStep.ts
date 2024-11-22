@@ -29,6 +29,7 @@ export class ChoosePortsStep extends TelemetryPromptStep<ScaffoldingWizardContex
 			value: suggestedPorts.join(", "),
 			validateInput: (value: string): string | undefined => {
 				const result = splitPorts(value);
+
 				if (!result) {
 					return vscode.l10n.t(
 						"Ports must be a comma-separated list of positive integers (1 to 65535), or empty for no exposed port.",
@@ -63,6 +64,7 @@ function splitPorts(value: string): number[] | undefined {
 	}
 
 	const elements = value.split(",").map((p) => p.trim());
+
 	const matches = elements.filter((p) => p.match(/^-*\d+$/));
 
 	if (matches.length < elements.length) {

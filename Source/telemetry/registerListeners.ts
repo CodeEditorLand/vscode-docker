@@ -56,6 +56,7 @@ function handleDocEvent(
 		// If it is not the document of type we expect, skip
 		if (doc.languageId !== languageId) {
 			context.telemetry.suppressAll = true;
+
 			return;
 		}
 

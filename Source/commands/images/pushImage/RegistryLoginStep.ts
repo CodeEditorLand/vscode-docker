@@ -28,9 +28,11 @@ export class RegistryLoginStep extends AzureWizardExecuteStep<PushImageWizardCon
 
 		const baseAuthority =
 			wizardContext.connectedRegistry.wrappedItem.baseUrl.authority;
+
 		const desiredRegistry = new NormalizedImageNameInfo(
 			parseDockerLikeImageName(wizardContext.finalTag),
 		).normalizedRegistry;
+
 		return desiredRegistry === baseAuthority;
 	}
 }

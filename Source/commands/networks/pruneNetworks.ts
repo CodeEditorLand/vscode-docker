@@ -30,6 +30,7 @@ export async function pruneNetworks(context: IActionContext): Promise<void> {
 			);
 
 			let message: string;
+
 			if (result?.networksDeleted?.length) {
 				message = vscode.l10n.t(
 					"Removed {0} unused networks(s).",

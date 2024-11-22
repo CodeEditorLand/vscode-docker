@@ -131,13 +131,16 @@ export class NodeTaskHelper implements TaskHelper {
 		buildDefinition: NodeBuildTaskDefinition,
 	): Promise<DockerBuildOptions> {
 		const helperOptions = buildDefinition.node || {};
+
 		const buildOptions = buildDefinition.dockerBuild;
 
 		const packagePath = NodeTaskHelper.inferPackagePath(
 			helperOptions.package,
 			context.folder,
 		);
+
 		const nodePackage = await readPackage(packagePath);
+
 		const packageName = await inferPackageName(nodePackage, packagePath);
 
 		if (buildOptions.context === undefined) {
@@ -162,6 +165,7 @@ export class NodeTaskHelper implements TaskHelper {
 		runDefinition: NodeRunTaskDefinition,
 	): Promise<DockerRunOptions> {
 		const helperOptions = runDefinition.node || {};
+
 		const runOptions = runDefinition.dockerRun;
 
 		const packagePath = NodeTaskHelper.inferPackagePath(
@@ -192,6 +196,7 @@ export class NodeTaskHelper implements TaskHelper {
 
 		if (helperOptions && helperOptions.enableDebugging) {
 			const inspectMode = helperOptions.inspectMode || "default";
+
 			const inspectPort =
 				helperOptions.inspectPort !== undefined
 					? helperOptions.inspectPort

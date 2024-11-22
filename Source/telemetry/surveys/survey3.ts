@@ -24,5 +24,6 @@ export const survey3: Survey = {
 async function isEligible(): Promise<boolean> {
 	const overallActivity =
 		ext.activityMeasurementService.getActivityMeasurement("overall");
+
 	return overallActivity.totalSessions >= minimumOverallSessions;
 }

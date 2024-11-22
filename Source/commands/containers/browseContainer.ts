@@ -46,6 +46,7 @@ interface BrowsablePort {
 
 function toBrowsablePort(port: PortBinding): BrowsablePort {
 	let host: string = port.hostIp;
+
 	if (
 		host === "0.0.0.0" ||
 		host === "::" || // IP is standard binding (IPv4 or IPv6)
@@ -109,6 +110,7 @@ export async function browseContainer(
 	}
 
 	const ports = node.ports ?? [];
+
 	const dupedPossiblePorts = ports
 		.filter((port) => port.hostPort && port.containerPort) // Ports must be defined (not falsy)
 		.filter((port) => port.protocol ?? "tcp" === "tcp") // Type must be undefined or tcp
@@ -127,10 +129,12 @@ export async function browseContainer(
 		void context.ui.showWarningMessage(
 			vscode.l10n.t("No valid ports are available."),
 		);
+
 		return;
 	}
 
 	let selectedPort: BrowsablePort;
+
 	if (browsablePorts.length === 1) {
 		// If there's just a single port, assume that one...
 		selectedPort = browsablePorts[0];
@@ -182,6 +186,7 @@ export async function browseContainer(
 	)
 		? "https"
 		: "http";
+
 	const url = `${protocol}://${selectedPort.host}:${selectedPort.hostPort}`;
 
 	/* eslint-disable-next-line @typescript-eslint/no-floating-promises */

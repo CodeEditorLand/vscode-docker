@@ -22,6 +22,7 @@ export class ContainerRuntimeManager extends RuntimeManager<IContainersClient> {
 
 	public override dispose(): void {
 		this._contextManager.dispose();
+
 		super.dispose();
 	}
 

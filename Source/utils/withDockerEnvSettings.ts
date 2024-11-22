@@ -11,6 +11,7 @@ export function withDockerEnvSettings(
 	baseEnv: NodeJS.ProcessEnv = process.env,
 ): NodeJS.ProcessEnv {
 	const newEnv = cloneObject(baseEnv || {});
+
 	const environmentSettings: NodeJS.ProcessEnv = workspace
 		.getConfiguration("docker")
 		.get<NodeJS.ProcessEnv>("environment", {});

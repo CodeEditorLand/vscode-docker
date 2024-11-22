@@ -41,23 +41,32 @@ export function getVSCodeRemoteInfo(
 	context?: IActionContext,
 ): IVSCodeRemoteInfo {
 	let extensionKind: DockerExtensionKind;
+
 	let remoteKind: RemoteKind | undefined;
 
 	const remoteName: string | undefined = env.remoteName;
+
 	const extension = extensions.getExtension(extensionId);
+
 	if (remoteName && extension) {
 		switch (remoteName.toLowerCase()) {
 			case "ssh-remote":
 				remoteKind = RemoteKind.ssh;
+
 				break;
+
 			case "wsl":
 				remoteKind = RemoteKind.wsl;
+
 				break;
+
 			case "attached-container":
 			case "dev-container":
 				// We don't actually care about the difference between the above two types
 				remoteKind = RemoteKind.devContainer;
+
 				break;
+
 			default:
 				remoteKind = RemoteKind.unknown;
 		}

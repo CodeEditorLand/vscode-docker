@@ -76,17 +76,20 @@ export class NetworkTreeItem extends ToolTipTreeItem {
 		const networkPromise = ext.runWithDefaults((client) =>
 			client.inspectNetworks({ networks: [this.networkName] }),
 		);
+
 		const containersPromise = ext.runWithDefaults((client) =>
 			client.listContainers({ networks: [this.networkName] }),
 		);
 
 		const networkInspection = (await networkPromise)?.[0];
+
 		const associatedContainers = await containersPromise;
 
 		const handlebarsContext = {
 			...networkInspection,
 			containers: associatedContainers,
 		};
+
 		return resolveTooltipMarkdown(
 			networkTooltipTemplate,
 			handlebarsContext,

@@ -32,6 +32,7 @@ export class TreeSettingStep extends AzureWizardPromptStep<ITreeSettingsWizardCo
 			options.isPickSelected = (
 				p: Partial<IAzureQuickPickItem<string>>,
 			) => !!p.data && info.currentValue.includes(p.data);
+
 			const result = await context.ui.showQuickPick(picks, {
 				...options,
 				canPickMany: true,
@@ -53,6 +54,7 @@ function convertPropertyInfoToPick(
 	info: ITreePropertyInfo<string>,
 ): IAzureQuickPickItem<string> {
 	let description: string | undefined;
+
 	let detail: string | undefined;
 
 	if (info.exampleValue) {

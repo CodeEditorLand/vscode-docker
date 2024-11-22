@@ -9,6 +9,7 @@ import { ext } from "../../extensionVariables";
 import { Survey } from "./SurveyManager";
 
 const minimumOverallSessions = 2;
+
 const maximumNotEditOnlySessions = 0;
 
 export const awareness: Survey = {
@@ -28,6 +29,7 @@ export const awareness: Survey = {
 async function isEligible(): Promise<boolean> {
 	const overallActivity =
 		ext.activityMeasurementService.getActivityMeasurement("overall");
+
 	const noEditActivity =
 		ext.activityMeasurementService.getActivityMeasurement("overallnoedit");
 

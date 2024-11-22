@@ -14,6 +14,7 @@ export async function useDockerContext(
 	node?: ContextTreeItem,
 ): Promise<void> {
 	let invokedFromCommandPalette = false;
+
 	if (!node) {
 		node = await ext.contextsTree.showTreeItemPicker<ContextTreeItem>(
 			ContextTreeItem.allContextRegExp,

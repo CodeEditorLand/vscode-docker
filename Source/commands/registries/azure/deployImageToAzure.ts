@@ -47,13 +47,17 @@ export async function deployImageToAzure(
 	}
 
 	const azExtAzureUtils = await getAzExtAzureUtils();
+
 	const vscAzureAppService = await getAzExtAppService();
+
 	const promptSteps: AzureWizardPromptStep<IAppServiceWizardContext>[] = [];
 
 	const subscriptionItem = await subscriptionExperience(context);
+
 	const subscriptionContext = createSubscriptionContext(
 		subscriptionItem.wrappedItem.subscription,
 	);
+
 	const wizardContext: IActionContext &
 		Partial<IAppServiceContainerWizardContext> = {
 		...context,
@@ -80,6 +84,7 @@ export async function deployImageToAzure(
 		];
 
 	const title = l10n.t("Create new web app");
+
 	const wizard = new AzureWizard(wizardContext, {
 		title,
 		promptSteps,
@@ -89,7 +94,9 @@ export async function deployImageToAzure(
 	await wizard.execute();
 
 	const site: Site = nonNullProp(wizardContext, "site");
+
 	const siteUri: string = `https://${site.defaultHostName}`;
+
 	const createdNewWebApp: string = l10n.t(
 		'Successfully created web app "{0}": {1}',
 		site.name,

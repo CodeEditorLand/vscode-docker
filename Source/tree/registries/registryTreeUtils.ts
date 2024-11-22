@@ -28,6 +28,7 @@ export function getImageNameFromRegistryTagItem(tag: CommonTag): string {
 	}
 
 	const repository = tag.parent as CommonRepository;
+
 	return `${repository.label.toLowerCase()}:${tag.label}`; // Tag is case sensitive but repository must be lowercase
 }
 
@@ -66,6 +67,7 @@ export function getFullImageNameFromRegistryTagItem(tag: CommonTag): string {
 	}
 
 	const baseImageName = getBaseImagePathFromRegistry(tag.parent.parent);
+
 	let imageName = getImageNameFromRegistryTagItem(tag);
 
 	// For GitHub, the image name is prefixed with the registry name so we
@@ -73,6 +75,7 @@ export function getFullImageNameFromRegistryTagItem(tag: CommonTag): string {
 	if (isGitHubRegistry(tag.parent.parent)) {
 		const regex = /\/(.*)$/; // Match "/" followed by anything until the end
 		const match = imageName.match(regex);
+
 		if (match) {
 			imageName = match[1];
 		}
@@ -96,12 +99,14 @@ export function getFullRepositoryNameFromRepositoryItem(
 	}
 
 	let imageName = repository.label.toLowerCase();
+
 	const baseImageName = getBaseImagePathFromRegistry(repository.parent);
 	// For GitHub, the image name is prefixed with the registry name so we
 	// need to remove it since it is already in the base image name
 	if (isGitHubRegistry(repository.parent)) {
 		const regex = /\/(.*)$/; // Match "/" followed by anything until the end
 		const match = imageName.match(regex);
+
 		if (match) {
 			imageName = match[1];
 		}
