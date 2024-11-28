@@ -44,10 +44,12 @@ export async function runWithDefaults<T>(
 	callback: ClientCallback<IContainersClient, T>,
 	additionalOptions?: DefaultEnvStreamCommandRunnerOptions,
 ): Promise<T>;
+
 export async function runWithDefaults(
 	callback: VoidClientCallback<IContainersClient>,
 	additionalOptions?: DefaultEnvStreamCommandRunnerOptions,
 ): Promise<void>;
+
 export async function runWithDefaults<T>(
 	callback:
 		| ClientCallback<IContainersClient, T>

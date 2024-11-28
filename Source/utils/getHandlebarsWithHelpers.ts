@@ -18,6 +18,7 @@ import { pathNormalize } from "./pathNormalize";
 import { PlatformOS } from "./platform";
 
 let handlebars: typeof import("handlebars") | undefined;
+
 export async function getHandlebarsWithHelpers(): Promise<typeof Handlebars> {
 	if (!handlebars) {
 		handlebars = await getHandlebars();

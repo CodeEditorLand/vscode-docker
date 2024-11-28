@@ -8,6 +8,7 @@ import * as vscode from "vscode";
 
 // 1.23.9 contains the fix to not overwrite existing assets
 export const minCSharpVersionString = "1.23.9";
+
 export const cSharpExtensionId = "ms-dotnettools.csharp";
 
 export interface CSharpExtensionExports {

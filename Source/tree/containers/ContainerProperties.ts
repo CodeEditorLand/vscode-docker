@@ -141,6 +141,7 @@ export function getContainerPropertyValue(
 }
 
 export const NonComposeGroupName = l10n.t("Individual Containers");
+
 export const NonLabelGroupName = l10n.t("Others");
 
 export function getLabelGroup(

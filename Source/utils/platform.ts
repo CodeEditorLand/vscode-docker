@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 export const AllPlatformOSs = ["Windows", "Linux", "Mac"] as const;
+
 export const AllPlatforms = [
 	"Node.js",
 	".NET: ASP.NET Core",
@@ -20,7 +21,9 @@ export const AllPlatforms = [
 ] as const;
 
 type PlatformOSTuple = typeof AllPlatformOSs;
+
 export type PlatformOS = PlatformOSTuple[number];
 
 type PlatformTuple = typeof AllPlatforms;
+
 export type Platform = PlatformTuple[number];

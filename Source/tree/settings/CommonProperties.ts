@@ -13,7 +13,9 @@ import { ITreePropertyInfo } from "./ITreeSettingInfo";
 dayjs.extend(relativeTime);
 
 export type CommonProperty = "CreatedTime" | "Size";
+
 export type CommonGroupBy = "None";
+
 export type CommonSortBy = "CreatedTime" | "Label" | "Size";
 
 export const commonProperties: ITreePropertyInfo<

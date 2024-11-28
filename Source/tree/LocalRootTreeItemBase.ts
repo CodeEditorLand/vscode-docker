@@ -72,6 +72,7 @@ export type LocalChildType<T extends AnyContainerObject> = new (
 	parent: AzExtParentTreeItem,
 	item: T,
 ) => AzExtTreeItem & { createdTime: number; size?: number };
+
 export type LocalChildGroupType<
 	TItem extends AnyContainerObject,
 	TProperty extends string | CommonProperty,
@@ -84,7 +85,9 @@ export type LocalChildGroupType<
 const groupByKey: string = "groupBy";
 
 const sortByKey: string = "sortBy";
+
 export const labelKey: string = "label";
+
 export const descriptionKey: string = "description";
 
 let dockerInstallNotificationShownToUser: boolean = false;

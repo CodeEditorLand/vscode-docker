@@ -23,6 +23,7 @@ export const AllNetContainerBuildOptions = [
 ] as const;
 
 type NetContainerBuildOptionsTuple = typeof AllNetContainerBuildOptions;
+
 export type NetContainerBuildOption = NetContainerBuildOptionsTuple[number];
 
 export class NetSdkChooseBuildStep extends TelemetryPromptStep<NetChooseBuildTypeContext> {

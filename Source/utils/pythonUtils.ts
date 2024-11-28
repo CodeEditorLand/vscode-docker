@@ -11,7 +11,9 @@ import { Platform } from "./platform";
 export type PythonProjectType = "django" | "fastapi" | "flask" | "general";
 
 export const PythonFileExtension = ".py";
+
 export const PythonDefaultDebugPort: number = 5678;
+
 export const PythonDefaultPorts = new Map<
 	PythonProjectType,
 	number | undefined
@@ -23,6 +25,7 @@ export const PythonDefaultPorts = new Map<
 ]);
 
 export type PythonTarget = PythonFileTarget | PythonModuleTarget;
+
 export interface PythonFileTarget {
 	file: string;
 }

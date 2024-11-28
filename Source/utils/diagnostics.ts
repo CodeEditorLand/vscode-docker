@@ -59,6 +59,7 @@ export function logDockerEnvironment(
 let loggedSystemInfo: boolean = false;
 
 let systemInfoDisposable: vscode.Disposable;
+
 export function logSystemInfo(outputChannel: vscode.LogOutputChannel): void {
 	if (loggedSystemInfo) {
 		return;
