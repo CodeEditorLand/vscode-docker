@@ -41,6 +41,7 @@ export async function removeDockerContext(
 	const removingMessage: string = vscode.l10n.t(
 		"Removing Docker context(s)...",
 	);
+
 	await vscode.window.withProgress(
 		{
 			location: vscode.ProgressLocation.Notification,

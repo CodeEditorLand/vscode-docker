@@ -43,13 +43,16 @@ const YELLOW = "33m";
 export class DockerPseudoterminal implements Pseudoterminal {
 	private readonly closeEmitter: EventEmitter<number> =
 		new EventEmitter<number>();
+
 	private readonly writeEmitter: EventEmitter<string> =
 		new EventEmitter<string>();
+
 	private readonly cts: CancellationTokenSource =
 		new CancellationTokenSource();
 
 	/* eslint-disable no-invalid-this */
 	public readonly onDidWrite: Event<string> = this.writeEmitter.event;
+
 	public readonly onDidClose: Event<number> = this.closeEmitter.event;
 	/* eslint-enable no-invalid-this */
 
@@ -84,6 +87,7 @@ export class DockerPseudoterminal implements Pseudoterminal {
 
 	public close(code?: number): void {
 		this.cts.cancel();
+
 		this.closeEmitter.fire(code || 0);
 	}
 
@@ -194,6 +198,8 @@ type ExecuteCommandResponseInTerminalOptions = ExecAsyncInTerminalOptions & {
 
 type ExecAsyncInTerminalOptions = {
 	folder: WorkspaceFolder;
+
 	token?: CancellationToken;
+
 	cwd?: string;
 };

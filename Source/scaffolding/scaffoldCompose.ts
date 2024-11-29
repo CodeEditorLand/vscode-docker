@@ -27,7 +27,9 @@ export async function scaffoldCompose(
 	}
 
 	copyWizardContext(wizardContext, apiInput);
+
 	wizardContext.scaffoldType = "compose";
+
 	wizardContext.scaffoldCompose = true;
 
 	const promptSteps: AzureWizardPromptStep<ScaffoldingWizardContext>[] = [
@@ -51,5 +53,6 @@ export async function scaffoldCompose(
 	);
 
 	await wizard.prompt();
+
 	await wizard.execute();
 }

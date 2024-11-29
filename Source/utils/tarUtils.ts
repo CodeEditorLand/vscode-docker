@@ -23,6 +23,7 @@ export function tarUnpackStream(
 		},
 		onentry: (entry: tar.ReadEntryClass) => {
 			entryCounter++;
+
 			entry.pipe(destination);
 		},
 	});
@@ -67,8 +68,11 @@ export function tarPackStream(
 	});
 
 	const sourceStream = stream.Readable.from(source);
+
 	sourceStream.pipe(readEntry);
+
 	tarPack.add(readEntry);
+
 	tarPack.end();
 
 	return tarPack;

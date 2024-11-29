@@ -17,7 +17,9 @@ export interface IActivityMeasurementService {
 
 export interface ActivityMeasurement {
 	lastSession: number | undefined;
+
 	currentMonthSessions: number;
+
 	totalSessions: number;
 }
 
@@ -30,6 +32,7 @@ const defaultMeasurement: ActivityMeasurement = {
 export class ActivityMeasurementService implements IActivityMeasurementService {
 	private readonly lazySetterMap: Map<ActivityType, AsyncLazy<void>> =
 		new Map<ActivityType, AsyncLazy<void>>();
+
 	private readonly values: Map<ActivityType, ActivityMeasurement> = new Map<
 		ActivityType,
 		ActivityMeasurement

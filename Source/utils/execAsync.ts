@@ -18,7 +18,9 @@ type Progress = (content: string, err: boolean) => void;
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type ExecError = Error & {
 	code: any;
+
 	signal: any;
+
 	stdErrHandled: boolean;
 };
 
@@ -28,6 +30,7 @@ export async function execAsync(
 	command: string,
 	options?: cp.ExecOptions & {
 		stdin?: string;
+
 		cancellationToken?: CancellationToken;
 	},
 	progress?: Progress,
@@ -48,6 +51,7 @@ export async function execAsync(
 
 	if (progress) {
 		stdoutIntermediate = new stream.PassThrough();
+
 		stdoutIntermediate.on("data", (chunk: Buffer) => {
 			try {
 				progress(bufferToString(chunk), false);
@@ -55,9 +59,11 @@ export async function execAsync(
 				// Best effort
 			}
 		});
+
 		stdoutIntermediate.pipe(stdoutFinal);
 
 		stderrIntermediate = new stream.PassThrough();
+
 		stderrIntermediate.on("data", (chunk: Buffer) => {
 			try {
 				progress(bufferToString(chunk), true);
@@ -65,6 +71,7 @@ export async function execAsync(
 				// Best effort
 			}
 		});
+
 		stderrIntermediate.pipe(stderrFinal);
 	}
 

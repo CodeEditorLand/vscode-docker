@@ -50,6 +50,7 @@ export async function removeContainerGroup(
 	);
 
 	const removing: string = vscode.l10n.t("Removing container group(s)...");
+
 	await vscode.window.withProgress(
 		{ location: vscode.ProgressLocation.Notification, title: removing },
 		async () => {

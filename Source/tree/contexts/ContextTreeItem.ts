@@ -22,12 +22,14 @@ const DefaultContextNames = ["default", "desktop-windows", "desktop-linux"];
 
 export class ContextTreeItem extends ToolTipTreeItem {
 	public static allContextRegExp: RegExp = /Context;/;
+
 	public static removableContextRegExp: RegExp = /^customContext;/i;
 
 	private readonly _item: ListContextItem;
 
 	public constructor(parent: AzExtParentTreeItem, item: ListContextItem) {
 		super(parent);
+
 		this._item = item;
 	}
 

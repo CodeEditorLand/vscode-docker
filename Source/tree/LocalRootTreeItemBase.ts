@@ -97,23 +97,30 @@ export abstract class LocalRootTreeItemBase<
 	TProperty extends string | CommonProperty,
 > extends AzExtParentTreeItem {
 	public abstract labelSettingInfo: ITreeSettingInfo<TProperty>;
+
 	public abstract descriptionSettingInfo: ITreeArraySettingInfo<TProperty>;
+
 	public abstract groupBySettingInfo: ITreeSettingInfo<
 		TProperty | CommonGroupBy
 	>;
+
 	public sortBySettingInfo: ITreeSettingInfo<CommonSortBy> = {
 		properties: [...sortByProperties],
 		defaultProperty: "CreatedTime",
 	};
 
 	public abstract treePrefix: TreePrefix;
+
 	public abstract configureExplorerTitle: string;
+
 	public abstract childType: LocalChildType<TItem>;
+
 	public abstract childGroupType: LocalChildGroupType<TItem, TProperty>;
 
 	public abstract getItems(
 		context: IActionContext,
 	): Promise<TItem[] | undefined>;
+
 	public abstract getPropertyValue(item: TItem, property: TProperty): string;
 
 	// Redefining this as an abstract allows inheriting classes to either do an accessor or a property
@@ -122,13 +129,19 @@ export abstract class LocalRootTreeItemBase<
 	public static autoRefreshViews: boolean = true;
 
 	public groupBySetting: TProperty | CommonGroupBy;
+
 	public sortBySetting: CommonSortBy;
+
 	public labelSetting: TProperty;
+
 	public descriptionSetting: TProperty[];
+
 	protected failedToConnect: boolean = false;
 
 	private _currentItems: TItem[] | undefined;
+
 	private _cachedItems: TItem[] | undefined;
+
 	private _currentDockerStatus: DockerStatus;
 
 	public get contextValue(): string {
@@ -158,11 +171,15 @@ export abstract class LocalRootTreeItemBase<
 			ext.activityMeasurementService.recordActivity("overallnoedit");
 
 			this._currentItems = await this.getCachedItems(context, clearCache);
+
 			this.failedToConnect = false;
+
 			this._currentDockerStatus = "Running";
 		} catch (error) {
 			this._currentItems = undefined;
+
 			this.failedToConnect = true;
+
 			context.telemetry.properties.failedToConnect = "true";
 
 			if (!this._currentDockerStatus) {
@@ -190,21 +207,28 @@ export abstract class LocalRootTreeItemBase<
 				groupByKey,
 				this.groupBySettingInfo,
 			);
+
 			context.telemetry.properties.groupBySetting = this.groupBySetting;
+
 			this.sortBySetting = this.getTreeSetting(
 				sortByKey,
 				this.sortBySettingInfo,
 			);
+
 			context.telemetry.properties.sortBySetting = this.sortBySetting;
+
 			this.labelSetting = this.getTreeSetting(
 				labelKey,
 				this.labelSettingInfo,
 			);
+
 			context.telemetry.properties.labelSetting = this.labelSetting;
+
 			this.descriptionSetting = this.getTreeArraySetting(
 				descriptionKey,
 				this.descriptionSettingInfo,
 			);
+
 			context.telemetry.properties.descriptionSetting =
 				this.descriptionSetting.toString();
 
@@ -403,7 +427,9 @@ export abstract class LocalRootTreeItemBase<
 			promptSteps: [new TreeSettingListStep(), new TreeSettingStep()],
 			hideStepCount: true,
 		});
+
 		await wizard.prompt();
+
 		await wizard.execute();
 
 		if (wizardContext.info) {
@@ -501,6 +527,7 @@ export abstract class LocalRootTreeItemBase<
 				l10n.t("Running Docker in a dev container..."),
 				"https://aka.ms/AA5xva6",
 			);
+
 			result.push(ti);
 		}
 
@@ -514,6 +541,7 @@ export abstract class LocalRootTreeItemBase<
 		if (clearCache || !this._cachedItems) {
 			if (ext.treeInitError === undefined) {
 				const items: TItem[] = (await this.getItems(context)) || [];
+
 				this._cachedItems = items.sort((a, b) =>
 					getTreeId(a).localeCompare(getTreeId(b)),
 				);

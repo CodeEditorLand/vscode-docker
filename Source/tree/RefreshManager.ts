@@ -65,9 +65,12 @@ const VolumeEventActions: EventAction[] = ["create", "destroy", "prune"]; // Unl
 
 export class RefreshManager extends vscode.Disposable {
 	private readonly autoRefreshDisposables: vscode.Disposable[] = [];
+
 	private readonly viewOpenedDisposables: vscode.Disposable[] = [];
+
 	private readonly cts: vscode.CancellationTokenSource =
 		new vscode.CancellationTokenSource();
+
 	private autoRefreshSetup: boolean = false;
 
 	public constructor() {
@@ -103,6 +106,7 @@ export class RefreshManager extends vscode.Disposable {
 							vscode.Disposable.from(
 								...this.viewOpenedDisposables,
 							).dispose();
+
 							this.viewOpenedDisposables.splice(0);
 
 							// Set up auto refreshes
@@ -118,6 +122,7 @@ export class RefreshManager extends vscode.Disposable {
 		if (this.autoRefreshSetup) {
 			return;
 		}
+
 		this.autoRefreshSetup = true;
 
 		// VSCode does *not* cancel by default on disposal of a CancellationTokenSource, so we need to manually cancel
@@ -126,9 +131,13 @@ export class RefreshManager extends vscode.Disposable {
 		);
 
 		this.setupRefreshOnInterval();
+
 		this.setupRefreshOnRuntimeEvent();
+
 		this.setupRefreshOnConfigurationChange();
+
 		this.setupRefreshOnDockerConfigurationChange();
+
 		this.setupRefreshOnContextChange();
 	}
 
@@ -139,6 +148,7 @@ export class RefreshManager extends vscode.Disposable {
 				if (view === "registries") {
 					continue;
 				}
+
 				await this.refresh(view, "interval");
 			}
 		}, pollingIntervalMs);
@@ -153,6 +163,7 @@ export class RefreshManager extends vscode.Disposable {
 			"vscode-docker.tree.eventRefresh",
 			async (context: IActionContext) => {
 				context.errorHandling.suppressDisplay = true;
+
 				context.telemetry.suppressIfSuccessful = true;
 
 				const eventTypesToWatch: EventType[] = [
@@ -289,6 +300,7 @@ export class RefreshManager extends vscode.Disposable {
 			"vscode-docker.tree.dockerConfigRefresh",
 			async (context: IActionContext) => {
 				context.errorHandling.suppressDisplay = true;
+
 				context.telemetry.suppressIfSuccessful = true;
 
 				const dockerConfigFolderUri = vscode.Uri.joinPath(
@@ -323,17 +335,20 @@ export class RefreshManager extends vscode.Disposable {
 							false,
 							true,
 						);
+
 					this.autoRefreshDisposables.push(configWatcher);
 
 					// Changes to this file tend to happen several times in succession, so we debounce
 					const debounceTimerMs = 500;
 
 					let lastTime = Date.now();
+
 					this.autoRefreshDisposables.push(
 						configWatcher.onDidChange(async () => {
 							if (Date.now() - lastTime < debounceTimerMs) {
 								return;
 							}
+
 							lastTime = Date.now();
 
 							await this.refresh("contexts", "event");
@@ -357,6 +372,7 @@ export class RefreshManager extends vscode.Disposable {
 							true,
 							false,
 						);
+
 					this.autoRefreshDisposables.push(contextWatcher);
 
 					this.autoRefreshDisposables.push(
@@ -386,6 +402,7 @@ export class RefreshManager extends vscode.Disposable {
 					if (view === "contexts" || view === "registries") {
 						continue;
 					}
+
 					await this.refresh(view, "contextChange");
 				}
 			}),
@@ -400,6 +417,7 @@ export class RefreshManager extends vscode.Disposable {
 			"vscode-docker.tree.refresh",
 			async (context: IActionContext) => {
 				context.errorHandling.suppressDisplay = true;
+
 				context.telemetry.properties.refreshReason = reason;
 
 				if (isAzExtTreeItem(target)) {

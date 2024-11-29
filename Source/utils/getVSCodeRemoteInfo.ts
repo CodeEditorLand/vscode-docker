@@ -34,6 +34,7 @@ export enum RemoteKind {
 
 export interface IVSCodeRemoteInfo {
 	extensionKind: DockerExtensionKind;
+
 	remoteKind: RemoteKind | undefined;
 }
 
@@ -82,7 +83,9 @@ export function getVSCodeRemoteInfo(
 
 	if (context) {
 		context.telemetry.properties.extensionKind = extensionKind;
+
 		context.telemetry.properties.remoteKind = remoteKind;
+
 		context.telemetry.properties.rawRemoteKind = remoteName;
 	}
 

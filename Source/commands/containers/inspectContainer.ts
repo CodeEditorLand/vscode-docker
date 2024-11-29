@@ -18,6 +18,7 @@ export async function inspectContainer(
 ): Promise<void> {
 	if (!node) {
 		await ext.containersTree.refresh(context);
+
 		node = await ext.containersTree.showTreeItemPicker<ContainerTreeItem>(
 			ContainerTreeItem.allContextRegExp,
 			{
@@ -32,5 +33,6 @@ export async function inspectContainer(
 	const inspectInfo = await ext.runWithDefaults((client) =>
 		client.inspectContainers({ containers: [node.containerId] }),
 	);
+
 	await openReadOnlyJson(node, JSON.parse(inspectInfo[0].raw));
 }

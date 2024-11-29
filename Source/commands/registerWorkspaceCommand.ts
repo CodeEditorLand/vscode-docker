@@ -70,6 +70,7 @@ async function verifyIsRunningInWorkspace(
 					);
 
 					switchTitle = l10n.t("Switch to Remote SSH");
+
 					learnMoreLink = "https://aka.ms/AA5y2rd";
 
 					break;
@@ -80,6 +81,7 @@ async function verifyIsRunningInWorkspace(
 					);
 
 					switchTitle = l10n.t("Switch to WSL");
+
 					learnMoreLink = "https://aka.ms/AA5xvjn";
 
 					break;
@@ -90,6 +92,7 @@ async function verifyIsRunningInWorkspace(
 					);
 
 					switchTitle = l10n.t("Switch to Container");
+
 					learnMoreLink = "https://aka.ms/AA5xva6";
 
 					break;
@@ -100,11 +103,13 @@ async function verifyIsRunningInWorkspace(
 			}
 
 			const switchBtn: MessageItem = { title: switchTitle };
+
 			await context.ui.showWarningMessage(
 				message,
 				{ learnMoreLink, stepName: "switchExtensionKind" },
 				switchBtn,
 			);
+
 			updateExtensionKind("workspace");
 
 			const reloadMessage: string = l10n.t(
@@ -112,6 +117,7 @@ async function verifyIsRunningInWorkspace(
 			);
 
 			const reload: MessageItem = { title: l10n.t("Reload Now") };
+
 			await context.ui.showWarningMessage(
 				reloadMessage,
 				{ stepName: "requiresReload" },
@@ -152,6 +158,7 @@ function updateExtensionKind(newKind: string): void {
 		values.workspaceValue[extensionId]
 	) {
 		target = ConfigurationTarget.Workspace;
+
 		value = values.workspaceValue;
 	} else {
 		// otherwise update the global setting

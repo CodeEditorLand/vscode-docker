@@ -27,11 +27,14 @@ export class VolumeTreeItem
 	implements VolumeTreeItemUsedByRemoteContainers
 {
 	public static contextValue: string = "volume";
+
 	public contextValue: string = VolumeTreeItem.contextValue;
+
 	private readonly _item: ListVolumeItem;
 
 	public constructor(parent: AzExtParentTreeItem, itemInfo: ListVolumeItem) {
 		super(parent);
+
 		this._item = itemInfo;
 	}
 

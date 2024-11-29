@@ -90,6 +90,7 @@ async function composeGroup<TOptions extends CommonOrchestratorCommandOptions>(
 ): Promise<void> {
 	if (!node) {
 		await ext.containersTree.refresh(context);
+
 		node =
 			await ext.containersTree.showTreeItemPicker<ContainerGroupTreeItem>(
 				/composeGroup$/i,

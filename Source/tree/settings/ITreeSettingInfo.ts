@@ -17,6 +17,8 @@ export interface ITreeArraySettingInfo<T extends string> {
 
 export interface ITreePropertyInfo<T extends string> {
 	property: T;
+
 	exampleValue?: string;
+
 	description?: string;
 }

@@ -55,6 +55,7 @@ export async function registryExperience<TNode extends CommonRegistryItem>(
 			isConnectRegistryTreeItem(registryRoots[0].wrappedItem))
 	) {
 		const add: MessageItem = { title: l10n.t("Connect Registry...") };
+
 		void window
 			.showErrorMessage(
 				l10n.t(
@@ -134,6 +135,7 @@ export class RegistryProviderQuickPickStep extends GenericQuickPickStep<
 		super(treeDataProvider, pickOptions, {
 			placeHolder: l10n.t("Select registry provider"),
 		});
+
 		this.pickFilter = new RegistryPickFilter(pickOptions);
 	}
 

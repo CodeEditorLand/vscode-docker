@@ -19,11 +19,17 @@ import * as vscode from "vscode";
 
 interface TaskCommandRunnerOptions {
 	taskName: string;
+
 	workspaceFolder?: vscode.WorkspaceFolder;
+
 	cwd?: string;
+
 	alwaysRunNew?: boolean;
+
 	rejectOnError?: boolean;
+
 	focus?: boolean;
+
 	env?: never; // Environment is not needed and should not be used, because VSCode adds it already (due to using `ExtensionContext.environmentVariableCollection`)
 }
 
@@ -38,6 +44,7 @@ export class TaskCommandRunnerFactory implements ICommandRunnerFactory {
 		) => {
 			const commandResponse =
 				await normalizeCommandResponseLike(commandResponseLike);
+
 			await executeAsTask(
 				this.options,
 				commandResponse.command,

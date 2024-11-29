@@ -21,6 +21,7 @@ export class DockerfileCompletionItemProvider
 	implements CompletionItemProvider
 {
 	public triggerCharacters: string[] = [];
+
 	public excludeTokens: string[] = [];
 
 	public async provideCompletionItems(

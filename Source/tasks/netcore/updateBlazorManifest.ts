@@ -17,6 +17,7 @@ import { DockerRunTaskContext } from "../TaskHelper";
 
 interface ContentRootAttributes {
 	BasePath: string;
+
 	Path: string;
 }
 

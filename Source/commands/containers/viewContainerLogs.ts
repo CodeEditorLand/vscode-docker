@@ -17,6 +17,7 @@ export async function viewContainerLogs(
 ): Promise<void> {
 	if (!node) {
 		await ext.containersTree.refresh(context);
+
 		node = await ext.containersTree.showTreeItemPicker<ContainerTreeItem>(
 			ContainerTreeItem.allContextRegExp,
 			{

@@ -12,6 +12,7 @@ import { NetCoreScaffoldingWizardContext } from "./NetCoreScaffoldingWizardConte
 
 interface DotNetProfile {
 	commandName?: string;
+
 	applicationUrl?: string;
 }
 

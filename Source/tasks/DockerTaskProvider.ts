@@ -86,10 +86,12 @@ export abstract class DockerTaskProvider implements TaskProvider {
 					}
 
 					context.actionContext = actionContext;
+
 					context.platform = getTaskPlatform(task.definition);
 
 					context.actionContext.telemetry.properties.dockerPlatform =
 						context.platform;
+
 					await this.executeTaskInternal(context, task);
 				},
 			);

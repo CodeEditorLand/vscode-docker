@@ -24,7 +24,9 @@ export abstract class ToolTipTreeItem extends AzExtTreeItem {
 					"resolveTooltip",
 					async (actionContext: IActionContext) => {
 						actionContext.telemetry.suppressIfSuccessful = true;
+
 						actionContext.errorHandling.suppressDisplay = true;
+
 						actionContext.errorHandling.rethrow = true;
 
 						return await this.resolveTooltipInternal(actionContext);
@@ -57,7 +59,9 @@ export abstract class ToolTipParentTreeItem extends AzExtParentTreeItem {
 					"resolveTooltip",
 					async (actionContext: IActionContext) => {
 						actionContext.telemetry.suppressIfSuccessful = true;
+
 						actionContext.errorHandling.suppressDisplay = true;
+
 						actionContext.errorHandling.rethrow = true;
 
 						return await this.resolveTooltipInternal(actionContext);

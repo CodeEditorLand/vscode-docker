@@ -13,13 +13,16 @@ import { JavaScaffoldingWizardContext } from "./JavaScaffoldingWizardContext";
 interface PomContents {
 	project?: {
 		version?: string;
+
 		artifactid?: string;
 	};
 }
 
 interface GradleContents {
 	archivesBaseName?: string;
+
 	jar?: { version?: string; archiveName?: string; baseName?: string };
+
 	version?: string;
 }
 

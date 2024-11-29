@@ -15,6 +15,7 @@ export class AutoConfigurableDockerClient
 {
 	public constructor() {
 		super();
+
 		this.reconfigure();
 	}
 
@@ -23,6 +24,7 @@ export class AutoConfigurableDockerClient
 
 		const dockerCommand =
 			config.get<string | undefined>("dockerPath") || "docker";
+
 		this.commandName = dockerCommand;
 
 		ext.outputChannel.debug(`docker.dockerPath: ${this.commandName}`);

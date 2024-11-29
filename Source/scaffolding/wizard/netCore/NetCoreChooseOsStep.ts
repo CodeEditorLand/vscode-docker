@@ -27,6 +27,7 @@ export class NetCoreChooseOsStep extends TelemetryPromptStep<NetCoreScaffoldingW
 		);
 
 		const response = await wizardContext.ui.showQuickPick(items, opt);
+
 		wizardContext.netCorePlatformOS = response.data;
 	}
 

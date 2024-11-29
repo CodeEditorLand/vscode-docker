@@ -11,9 +11,11 @@ export function trimWithElipsis(str: string, max: number): string {
 	if (max <= 0 || max >= 100) {
 		return str;
 	}
+
 	if (str.length <= max) {
 		return str;
 	}
+
 	if (max < 3) {
 		return str.substr(0, max);
 	}

@@ -62,7 +62,9 @@ import {
 
 export interface NetCoreDebugOptions extends NetCoreTaskOptions {
 	appOutput?: string;
+
 	debuggerPath?: string;
+
 	buildWithSdk?: boolean;
 }
 
@@ -76,7 +78,9 @@ export interface NetCoreDebugScaffoldingOptions {
 
 export interface NetCoreProjectProperties {
 	assemblyName: string;
+
 	targetFramework: string;
+
 	appOutput: string;
 }
 
@@ -86,6 +90,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 		options?: NetCoreDebugScaffoldingOptions,
 	): Promise<DockerDebugConfiguration[]> {
 		options = options || {};
+
 		options.appProject =
 			options.appProject ||
 			(await NetCoreTaskHelper.inferAppProject(context)); // This method internally checks the user-defined input first
@@ -138,6 +143,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 		debugConfiguration: DockerDebugConfiguration,
 	): Promise<ResolvedDebugConfiguration | undefined> {
 		debugConfiguration.netCore = debugConfiguration.netCore || {};
+
 		debugConfiguration.netCore.appProject =
 			await NetCoreTaskHelper.inferAppProject(
 				context,
@@ -261,6 +267,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 		// If debugger path is not specified, then install the debugger if it doesn't exist in the container
 		if (!debuggerPath) {
 			const containerOS = await getDockerOSType();
+
 			await this.acquireDebuggers(
 				containerOS === "windows" ? "Windows" : "Linux",
 			);
@@ -269,6 +276,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 				containerOS === "windows"
 					? "C:\\remote_debugger"
 					: "/remote_debugger";
+
 			debuggerPath =
 				containerOS === "windows"
 					? path.win32.join(
@@ -346,7 +354,9 @@ export class NetCoreDebugHelper implements DebugHelper {
 		debugConfiguration: DockerDebugConfiguration,
 	): Promise<{
 		configureSsl: boolean;
+
 		containerName: string;
+
 		platformOS: PlatformOS;
 	}> {
 		const associatedTask = context.runDefinition;
@@ -422,7 +432,9 @@ export class NetCoreDebugHelper implements DebugHelper {
 		);
 
 		const destPath = path.join(vsDbgInstallBasePath, "vsdbg");
+
 		await fse.copyFile(debuggerScriptPath, destPath);
+
 		await fse.chmod(destPath, 0o755); // Give all read and execute permissions
 	}
 
@@ -437,7 +449,9 @@ export class NetCoreDebugHelper implements DebugHelper {
 			getHostSecretsFolders().hostCertificateFolder,
 			`${appOutputName}.pfx`,
 		);
+
 		await trustCertificateIfNecessary(context);
+
 		await exportCertificateIfNecessary(
 			debugConfiguration.netCore.appProject,
 			certificateExportPath,
@@ -536,6 +550,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 
 		if (containerOS === "windows") {
 			containerCommand = "cmd";
+
 			containerCommandArgs = composeArgs(
 				withArg("/C"),
 				withQuotedArg(
@@ -544,6 +559,7 @@ export class NetCoreDebugHelper implements DebugHelper {
 			)();
 		} else {
 			containerCommand = "/bin/sh";
+
 			containerCommandArgs = composeArgs(
 				withArg("-c"),
 				withQuotedArg(

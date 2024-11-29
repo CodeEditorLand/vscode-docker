@@ -50,6 +50,7 @@ export async function removeNetwork(
 	);
 
 	const removing: string = vscode.l10n.t("Removing network(s)...");
+
 	await vscode.window.withProgress(
 		{ location: vscode.ProgressLocation.Notification, title: removing },
 		async () => {

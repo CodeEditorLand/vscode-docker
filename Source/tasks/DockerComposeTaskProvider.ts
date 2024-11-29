@@ -38,13 +38,16 @@ export class DockerComposeTaskProvider extends DockerTaskProvider {
 		task: DockerComposeTask,
 	): Promise<void> {
 		const definition = cloneObject(task.definition);
+
 		definition.dockerCompose = definition.dockerCompose || {};
+
 		definition.dockerCompose.files = definition.dockerCompose.files || [];
 
 		// Fix wrong environment file option name
 		definition.dockerCompose.envFile = this.normalizeEnvFile(
 			definition.dockerCompose,
 		);
+
 		definition.dockerCompose.envFiles = undefined;
 
 		await this.validateResolvedDefinition(

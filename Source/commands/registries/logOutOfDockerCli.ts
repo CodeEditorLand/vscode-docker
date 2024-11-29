@@ -21,6 +21,7 @@ export async function logOutOfDockerCli(
 			contextValueFilter: { include: /commonregistry/i },
 		});
 	}
+
 	const serverUrl = (
 		await node.provider.getLoginInformation?.(node.wrappedItem)
 	)?.server;

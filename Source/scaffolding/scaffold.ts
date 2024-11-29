@@ -28,6 +28,7 @@ export async function scaffold(
 	}
 
 	copyWizardContext(wizardContext, apiInput);
+
 	wizardContext.scaffoldType = "all";
 
 	const promptSteps: AzureWizardPromptStep<ScaffoldingWizardContext>[] = [
@@ -57,6 +58,7 @@ export async function scaffold(
 		executeSteps.push(
 			new ScaffoldFileStep("docker-compose.yml", "ask", 300),
 		);
+
 		executeSteps.push(
 			new ScaffoldFileStep("docker-compose.debug.yml", "ask", 400),
 		);

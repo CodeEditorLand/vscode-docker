@@ -17,6 +17,7 @@ import { AutoConfigurableClient } from "./AutoConfigurableClient";
 
 interface ComposeConfig {
 	commandName: string;
+
 	composeV2: boolean;
 }
 
@@ -30,6 +31,7 @@ export class AutoConfigurableDockerComposeClient
 
 	public constructor() {
 		super();
+
 		this.reconfigure();
 	}
 
@@ -39,7 +41,9 @@ export class AutoConfigurableDockerComposeClient
 
 	public async slowConfigure(): Promise<void> {
 		const config = await this.composeConfigLazy.getValue();
+
 		this.commandName = config.commandName;
+
 		this.composeV2 = config.composeV2;
 	}
 
@@ -56,6 +60,7 @@ export class AutoConfigurableDockerComposeClient
 			if (/^docker(\s+compose\s*)?$/i.test(composeCommand)) {
 				// Normalize both "docker" and "docker compose" to "docker", with `isComposeV2` true
 				composeCommand = "docker";
+
 				isComposeV2 = true;
 			}
 
@@ -70,6 +75,7 @@ export class AutoConfigurableDockerComposeClient
 				ext.outputChannel.info(
 					"Attempting to autodetect Docker Compose command...",
 				);
+
 				await execAsync("docker compose version");
 
 				// If successful, then assume we can use compose V2

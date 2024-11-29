@@ -53,7 +53,9 @@ export type KeyInfo = { [keyName: string]: string };
 
 export interface ComposeVersionKeys {
 	all: KeyInfo;
+
 	v1: KeyInfo;
+
 	v2: KeyInfo;
 }
 
@@ -72,6 +74,7 @@ function initializeExtensionVariables(ctx: vscode.ExtensionContext): void {
 		vscode.window.createOutputChannel("Docker", { log: true }),
 		ext.prefix,
 	);
+
 	ctx.subscriptions.push(ext.outputChannel);
 
 	registerUIExtensionVariables(ext);
@@ -89,7 +92,9 @@ export async function activateInternal(
 		"docker.activate",
 		async (activateContext: IActionContext) => {
 			activateContext.errorHandling.rethrow = true;
+
 			activateContext.telemetry.properties.isActivationEvent = "true";
+
 			activateContext.telemetry.measurements.mainFileLoad =
 				(perfStats.loadEndTime - perfStats.loadStartTime) / 1000;
 
@@ -97,6 +102,7 @@ export async function activateInternal(
 			ext.activityMeasurementService = new ActivityMeasurementService(
 				ctx.globalState,
 			);
+
 			ext.experimentationService = await createExperimentationService(
 				ctx,
 				process.env.VSCODE_DOCKER_TEAM === "1"
@@ -114,6 +120,7 @@ export async function activateInternal(
 			registerErrorHandler(
 				(ctx) => (ctx.errorHandling.suppressReportIssue = true),
 			);
+
 			registerReportIssueCommand("vscode-docker.help.reportIssue");
 
 			// Set up Dockerfile completion provider
@@ -151,15 +158,18 @@ export async function activateInternal(
 			);
 
 			registerTrees();
+
 			registerCommands();
 
 			// Set up docker context status bar items
 			registerDockerContextStatusBarEvent(ctx);
 
 			registerDebugProvider(ctx);
+
 			registerTaskProviders(ctx);
 
 			activateDockerfileLanguageClient(ctx);
+
 			activateComposeLanguageClient(ctx);
 
 			registerListeners();
@@ -205,6 +215,7 @@ function registerEnvironmentVariableContributions(): void {
 		vscode.workspace.onDidChangeConfiguration,
 		(actionContext: IActionContext, e: vscode.ConfigurationChangeEvent) => {
 			actionContext.telemetry.suppressAll = true;
+
 			actionContext.errorHandling.suppressDisplay = true;
 
 			if (e.affectsConfiguration("docker.environment")) {
@@ -222,6 +233,7 @@ function setEnvironmentVariableContributions(): void {
 		.get<NodeJS.ProcessEnv>("environment", {});
 
 	ext.context.environmentVariableCollection.clear();
+
 	ext.context.environmentVariableCollection.persistent = true;
 
 	for (const key of Object.keys(settingValue)) {
@@ -250,6 +262,7 @@ function registerDockerClients(): void {
 		vscode.workspace.onDidChangeConfiguration,
 		(actionContext: IActionContext, e: vscode.ConfigurationChangeEvent) => {
 			actionContext.telemetry.suppressAll = true;
+
 			actionContext.errorHandling.suppressDisplay = true;
 
 			if (e.affectsConfiguration("docker.dockerPath")) {
@@ -285,8 +298,10 @@ namespace Configuration {
 			} else {
 				config = vscode.workspace.getConfiguration(item.section);
 			}
+
 			result.push(config);
 		}
+
 		return result;
 	}
 
@@ -366,7 +381,9 @@ function activateDockerfileLanguageClient(ctx: vscode.ExtensionContext): void {
 			dockerfileLanguageClient.registerProposedFeatures();
 
 			ctx.subscriptions.push(dockerfileLanguageClient);
+
 			await dockerfileLanguageClient.start();
+
 			Configuration.initialize(ctx);
 		},
 	);
@@ -419,10 +436,13 @@ function activateComposeLanguageClient(ctx: vscode.ExtensionContext): void {
 				serverOptions,
 				clientOptions,
 			);
+
 			composeLanguageClient.registerProposedFeatures();
+
 			composeLanguageClient.registerFeature(
 				new DocumentSettingsClientFeature(composeLanguageClient),
 			);
+
 			composeLanguageClient.registerFeature(
 				new AlternateYamlLanguageServiceClientFeature(),
 			);
@@ -433,7 +453,9 @@ function activateComposeLanguageClient(ctx: vscode.ExtensionContext): void {
 				(context: IActionContext, evtArgs: TelemetryEvent) => {
 					context.telemetry.properties.langServerEventName =
 						evtArgs.eventName;
+
 					context.telemetry.suppressAll = evtArgs.suppressAll;
+
 					context.telemetry.suppressIfSuccessful =
 						evtArgs.suppressIfSuccessful;
 
@@ -441,6 +463,7 @@ function activateComposeLanguageClient(ctx: vscode.ExtensionContext): void {
 						context.telemetry.measurements,
 						evtArgs.measurements,
 					);
+
 					Object.assign(
 						context.telemetry.properties,
 						evtArgs.properties,
@@ -449,6 +472,7 @@ function activateComposeLanguageClient(ctx: vscode.ExtensionContext): void {
 			);
 
 			ctx.subscriptions.push(composeLanguageClient);
+
 			await composeLanguageClient.start();
 		},
 	);

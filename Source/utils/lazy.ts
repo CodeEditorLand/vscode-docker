@@ -5,6 +5,7 @@
 
 export class Lazy<T> {
 	private _isValueCreated: boolean = false;
+
 	private _value: T | undefined;
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -31,6 +32,7 @@ export class Lazy<T> {
 		}
 
 		this._value = this.valueFactory();
+
 		this._isValueCreated = true;
 
 		if (this._valueLifetime) {
@@ -38,8 +40,10 @@ export class Lazy<T> {
 				// If caller cleared the valueLifeTime, then continue to use the cached value.
 				if (this._valueLifetime) {
 					this._isValueCreated = false;
+
 					this._value = undefined;
 				}
+
 				clearTimeout(reset);
 			}, this._valueLifetime);
 		}
@@ -50,7 +54,9 @@ export class Lazy<T> {
 
 export class AsyncLazy<T> {
 	private _isValueCreated: boolean = false;
+
 	private _value: T | undefined;
+
 	private _valuePromise: Promise<T> | undefined;
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -69,6 +75,7 @@ export class AsyncLazy<T> {
 
 	public clear(): void {
 		this._isValueCreated = false;
+
 		this._valuePromise = undefined;
 	}
 
@@ -87,7 +94,9 @@ export class AsyncLazy<T> {
 
 		if (isPrimaryPromise) {
 			this._value = result;
+
 			this._valuePromise = undefined;
+
 			this._isValueCreated = true;
 		}
 
@@ -98,6 +107,7 @@ export class AsyncLazy<T> {
 				// If there is, this timer will skip, but when that Promise finishes it will go through this code and register a new timer
 				if (this._valueLifetime && this._valuePromise === undefined) {
 					this._isValueCreated = false;
+
 					this._value = undefined;
 				}
 

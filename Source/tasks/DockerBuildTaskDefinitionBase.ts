@@ -9,14 +9,21 @@ import { DockerLabels, TaskDefinitionBase } from "./TaskDefinitionBase";
 
 export interface DockerBuildOptions {
 	buildArgs?: { [key: string]: string };
+
 	context?: string;
 
 	dockerfile?: string;
+
 	labels?: DockerLabels;
+
 	platform?: ContainerPlatform | string;
+
 	tag?: string;
+
 	target?: string;
+
 	pull?: boolean;
+
 	customOptions?: string;
 }
 

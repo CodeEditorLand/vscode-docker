@@ -43,6 +43,7 @@ export async function openInAzurePortal(
 		subscriptionContext = createSubscriptionContext(
 			azureRegistryItem.subscription,
 		);
+
 		await azExtAzureUtils.openInPortal(
 			subscriptionContext,
 			`/subscriptions/${subscriptionContext.subscriptionId}`,
@@ -51,6 +52,7 @@ export async function openInAzurePortal(
 		subscriptionContext = createSubscriptionContext(
 			azureRegistryItem.parent.subscription,
 		);
+
 		await azExtAzureUtils.openInPortal(
 			subscriptionContext,
 			azureRegistryItem.id,
@@ -59,6 +61,7 @@ export async function openInAzurePortal(
 		subscriptionContext = createSubscriptionContext(
 			azureRegistryItem.parent.parent.subscription,
 		);
+
 		await azExtAzureUtils.openInPortal(
 			subscriptionContext,
 			`${azureRegistryItem.parent.id}/repository`,

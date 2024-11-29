@@ -33,11 +33,15 @@ export class NetworksTreeItem extends LocalRootTreeItemBase<
 	NetworkProperty
 > {
 	public treePrefix: TreePrefix = "networks";
+
 	public label: string = l10n.t("Networks");
+
 	public configureExplorerTitle: string = l10n.t(
 		"Configure networks explorer",
 	);
+
 	public childType: LocalChildType<ListNetworkItem> = NetworkTreeItem;
+
 	public childGroupType: LocalChildGroupType<
 		ListNetworkItem,
 		NetworkProperty

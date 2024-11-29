@@ -167,6 +167,7 @@ export class ACROAuthProvider implements AuthenticationProvider {
 				this.registryUri,
 				this.subscription,
 			);
+
 			this.refreshTokenCache.set(registryString, refreshToken);
 		}
 

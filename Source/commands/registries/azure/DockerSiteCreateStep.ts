@@ -50,7 +50,9 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 			'Creating web app "{0}"...',
 			context.newSiteName,
 		);
+
 		ext.outputChannel.info(creatingNewApp);
+
 		progress.report({ message: creatingNewApp });
 
 		const siteConfig = await this.getNewSiteConfig(context);
@@ -77,6 +79,7 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 		if (context.customLocation) {
 			// deploying to Azure Arc
 			siteEnvelope.kind = "app,linux,kubernetes,container";
+
 			this.addCustomLocationProperties(
 				siteEnvelope,
 				context.customLocation,
@@ -141,7 +144,9 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 			}
 
 			username = cred.username;
+
 			password = cred.passwords[0].value;
+
 			registryUrl = registryTI.wrappedItem.baseUrl.toString();
 		}
 		// Other registries -> App Service *OR* Arc App Service
@@ -153,6 +158,7 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 					),
 				);
 			}
+
 			const loginInformation =
 				await registryTI.provider.getLoginInformation(
 					registryTI.wrappedItem,
@@ -161,7 +167,9 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 			registryUrl = (
 				registryTI.wrappedItem as CommonRegistry
 			).baseUrl.toString();
+
 			username = loginInformation.username;
+
 			password = loginInformation.secret;
 		}
 
@@ -170,6 +178,7 @@ export class DockerSiteCreateStep extends AzureWizardExecuteStep<IAppServiceCont
 				name: "DOCKER_REGISTRY_SERVER_USERNAME",
 				value: username,
 			});
+
 			appSettings.push({
 				name: "DOCKER_REGISTRY_SERVER_PASSWORD",
 				value: password,

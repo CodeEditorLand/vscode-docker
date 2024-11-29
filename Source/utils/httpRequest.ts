@@ -42,10 +42,15 @@ export async function httpRequest<T>(
 
 export class HttpResponse<T> implements ResponseLike {
 	private bodyText: string | undefined;
+
 	private normalizedHeaders: { [key: string]: string } | undefined;
+
 	public readonly headers: HeadersLike;
+
 	public readonly status: number;
+
 	public readonly statusText: string;
+
 	public readonly ok: boolean;
 
 	public constructor(
@@ -74,7 +79,9 @@ export class HttpResponse<T> implements ResponseLike {
 		};
 
 		this.status = this.innerResponse.status;
+
 		this.statusText = this.innerResponse.statusText;
+
 		this.ok = this.innerResponse.ok;
 	}
 
@@ -120,14 +127,18 @@ export const enum HttpStatusCode {
 
 export interface RequestOptionsLike {
 	headers?: { [key: string]: string };
+
 	method?: RequestMethod; // This is an enum type because it enforces the above valid options on callers (which do not directly use node-fetch's Request object)
 	form?: { [key: string]: string };
+
 	body?: string;
 }
 
 export interface RequestLike {
 	url: string;
+
 	headers: HeadersLike;
+
 	method: string; // This is a string because node-fetch's Request defines it as such
 }
 
@@ -139,9 +150,13 @@ export interface HeadersLike {
 
 export interface ResponseLike {
 	headers: HeadersLike;
+
 	url: string;
+
 	status: number;
+
 	statusText: string;
+
 	ok: boolean;
 }
 
@@ -194,7 +209,9 @@ export function bearerAuthHeader(token: string): string {
 
 export interface IOAuthContext {
 	realm: URL;
+
 	service: string;
+
 	scope?: string;
 }
 

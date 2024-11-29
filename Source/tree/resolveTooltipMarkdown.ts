@@ -18,6 +18,7 @@ export async function resolveTooltipMarkdown(
 	const markdownString = template(context);
 
 	const result = new MarkdownString(markdownString, true);
+
 	result.isTrusted = { enabledCommands: ["revealFileInOS"] }; // revealFileInOS is used in container tooltips
 	return result;
 }

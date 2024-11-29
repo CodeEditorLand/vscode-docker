@@ -14,7 +14,10 @@ import type { IResourceGroupWizardContext } from "@microsoft/vscode-azext-azureu
 export interface IAzureRegistryWizardContext
 	extends IResourceGroupWizardContext {
 	newRegistryName?: string;
+
 	newRegistrySku?: AcrSkuName;
+
 	registry?: AcrRegistry;
+
 	readonly azureSubscription: AzureSubscription;
 }

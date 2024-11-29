@@ -16,6 +16,7 @@ import { ContainerTreeItem } from "../../tree/containers/ContainerTreeItem";
 
 type BrowseTelemetryProperties = TelemetryProperties & {
 	possiblePorts?: string;
+
 	selectedPort?: string;
 };
 
@@ -40,7 +41,9 @@ const commonSslPorts = [
 
 interface BrowsablePort {
 	host: string;
+
 	hostPort: number;
+
 	containerPort: number;
 }
 
@@ -98,6 +101,7 @@ export async function browseContainer(
 
 	if (!node) {
 		await ext.containersTree.refresh(context);
+
 		node = await ext.containersTree.showTreeItemPicker<ContainerTreeItem>(
 			ContainerTreeItem.runningContainerRegExp,
 			{
@@ -147,6 +151,7 @@ export async function browseContainer(
 						commonPort === browsablePort.containerPort,
 				),
 			);
+
 		selectedPort = browsablePorts.find(
 			(browsablePort) =>
 				browsablePort.containerPort === preferredCommonPrivatePort,

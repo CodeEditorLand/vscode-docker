@@ -32,8 +32,11 @@ const minimumAcaExtensionVersion = "0.4.0";
 // The interface of the command options passed to the Azure Container Apps extension's deployImageToAca command
 interface DeployImageToAcaOptionsContract {
 	image: string;
+
 	registryName: string;
+
 	username?: string;
+
 	secret?: string;
 }
 
@@ -86,6 +89,7 @@ export async function deployImageToAca(
 		}
 
 		commandOptions.username = logInInfo.username;
+
 		commandOptions.secret = logInInfo.secret;
 	}
 

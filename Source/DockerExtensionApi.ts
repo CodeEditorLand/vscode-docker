@@ -33,6 +33,7 @@ export class DockerExtensionApi
 	): vscode.Disposable {
 		const disposable =
 			ext.registriesTree.registerProvider(registryDataProvider);
+
 		void ext.registriesTree.refresh();
 
 		return disposable;
@@ -49,5 +50,6 @@ interface MementoExplorerExport {
 
 interface ExtensionMementos {
 	readonly globalState: vscode.Memento;
+
 	readonly workspaceState: vscode.Memento;
 }

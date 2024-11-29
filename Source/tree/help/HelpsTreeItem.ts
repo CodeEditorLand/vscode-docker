@@ -15,9 +15,11 @@ import { OpenUrlTreeItem } from "../OpenUrlTreeItem";
 
 export class HelpsTreeItem extends AzExtParentTreeItem {
 	public label: string = "help";
+
 	public contextValue: string = "help";
 
 	private values: GenericTreeItem[];
+
 	public async loadMoreChildrenImpl(
 		clearCache: boolean,
 		context: IActionContext,
@@ -56,6 +58,7 @@ export class HelpsTreeItem extends AzExtParentTreeItem {
 			"https://aka.ms/helppanel_docs",
 			new ThemeIcon("book"),
 		);
+
 		node.id = "0";
 
 		return node;
@@ -68,6 +71,7 @@ export class HelpsTreeItem extends AzExtParentTreeItem {
 			"https://aka.ms/helppanel_videos",
 			new ThemeIcon("play-circle"),
 		);
+
 		node.id = "10";
 
 		return node;
@@ -80,6 +84,7 @@ export class HelpsTreeItem extends AzExtParentTreeItem {
 			"https://aka.ms/helppanel_getstarted",
 			new ThemeIcon("star-empty"),
 		);
+
 		node.id = "20";
 
 		return node;
@@ -93,6 +98,7 @@ export class HelpsTreeItem extends AzExtParentTreeItem {
 			iconPath: new ThemeIcon("extensions"),
 			includeInTreeItemPicker: true,
 		});
+
 		node.id = "30";
 
 		return node;
@@ -105,6 +111,7 @@ export class HelpsTreeItem extends AzExtParentTreeItem {
 			"https://aka.ms/helppanel_reviewissues",
 			new ThemeIcon("issues"),
 		);
+
 		node.id = "40";
 
 		return node;
@@ -118,6 +125,7 @@ export class HelpsTreeItem extends AzExtParentTreeItem {
 			iconPath: new ThemeIcon("comment"),
 			includeInTreeItemPicker: true,
 		});
+
 		node.id = "50";
 
 		return node;
@@ -131,6 +139,7 @@ export class HelpsTreeItem extends AzExtParentTreeItem {
 			iconPath: new ThemeIcon("link-external"),
 			includeInTreeItemPicker: true,
 		});
+
 		node.id = "60";
 
 		return node;

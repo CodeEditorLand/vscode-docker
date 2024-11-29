@@ -30,6 +30,7 @@ export class CreatePickAcrPromptStep extends AzureWizardPromptStep<PushImageWiza
 					data: acr,
 				},
 		);
+
 		picks.push({
 			label: vscode.l10n.t(
 				"$(plus) Create new Azure Container Registry...",
@@ -56,6 +57,7 @@ export class CreatePickAcrPromptStep extends AzureWizardPromptStep<PushImageWiza
 			const selectedAcrNode = acrNodes.find(
 				(acrNode) => acrNode.wrappedItem.label === createdAcrName,
 			);
+
 			wizardContext.connectedRegistry = selectedAcrNode;
 		} else {
 			wizardContext.connectedRegistry =

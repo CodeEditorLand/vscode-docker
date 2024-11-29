@@ -18,8 +18,11 @@ import {
 
 export interface Item extends vscode.QuickPickItem {
 	relativeFilePath: string;
+
 	relativeFolderPath: string;
+
 	absoluteFilePath: string;
+
 	absoluteFolderPath: string;
 }
 
@@ -90,6 +93,7 @@ function getGlobPatterns(globPatterns: string[], languageId: string): string[] {
 	} catch {
 		// ignore and use default
 	}
+
 	return result;
 }
 
@@ -99,6 +103,7 @@ export async function resolveFilesOfPattern(
 	excludePattern?: string,
 ): Promise<Item[] | undefined> {
 	let uris: vscode.Uri[] = [];
+
 	await Promise.all(
 		filePatterns.map(async (pattern: string) => {
 			uris.push(
@@ -158,6 +163,7 @@ export async function quickPickDockerFileItem(
 		);
 
 		const message = vscode.l10n.t("Choose a Dockerfile to build.");
+
 		selectedDockerFile = await quickPickFileItem(
 			context,
 			dockerFiles,
@@ -168,16 +174,19 @@ export async function quickPickDockerFileItem(
 			const msg = vscode.l10n.t(
 				"Couldn't find a Dockerfile in your workspace. Would you like to add Docker files to the workspace?",
 			);
+
 			await context.ui.showWarningMessage(
 				msg,
 				{ stepName: msg },
 				DialogResponses.yes,
 				DialogResponses.cancel,
 			);
+
 			await vscode.commands.executeCommand("vscode-docker.configure");
 			// Try again
 		}
 	}
+
 	return selectedDockerFile;
 }
 
@@ -222,18 +231,21 @@ export async function quickPickDockerComposeFileItem(
 			const msg = vscode.l10n.t(
 				"Couldn't find any docker-compose files in your workspace. Would you like to add Docker files to the workspace?",
 			);
+
 			await context.ui.showWarningMessage(
 				msg,
 				{ stepName: msg },
 				DialogResponses.yes,
 				DialogResponses.cancel,
 			);
+
 			await vscode.commands.executeCommand(
 				"vscode-docker.configureCompose",
 			);
 			// Try again
 		}
 	}
+
 	return selectedComposeFile;
 }
 
@@ -286,6 +298,7 @@ export async function quickPickYamlFileItem(
 	if (!fileItem) {
 		throw new Error(noYamlFileMessage);
 	}
+
 	return fileItem;
 }
 
@@ -313,5 +326,6 @@ export async function quickPickProjectFileItem(
 	if (!fileItem) {
 		throw new Error(noProjectFileMessage);
 	}
+
 	return fileItem;
 }

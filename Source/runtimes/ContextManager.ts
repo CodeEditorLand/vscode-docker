@@ -18,8 +18,11 @@ export interface IContextManager {
 	getContexts(): Promise<ListContextItem[]>;
 
 	getCurrentContext(): Promise<ListContextItem | undefined>;
+
 	useContext(name: string): Promise<void>;
+
 	removeContext(name: string): Promise<void>;
+
 	inspectContext(name: string): Promise<InspectContextsItem | undefined>;
 }
 
@@ -32,6 +35,7 @@ export class ContextManager implements IContextManager, vscode.Disposable {
 	private readonly onContextChangedEmitter = new vscode.EventEmitter<
 		ListContextItem | undefined
 	>();
+
 	public readonly onContextChanged = this.onContextChangedEmitter.event;
 
 	private readonly onContextChangedDisposable: vscode.Disposable;
@@ -73,6 +77,7 @@ export class ContextManager implements IContextManager, vscode.Disposable {
 		await ext.runWithDefaults((client) =>
 			client.useContext({ context: name }),
 		);
+
 		await this.getCurrentContext(); // Reestablish the current context, to cause the change emitter to fire indirectly if the context has actually changed
 	}
 

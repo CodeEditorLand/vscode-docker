@@ -25,6 +25,7 @@ export class OpenUrlTreeItem extends GenericTreeItem {
 			includeInTreeItemPicker: true,
 			label,
 		});
+
 		this._url = url;
 	}
 

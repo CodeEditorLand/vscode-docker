@@ -24,18 +24,27 @@ import { PythonScaffoldingOptions } from "../DockerDebugScaffoldingProvider";
 
 export interface PythonPathMapping {
 	localRoot: string;
+
 	remoteRoot: string;
 }
 
 export interface PythonDebugOptions {
 	host?: string;
+
 	port?: number;
+
 	pathMappings?: PythonPathMapping[];
+
 	justMyCode?: boolean;
+
 	projectType?: PythonProjectType;
+
 	django?: boolean;
+
 	fastapi?: boolean;
+
 	jinja?: boolean;
+
 	args?: string[];
 }
 

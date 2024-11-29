@@ -104,9 +104,11 @@ export async function buildImage(
 				context,
 				suggestedImageName,
 			);
+
 			addImageTaggingTelemetry(context, imageName, ".after");
 
 			await ext.context.workspaceState.update(dockerFileKey, imageName);
+
 			terminalCommand.command = terminalCommand.command.replace(
 				tagRegex,
 				imageName,

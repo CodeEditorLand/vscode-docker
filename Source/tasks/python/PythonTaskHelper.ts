@@ -30,9 +30,13 @@ import { PythonExtensionHelper } from "./PythonExtensionHelper";
 
 export interface PythonTaskRunOptions {
 	file?: string;
+
 	module?: string;
+
 	args?: string[];
+
 	wait?: boolean;
+
 	debugPort?: number;
 }
 
@@ -88,7 +92,9 @@ export class PythonTaskHelper implements TaskHelper {
 					"FLASK_APP": runOptions.file || runOptions.module,
 				},
 			};
+
 			runOptions.module = "flask";
+
 			runOptions.file = undefined;
 		} else if (options.projectType === "fastapi") {
 			const basename = path.basename(runOptions.file, ".py");
@@ -102,7 +108,9 @@ export class PythonTaskHelper implements TaskHelper {
 			} else {
 				runOptions.args.unshift(`${basename}:app`);
 			}
+
 			runOptions.module = "uvicorn";
+
 			runOptions.file = undefined;
 		}
 
@@ -125,6 +133,7 @@ export class PythonTaskHelper implements TaskHelper {
 
 		/* eslint-disable no-template-curly-in-string */
 		buildOptions.context = buildOptions.context || "${workspaceFolder}";
+
 		buildOptions.dockerfile =
 			buildOptions.dockerfile || "${workspaceFolder}/Dockerfile";
 		/* eslint-enable no-template-curly-in-string */

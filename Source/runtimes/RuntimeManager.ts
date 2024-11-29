@@ -10,6 +10,7 @@ export abstract class RuntimeManager<
 	TClient extends ClientIdentity,
 > extends vscode.Disposable {
 	private readonly _runtimeClients = new Map<string, TClient>();
+
 	protected readonly runtimeClientRegisteredEmitter =
 		new vscode.EventEmitter<TClient>();
 

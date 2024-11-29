@@ -15,7 +15,9 @@ export class NetworkGroupTreeItem extends LocalGroupTreeItemBase<
 	NetworkProperty
 > {
 	public static readonly contextValue: string = "networkGroup";
+
 	public readonly contextValue: string = NetworkGroupTreeItem.contextValue;
+
 	public childTypeLabel: string = "network";
 
 	public get iconPath(): ThemeIcon {

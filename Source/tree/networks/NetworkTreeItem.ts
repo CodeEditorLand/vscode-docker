@@ -18,12 +18,14 @@ import { ToolTipTreeItem } from "../ToolTipTreeItem";
 
 export class NetworkTreeItem extends ToolTipTreeItem {
 	public static allContextRegExp: RegExp = /Network$/;
+
 	public static customNetworkRegExp: RegExp = /^customNetwork$/i;
 
 	private readonly _item: ListNetworkItem;
 
 	public constructor(parent: AzExtParentTreeItem, itemInfo: ListNetworkItem) {
 		super(parent);
+
 		this._item = itemInfo;
 	}
 

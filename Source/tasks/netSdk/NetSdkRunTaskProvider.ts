@@ -54,6 +54,7 @@ export class NetSdkRunTaskProvider extends DockerTaskProvider {
 			isProjectWebApp,
 			task.definition.dockerRun.image,
 		);
+
 		await context.terminal.execAsyncInTerminal(buildCommand, {
 			folder: context.folder,
 			token: context.cancellationToken,
@@ -65,6 +66,7 @@ export class NetSdkRunTaskProvider extends DockerTaskProvider {
 			isProjectWebApp,
 			task.definition.dockerRun.image,
 		);
+
 		await context.terminal.execAsyncInTerminal(runCommand, {
 			folder: context.folder,
 			token: context.cancellationToken,

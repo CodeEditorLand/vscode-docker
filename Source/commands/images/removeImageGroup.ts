@@ -50,6 +50,7 @@ export async function removeImageGroup(
 	);
 
 	const removing: string = vscode.l10n.t("Removing image(s)...");
+
 	await vscode.window.withProgress(
 		{ location: vscode.ProgressLocation.Notification, title: removing },
 		async () => {

@@ -50,6 +50,7 @@ export async function removeVolume(
 	);
 
 	const removing: string = vscode.l10n.t("Removing volume(s)...");
+
 	await vscode.window.withProgress(
 		{ location: vscode.ProgressLocation.Notification, title: removing },
 		async () => {

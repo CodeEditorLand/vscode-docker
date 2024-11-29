@@ -13,6 +13,8 @@ export class ContextGroupTreeItem extends LocalGroupTreeItemBase<
 	ContextProperty
 > {
 	public static readonly contextValue: string = "contextGroup";
+
 	public readonly contextValue: string = ContextGroupTreeItem.contextValue;
+
 	public childTypeLabel: string = "context";
 }

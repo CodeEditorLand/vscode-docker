@@ -58,6 +58,7 @@ export async function deleteRemoteImage(
 	);
 
 	const deleting = l10n.t('Deleting image "{0}"...', tagName);
+
 	await window.withProgress(
 		{ location: ProgressLocation.Notification, title: deleting },
 		async () => {
@@ -86,6 +87,7 @@ export async function deleteRemoteImage(
 	// Other tags that also matched the image may have been deleted, so refresh the whole repository
 	// don't wait
 	void ext.registriesTree.refresh();
+
 	void window.showInformationMessage(
 		l10n.t('Successfully deleted image "{0}".', tagName),
 	);

@@ -25,9 +25,13 @@ const slushTime = 3000;
 
 export interface Survey {
 	id: string;
+
 	prompt: string;
+
 	buttons: Map<string, string | undefined>;
+
 	activationDelayMs: number;
+
 	isEligible(): Promise<boolean>;
 }
 
@@ -43,6 +47,7 @@ export class SurveyManager {
 
 			const timer = setTimeout(async () => {
 				clearTimeout(timer);
+
 				await this.executeSurvey(survey);
 			}, survey.activationDelayMs + slush);
 		}
@@ -55,6 +60,7 @@ export class SurveyManager {
 					"surveyCheck",
 					async (context: IActionContext) => {
 						context.telemetry.properties.surveyId = survey.id;
+
 						context.telemetry.properties.isActivationEvent = "true";
 
 						const alreadyToasted =
@@ -76,10 +82,13 @@ export class SurveyManager {
 
 						context.telemetry.properties.surveyAlreadyToasted =
 							alreadyToasted.toString();
+
 						context.telemetry.properties.surveyResponded =
 							responded.toString();
+
 						context.telemetry.properties.surveyEligible =
 							eligible.toString();
+
 						context.telemetry.properties.surveyFlighted =
 							flighted.toString();
 
@@ -97,12 +106,15 @@ export class SurveyManager {
 					"surveyResponse",
 					async (context: IActionContext) => {
 						context.telemetry.properties.surveyId = survey.id;
+
 						context.telemetry.properties.isActivationEvent = "true";
 
 						const response = await this.surveyPrompt(survey);
+
 						context.telemetry.properties.surveyResponse = response
 							? "true"
 							: "false";
+
 						context.telemetry.properties.surveyChoice = response;
 
 						if (response) {
@@ -129,6 +141,7 @@ export class SurveyManager {
 			`${surveyRespondedKeyPrefix}.${survey.id}`,
 			true,
 		);
+
 		await ext.context.globalState.update(
 			lastToastedSessionKey,
 			vscode.env.sessionId,

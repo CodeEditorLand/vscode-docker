@@ -22,6 +22,7 @@ export async function pushImage(
 ): Promise<void> {
 	if (!node) {
 		await ext.imagesTree.refresh(context);
+
 		node = await ext.imagesTree.showTreeItemPicker<ImageTreeItem>(
 			ImageTreeItem.contextValue,
 			{
@@ -34,7 +35,9 @@ export async function pushImage(
 	}
 
 	const wizardContext = context as PushImageWizardContext;
+
 	wizardContext.initialTag = node.fullTag;
+
 	wizardContext.node = node;
 
 	const wizard = new AzureWizard(wizardContext, {
@@ -52,5 +55,6 @@ export async function pushImage(
 	});
 
 	await wizard.prompt();
+
 	await wizard.execute();
 }

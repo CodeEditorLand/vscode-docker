@@ -49,6 +49,7 @@ export async function removeContainer(
 	);
 
 	const removing: string = vscode.l10n.t("Removing container(s)...");
+
 	await vscode.window.withProgress(
 		{ location: vscode.ProgressLocation.Notification, title: removing },
 		async () => {

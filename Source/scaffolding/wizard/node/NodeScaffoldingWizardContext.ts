@@ -25,6 +25,7 @@ const noPackageFile = l10n.t(
 
 export interface NodeScaffoldingWizardContext extends ScaffoldingWizardContext {
 	nodeCmdParts?: string[];
+
 	nodeDebugCmdParts?: string[];
 }
 

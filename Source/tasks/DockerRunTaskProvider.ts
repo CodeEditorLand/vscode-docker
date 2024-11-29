@@ -28,7 +28,9 @@ export interface DockerRunTaskDefinition
 	extends NetCoreRunTaskDefinition,
 		NodeRunTaskDefinition {
 	label?: string;
+
 	dependsOn?: string[];
+
 	platform?: DockerPlatform;
 }
 
@@ -47,6 +49,7 @@ export class DockerRunTaskProvider extends DockerTaskProvider {
 		task: DockerRunTask,
 	): Promise<void> {
 		const definition = cloneObject(task.definition);
+
 		definition.dockerRun = definition.dockerRun || {};
 
 		context.actionContext.telemetry.properties.containerOS =
@@ -56,6 +59,7 @@ export class DockerRunTaskProvider extends DockerTaskProvider {
 			task,
 			context.folder,
 		);
+
 		context.actionContext.telemetry.properties.buildTaskFound =
 			context.buildDefinition ? "true" : "false";
 

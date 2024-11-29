@@ -26,16 +26,27 @@ import { NodeScaffoldingOptions } from "../DockerDebugScaffoldingProvider";
 
 export interface NodeDebugOptions {
 	address?: string;
+
 	autoAttachChildProcesses?: boolean;
+
 	localRoot?: string;
+
 	outFiles?: string[];
+
 	port?: number;
+
 	remoteRoot?: string;
+
 	skipFiles?: string[];
+
 	smartStep?: boolean;
+
 	sourceMaps?: boolean;
+
 	stopOnEntry?: boolean;
+
 	timeout?: number;
+
 	trace?: boolean;
 }
 

@@ -24,6 +24,7 @@ export class WebSitesPortPromptStep extends AzureWizardPromptStep<IAppServiceCon
 			value,
 			validateInput,
 		});
+
 		context.webSitesPort = parseInt(portString, 10);
 	}
 

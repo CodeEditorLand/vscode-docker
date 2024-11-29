@@ -41,5 +41,6 @@ export async function netContainerBuild(
 	);
 
 	await wizard.prompt();
+
 	await wizard.execute();
 }

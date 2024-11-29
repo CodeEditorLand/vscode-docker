@@ -100,6 +100,7 @@ async function runWithDefaultsInternal<TClient extends ClientIdentity, T>(
 		if (isChildProcessError(err)) {
 			// If this is a child process error, alter the message to be the stderr output, if it isn't falsy
 			const stdErr = await factory.errAccumulator.getString();
+
 			err.message = stdErr || err.message;
 		}
 
@@ -132,6 +133,7 @@ async function* streamWithDefaultsInternal<TClient extends ClientIdentity, T>(
 		if (isChildProcessError(err)) {
 			// If this is a child process error, alter the message to be the stderr output, if it isn't falsy
 			const stdErr = await factory.errAccumulator.getString();
+
 			err.message = stdErr || err.message;
 		}
 
@@ -156,6 +158,7 @@ class DefaultEnvStreamCommandRunnerFactory<
 
 		if (ext.outputChannel.isDebugLoggingEnabled) {
 			stdOutPipe = new stream.PassThrough();
+
 			stdOutPipe.on("data", (chunk: Buffer) => {
 				try {
 					ext.outputChannel.debug(chunk.toString());
@@ -166,6 +169,7 @@ class DefaultEnvStreamCommandRunnerFactory<
 		}
 
 		const stdErrPipe = new stream.PassThrough();
+
 		stdErrPipe.on("data", (chunk: Buffer) => {
 			try {
 				ext.outputChannel.error(chunk.toString());
@@ -173,6 +177,7 @@ class DefaultEnvStreamCommandRunnerFactory<
 				// Do not throw on diagnostic errors
 			}
 		});
+
 		stdErrPipe.pipe(errAccumulator);
 
 		const onCommand = (command) => {

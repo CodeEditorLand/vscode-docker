@@ -46,7 +46,9 @@ import {
 
 interface NetSdkProjectProperties extends NetCoreProjectProperties {
 	containerWorkingDirectory: string;
+
 	isSdkContainerSupportEnabled: boolean;
+
 	imageName: string;
 }
 
@@ -69,6 +71,7 @@ export class NetSdkDebugHelper extends NetCoreDebugHelper {
 			AllNetContainerBuildOptions[1]
 		) {
 			options = options || {};
+
 			options.appProject =
 				options.appProject ||
 				(await NetCoreTaskHelper.inferAppProject(context)); // This method internally checks the user-defined input first
@@ -126,7 +129,9 @@ export class NetSdkDebugHelper extends NetCoreDebugHelper {
 
 		const { task, promise } =
 			netSdkRunTaskProvider.createNetSdkRunTask(runDefinition);
+
 		await tasks.executeTask(task);
+
 		await promise;
 	}
 
@@ -135,17 +140,21 @@ export class NetSdkDebugHelper extends NetCoreDebugHelper {
 		debugConfiguration: DockerDebugConfiguration,
 	): Promise<{
 		configureSsl: boolean;
+
 		containerName: string;
+
 		platformOS: PlatformOS;
 	}> {
 		const projectProperties = await this.getProjectProperties(
 			debugConfiguration,
 			context.folder,
 		);
+
 		debugConfiguration.netCore.appOutput = await this.normalizeAppOutput(
 			projectProperties.containerWorkingDirectory,
 			projectProperties.isSdkContainerSupportEnabled,
 		);
+
 		context.runDefinition = {
 			...context.runDefinition,
 			dockerRun: {

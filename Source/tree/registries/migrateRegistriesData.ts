@@ -69,6 +69,7 @@ export async function migrateRegistriesData(
 
 			case "dockerHub":
 				registryProviderId = ext.dockerHubRegistryDataProvider.id;
+
 				credentialStorageKey = "DockerHub";
 
 				break;
@@ -96,7 +97,9 @@ export async function migrateRegistriesData(
 				TrackedRegistriesKey,
 				[],
 			);
+
 			trackedRegistryStrings.push(credentialStorageKey);
+
 			await ctx.globalState.update(
 				TrackedRegistriesKey,
 				trackedRegistryStrings,
@@ -124,6 +127,7 @@ export async function migrateRegistriesData(
 
 	// don't wait & mark the migration as done
 	void ctx.globalState.update(IsRegistriesDataMigratedKey, true);
+
 	void ext.registriesTree.refresh();
 }
 
@@ -147,8 +151,11 @@ export enum RegistryApi {
 
 export interface ICachedRegistryProvider {
 	id: string;
+
 	api: RegistryApi;
+
 	url?: string;
+
 	username?: string;
 }
 

@@ -19,7 +19,9 @@ interface PythonExtensionAPI {
 export namespace PythonExtensionHelper {
 	export interface DebugLaunchOptions {
 		host?: string;
+
 		port?: number;
+
 		wait?: boolean;
 	}
 

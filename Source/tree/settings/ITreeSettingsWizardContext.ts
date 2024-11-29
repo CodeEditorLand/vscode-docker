@@ -9,15 +9,20 @@ import { ITreeArraySettingInfo, ITreeSettingInfo } from "./ITreeSettingInfo";
 
 export interface ITreeSettingWizardInfo {
 	setting: string;
+
 	label: string;
+
 	description: string;
 
 	settingInfo: ITreeSettingInfo<string> | ITreeArraySettingInfo<string>;
+
 	currentValue: string | string[];
 }
 
 export interface ITreeSettingsWizardContext extends IActionContext {
 	infoList: ITreeSettingWizardInfo[];
+
 	info?: ITreeSettingWizardInfo;
+
 	newValue?: string | string[];
 }

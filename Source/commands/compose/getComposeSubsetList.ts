@@ -179,7 +179,9 @@ async function pickSubsets(
 	});
 
 	context.telemetry.measurements.totalServices = pickChoices.length;
+
 	context.telemetry.measurements.chosenServices = chosenSubsets.length;
+
 	context.telemetry.properties.subsetType = type;
 
 	return chosenSubsets.map((c) => c.data);

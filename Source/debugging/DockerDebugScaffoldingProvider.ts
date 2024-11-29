@@ -38,6 +38,7 @@ export interface NodeScaffoldingOptions {
 
 export interface PythonScaffoldingOptions {
 	projectType?: PythonProjectType;
+
 	target?: PythonTarget;
 }
 
@@ -46,10 +47,12 @@ export interface IDockerDebugScaffoldingProvider {
 		context: DockerDebugScaffoldContext,
 		options?: NetCoreScaffoldingOptions,
 	): Promise<void>;
+
 	initializeNodeForDebugging(
 		context: DockerDebugScaffoldContext,
 		options?: NodeScaffoldingOptions,
 	): Promise<void>;
+
 	initializePythonForDebugging(
 		context: DockerDebugScaffoldContext,
 		options: PythonScaffoldingOptions,

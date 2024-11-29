@@ -17,10 +17,12 @@ import { ITreeSettingsWizardContext } from "./ITreeSettingsWizardContext";
 export class TreeSettingStep extends AzureWizardPromptStep<ITreeSettingsWizardContext> {
 	public async prompt(context: ITreeSettingsWizardContext): Promise<void> {
 		const info = nonNullProp(context, "info");
+
 		context.telemetry.properties.setting = info.setting;
 
 		let picks: IAzureQuickPickItem<string>[] =
 			info.settingInfo.properties.map(convertPropertyInfoToPick);
+
 		picks = picks.sort((p1, p2) => p1.label.localeCompare(p2.label));
 
 		const options: IAzureQuickPickOptions = {
@@ -37,11 +39,14 @@ export class TreeSettingStep extends AzureWizardPromptStep<ITreeSettingsWizardCo
 				...options,
 				canPickMany: true,
 			});
+
 			context.newValue = result.map((p) => p.data);
 		} else {
 			const result = await context.ui.showQuickPick(picks, options);
+
 			context.newValue = result.data;
 		}
+
 		context.telemetry.properties.newValue = context.newValue.toString();
 	}
 
@@ -59,6 +64,7 @@ function convertPropertyInfoToPick(
 
 	if (info.exampleValue) {
 		description = l10n.t('e.g. "{0}"', info.exampleValue);
+
 		detail = info.description;
 	} else {
 		description = info.description;

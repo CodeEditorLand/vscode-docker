@@ -49,7 +49,9 @@ import { updateBlazorManifest } from "./updateBlazorManifest";
 
 export interface NetCoreTaskOptions {
 	appProject?: string;
+
 	configureSsl?: boolean;
+
 	enableDebugging?: boolean;
 }
 
@@ -64,6 +66,7 @@ export interface NetCoreRunTaskDefinition extends DockerRunTaskDefinitionBase {
 
 export interface NetCoreTaskScaffoldingOptions {
 	appProject?: string;
+
 	platformOS?: PlatformOS;
 }
 
@@ -75,6 +78,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 		options?: NetCoreTaskScaffoldingOptions,
 	): Promise<DockerBuildTaskDefinition[]> {
 		options = options || {};
+
 		options.appProject =
 			options.appProject ||
 			(await NetCoreTaskHelper.inferAppProject(context)); // This method internally checks the user-defined input first
@@ -135,6 +139,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 		options?: NetCoreTaskScaffoldingOptions,
 	): Promise<DockerRunTaskDefinition[]> {
 		options = options || {};
+
 		options.appProject =
 			options.appProject ||
 			(await NetCoreTaskHelper.inferAppProject(context)); // This method internally checks the user-defined input first
@@ -194,6 +199,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 
 		/* eslint-disable no-template-curly-in-string */
 		buildOptions.context = buildOptions.context || "${workspaceFolder}";
+
 		buildOptions.dockerfile =
 			buildOptions.dockerfile ||
 			path.join("${workspaceFolder}", "Dockerfile");
@@ -220,7 +226,9 @@ export class NetCoreTaskHelper implements TaskHelper {
 		runOptions.containerName =
 			runOptions.containerName ||
 			getDefaultContainerName(context.folder.name);
+
 		runOptions.os = runOptions.os || "Linux";
+
 		runOptions.image = inferImageName(
 			runDefinition as DockerRunTaskDefinition,
 			context,
@@ -243,8 +251,10 @@ export class NetCoreTaskHelper implements TaskHelper {
 			ssl === true ? true : await this.inferUserSecrets(helperOptions);
 
 		runOptions.env = runOptions.env || {};
+
 		runOptions.env.DOTNET_USE_POLLING_FILE_WATCHER =
 			runOptions.env.DOTNET_USE_POLLING_FILE_WATCHER || "1";
+
 		runOptions.env.ASPNETCORE_ENVIRONMENT =
 			runOptions.env.ASPNETCORE_ENVIRONMENT || "Development";
 
@@ -300,6 +310,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 					"No .NET project file (.csproj or .fsproj) could be found.",
 				),
 			);
+
 			result = item.absoluteFilePath;
 		}
 
@@ -389,15 +400,19 @@ export class NetCoreTaskHelper implements TaskHelper {
 			};
 
 			addVolumeWithoutConflicts(volumes, appVolume);
+
 			addVolumeWithoutConflicts(volumes, srcVolume);
+
 			addVolumeWithoutConflicts(volumes, debuggerVolume);
 
 			if (await fse.pathExists(nugetRootVolume.localPath)) {
 				addVolumeWithoutConflicts(volumes, nugetRootVolume);
 			}
+
 			if (await fse.pathExists(nugetUserVolume.localPath)) {
 				addVolumeWithoutConflicts(volumes, nugetUserVolume);
 			}
+
 			if (await fse.pathExists(nugetDefaultUserVolume.localPath)) {
 				addVolumeWithoutConflicts(volumes, nugetDefaultUserVolume);
 			}
@@ -413,6 +428,7 @@ export class NetCoreTaskHelper implements TaskHelper {
 						client.inspectImages({ imageRefs: [runOptions.image] }),
 					)
 				)?.[0];
+
 				userName = imageInspection?.user;
 			} catch {
 				// Best effort

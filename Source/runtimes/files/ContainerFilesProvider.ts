@@ -31,6 +31,7 @@ export class ContainerFilesProvider
 	private readonly changeEmitter: vscode.EventEmitter<
 		vscode.FileChangeEvent[]
 	> = new vscode.EventEmitter<vscode.FileChangeEvent[]>();
+
 	public readonly onDidChangeFile = this.changeEmitter.event;
 
 	public constructor() {

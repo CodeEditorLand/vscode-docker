@@ -79,12 +79,14 @@ export class ChoosePythonArtifactStep extends ChooseArtifactStep<PythonScaffoldi
 			});
 
 			wizardContext.artifact = module;
+
 			wizardContext.pythonArtifact = {
 				module: module,
 			};
 		} else {
 			// User chose a file target
 			wizardContext.artifact = result.data.absoluteFilePath;
+
 			wizardContext.pythonArtifact = {
 				file: result.data.relativeFilePath,
 			};

@@ -41,6 +41,7 @@ export class ChoosePlatformStep extends TelemetryPromptStep<ScaffoldingWizardCon
 		});
 
 		const response = await wizardContext.ui.showQuickPick(items, opt);
+
 		wizardContext.platform = response.data;
 	}
 

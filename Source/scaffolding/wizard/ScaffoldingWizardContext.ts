@@ -21,9 +21,13 @@ export interface ScaffoldingWizardContext extends IActionContext {
 
 	// These come from user choice
 	platform?: Platform;
+
 	ports?: number[];
+
 	debugPorts?: number[];
+
 	scaffoldCompose?: boolean;
+
 	workspaceFolder?: vscode.WorkspaceFolder;
 
 	// A project file (.NET), entrypoint file (Python), or package.json (Node). For applicable platforms, guaranteed to be defined after the prompt phase.
@@ -36,7 +40,9 @@ export interface ScaffoldingWizardContext extends IActionContext {
 
 	// These are calculated depending on platform, with defaults
 	version?: string;
+
 	serviceName?: string;
+
 	suggestedRandomPorts?: number[];
 
 	// Other properties that get calculated or set later

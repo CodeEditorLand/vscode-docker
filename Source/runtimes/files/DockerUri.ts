@@ -9,11 +9,17 @@ import * as vscode from "vscode";
 
 export type DockerUriQuery = {
 	containerOS?: ContainerOS;
+
 	fileType?: vscode.FileType;
+
 	mode?: number;
+
 	ctime?: number;
+
 	mtime?: number;
+
 	atime?: number;
+
 	size?: number;
 };
 
@@ -48,6 +54,7 @@ export class DockerUri {
 	public with(
 		options: DockerUriQuery & {
 			containerId?: string;
+
 			path?: string;
 		},
 	): DockerUri {

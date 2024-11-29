@@ -31,9 +31,11 @@ export async function reconnectRegistry(
 		await ext.genericRegistryV2DataProvider.removeTrackedRegistry(
 			node.parent.wrappedItem as V2Registry,
 		);
+
 		await ext.genericRegistryV2DataProvider.addTrackedRegistry();
 	} else {
 		await ext.registriesTree.disconnectRegistryProvider(node.parent);
+
 		await ext.registriesRoot.connectRegistryProvider(node.provider);
 	}
 }

@@ -33,6 +33,7 @@ export async function getAzExtAzureUtils(): Promise<
 	typeof import("@microsoft/vscode-azext-azureutils")
 > {
 	const azExtAzureUtils = await import("@microsoft/vscode-azext-azureutils");
+
 	azExtAzureUtils.registerAzureUtilsExtensionVariables(ext);
 
 	return azExtAzureUtils;
@@ -42,6 +43,7 @@ export async function getAzExtAppService(): Promise<
 	typeof import("@microsoft/vscode-azext-azureappservice")
 > {
 	const appSvc = await import("@microsoft/vscode-azext-azureappservice");
+
 	appSvc.registerAppServiceExtensionVariables(ext);
 
 	return appSvc;

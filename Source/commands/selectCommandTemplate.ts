@@ -36,15 +36,20 @@ type TemplatePicker = (
 
 interface CommandSettings {
 	defaultValue?: CommandTemplate[] | string;
+
 	globalValue?: CommandTemplate[] | string;
+
 	workspaceValue?: CommandTemplate[] | string;
+
 	workspaceFolderValue?: CommandTemplate[] | string;
 }
 
 // Exported only for tests
 export interface CommandTemplate {
 	template: string;
+
 	label: string;
+
 	match?: string;
 }
 
@@ -285,6 +290,7 @@ export async function selectCommandTemplate(
 	)
 		? "true"
 		: "false";
+
 	actionContext.telemetry.properties.isCommandRegexMatched =
 		selectedTemplate.match ? "true" : "false";
 

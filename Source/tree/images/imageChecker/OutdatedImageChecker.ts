@@ -18,11 +18,14 @@ import { ImageRegistry, registries } from "./registries";
 
 export class OutdatedImageChecker {
 	private shouldLoad: boolean;
+
 	private readonly outdatedImageIds: string[] = [];
+
 	private readonly defaultRequestOptions: RequestOptionsLike;
 
 	public constructor() {
 		const dockerConfig = vscode.workspace.getConfiguration("docker");
+
 		this.shouldLoad = dockerConfig.get("images.checkForOutdatedImages");
 
 		this.defaultRequestOptions = {
@@ -45,7 +48,9 @@ export class OutdatedImageChecker {
 				"outdatedImageCheck",
 				async (context: IActionContext) => {
 					context.telemetry.properties.isActivationEvent = "true";
+
 					context.errorHandling.suppressReportIssue = true;
+
 					context.errorHandling.suppressDisplay = true;
 
 					// Do a live check

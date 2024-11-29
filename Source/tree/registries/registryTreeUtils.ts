@@ -111,6 +111,7 @@ export function getFullRepositoryNameFromRepositoryItem(
 			imageName = match[1];
 		}
 	}
+
 	return `${baseImageName}/${imageName}`;
 }
 

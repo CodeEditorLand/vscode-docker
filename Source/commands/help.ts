@@ -13,6 +13,7 @@ import { extensionId } from "../constants";
 
 interface HelpMenuItem extends vscode.QuickPickItem {
 	handler(): Promise<void>;
+
 	telemetryID: string;
 }
 
@@ -49,7 +50,9 @@ export async function help(context: IActionContext): Promise<void> {
 		items,
 		options,
 	);
+
 	context.telemetry.properties.helpItem = selectedItem.telemetryID;
+
 	await selectedItem.handler();
 }
 

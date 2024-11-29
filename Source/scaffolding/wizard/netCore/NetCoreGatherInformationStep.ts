@@ -80,19 +80,23 @@ export class NetCoreGatherInformationStep extends GatherInformationStep<NetCoreS
 
 			// semver.coerce tolerates version strings like "5.0" which is typically what is present in the .NET project file
 			const netCoreVersion = semver.coerce(netCoreVersionString);
+
 			wizardContext.netCoreRuntimeBaseImage =
 				wizardContext.platform === ".NET: ASP.NET Core"
 					? `${aspNetBaseImage}:${netCoreVersion.major}.${netCoreVersion.minor}`
 					: `${consoleNetBaseImage}:${netCoreVersion.major}.${netCoreVersion.minor}`;
+
 			wizardContext.netCoreSdkBaseImage = `${netSdkImage}:${netCoreVersion.major}.${netCoreVersion.minor}`;
 
 			if (netCoreVersion.major >= NetCorePreviewVersion) {
 				wizardContext.netCoreRuntimeBaseImage = `${wizardContext.netCoreRuntimeBaseImage}-preview`;
+
 				wizardContext.netCoreSdkBaseImage = `${wizardContext.netCoreSdkBaseImage}-preview`;
 			}
 			// append '-nanoserver-ltsc2022' for windows base images for .NET 8+'s new naming convention
 			if (wizardContext.netCorePlatformOS === "Windows") {
 				wizardContext.netCoreRuntimeBaseImage = `${wizardContext.netCoreRuntimeBaseImage}-nanoserver-1809`;
+
 				wizardContext.netCoreSdkBaseImage = `${wizardContext.netCoreSdkBaseImage}-nanoserver-1809`;
 			}
 
@@ -149,6 +153,7 @@ export class NetCoreGatherInformationStep extends GatherInformationStep<NetCoreS
 		} catch (err) {
 			// Suppress report issue and rethrow
 			wizardContext.errorHandling.suppressReportIssue = true;
+
 			wizardContext.errorHandling.buttons = [
 				{
 					title: vscode.l10n.t("Open Extension"),

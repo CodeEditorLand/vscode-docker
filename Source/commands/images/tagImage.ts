@@ -25,6 +25,7 @@ export async function tagImage(
 ): Promise<string> {
 	if (!node) {
 		await ext.imagesTree.refresh(context);
+
 		node = await ext.imagesTree.showTreeItemPicker<ImageTreeItem>(
 			ImageTreeItem.contextValue,
 			{
@@ -47,6 +48,7 @@ export async function tagImage(
 		node.fullTag,
 		baseImagePath,
 	);
+
 	addImageTaggingTelemetry(context, newTaggedName, ".after");
 
 	await ext.runWithDefaults((client) =>
@@ -73,6 +75,7 @@ export async function getTagFromUserInput(
 		opt.valueSelection = [0, fullTag.lastIndexOf("/")];
 	} else if (baseImagePath) {
 		fullTag = `${baseImagePath}/${fullTag}`;
+
 		opt.valueSelection = [0, fullTag.lastIndexOf("/")];
 	}
 
@@ -122,7 +125,9 @@ export function addImageTaggingTelemetry(
 		) {
 			properties.safeTag = tag;
 		}
+
 		properties.hasTag = String(!!tag);
+
 		properties.numSlashes = String(numberMatches(repository.match(/\//g)));
 
 		const knownRegistry = KnownRegistries.find(

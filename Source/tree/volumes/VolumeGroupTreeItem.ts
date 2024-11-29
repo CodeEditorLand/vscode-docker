@@ -15,7 +15,9 @@ export class VolumeGroupTreeItem extends LocalGroupTreeItemBase<
 	VolumeProperty
 > {
 	public static readonly contextValue: string = "volumeGroup";
+
 	public readonly contextValue: string = VolumeGroupTreeItem.contextValue;
+
 	public childTypeLabel: string = "volume";
 
 	public get iconPath(): ThemeIcon {

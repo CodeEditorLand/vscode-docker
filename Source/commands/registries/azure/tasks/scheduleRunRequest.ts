@@ -85,7 +85,9 @@ export async function scheduleRunRequest(
 				"To quick build Docker files you must first open a folder or workspace in VS Code.",
 			),
 		);
+
 		fileItem = await quickPickDockerFileItem(context, uri, rootFolder);
+
 		imageName = await quickPickImageName(context, rootFolder, fileItem);
 	} else if (requestType === "FileTaskRunRequest") {
 		rootFolder = await quickPickWorkspaceFolder(
@@ -94,6 +96,7 @@ export async function scheduleRunRequest(
 				"To run a task from a .yaml file you must first open a folder or workspace in VS Code.",
 			),
 		);
+
 		fileItem = await quickPickYamlFileItem(
 			context,
 			uri,
@@ -153,6 +156,7 @@ export async function scheduleRunRequest(
 			rootUri,
 			tarFilePath,
 		);
+
 		ext.outputChannel.info(
 			vscode.l10n.t("Uploaded source code from {0}", tarFilePath),
 		);
@@ -192,6 +196,7 @@ export async function scheduleRunRequest(
 				registryItem.label,
 				runRequest,
 			);
+
 		ext.outputChannel.info(vscode.l10n.t("Scheduled run {0}", run.runId));
 
 		void streamLogs(context, registryItem, run);
@@ -254,6 +259,7 @@ async function quickPickImageName(
 		context,
 		suggestedImageName,
 	);
+
 	addImageTaggingTelemetry(context, imageName, ".after");
 
 	await ext.context.workspaceState.update(dockerFileKey, imageName);
@@ -275,6 +281,7 @@ async function uploadSourceCode(
 	const source: string = rootFolder.fsPath;
 
 	let items = await fse.readdir(source);
+
 	items = items.filter((i) => !(i in vcsIgnoreList));
 	// tslint:disable-next-line:no-unsafe-any
 	tar.c({ cwd: source }, items).pipe(fse.createWriteStream(tarFilePath));
@@ -294,7 +301,9 @@ async function uploadSourceCode(
 	const storageBlob = await getStorageBlob();
 
 	const blobClient = new storageBlob.BlockBlobClient(uploadUrl);
+
 	ext.outputChannel.info(vscode.l10n.t("   Creating block blob"));
+
 	await blobClient.uploadFile(tarFilePath);
 
 	return relativePath;
@@ -341,6 +350,7 @@ async function streamLogs(
 
 					if (totalChecks >= maxBlobChecks) {
 						clearInterval(timer);
+
 						reject("Not found");
 					}
 				}
@@ -350,6 +360,7 @@ async function streamLogs(
 				if (properties.contentLength > byteOffset) {
 					// New data available
 					const response = await blobClient.download(byteOffset);
+
 					byteOffset += response.contentLength;
 
 					const lineReader = readline.createInterface(
@@ -366,10 +377,12 @@ async function streamLogs(
 
 				if (properties.metadata?.complete) {
 					clearInterval(timer);
+
 					resolve();
 				}
 			} catch (err) {
 				clearInterval(timer);
+
 				reject(err);
 			}
 		}, blobCheckInterval);
@@ -381,6 +394,7 @@ function getTempSourceArchivePath(): string {
 	const id: number = Math.floor(Math.random() * Math.pow(10, idPrecision));
 
 	const archive = `sourceArchive${id}.tar.gz`;
+
 	ext.outputChannel.info(
 		vscode.l10n.t("Setting up temp file with '{0}'", archive),
 	);

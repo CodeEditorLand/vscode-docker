@@ -8,6 +8,7 @@ import { AsyncLazy } from "./lazy";
 
 class RuntimeInstallStatusProvider {
 	private maxCacheTime: number = 30000;
+
 	private isRuntimeInstalledLazy: AsyncLazy<boolean>;
 
 	public constructor() {
@@ -20,6 +21,7 @@ class RuntimeInstallStatusProvider {
 				// It is unlikely user will uninstall the runtime, in which case user has open a new workspace to get the updated status.
 				this.isRuntimeInstalledLazy.cacheForever();
 			}
+
 			return runtimeInstalled;
 		}, this.maxCacheTime);
 	}

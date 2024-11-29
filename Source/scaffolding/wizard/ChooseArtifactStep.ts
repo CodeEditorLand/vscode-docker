@@ -34,6 +34,7 @@ export class ChooseArtifactStep<
 			const item = await wizardContext.ui.showQuickPick(items, {
 				placeHolder: this.promptText,
 			});
+
 			wizardContext.artifact = item.absoluteFilePath;
 		}
 	}

@@ -46,6 +46,7 @@ export async function trustCertificateIfNecessary(
 				.then(async (selection) => {
 					if (selection === trust) {
 						await execAsync("dotnet dev-certs https --trust");
+
 						knownConfiguredProjects.clear(); // Clear the cache so future F5's will not use an untrusted cert
 					}
 				});
@@ -76,11 +77,13 @@ export async function exportCertificateIfNecessary(
 	}
 
 	await exportCertificate(projectFile, certificateExportPath);
+
 	knownConfiguredProjects.add(projectFile);
 }
 
 export function getHostSecretsFolders(): {
 	hostCertificateFolder: string;
+
 	hostUserSecretsFolder: string;
 } {
 	let appDataEnvironmentVariable: string | undefined;
@@ -158,6 +161,7 @@ async function exportCertificate(
 	certificateExportPath: string,
 ): Promise<void> {
 	await addUserSecretsIfNecessary(projectFile);
+
 	await exportCertificateAndSetPassword(projectFile, certificateExportPath);
 }
 
@@ -170,6 +174,7 @@ async function addUserSecretsIfNecessary(projectFile: string): Promise<void> {
 
 	// Initialize user secrets for the project
 	const userSecretsInitCommand = `dotnet user-secrets init --project "${projectFile}" --id ${cryptoUtils.getRandomHexString(32)}`;
+
 	await execAsync(userSecretsInitCommand);
 }
 
@@ -181,9 +186,11 @@ async function exportCertificateAndSetPassword(
 
 	// Export the certificate
 	const exportCommand = `dotnet dev-certs https -ep "${certificateExportPath}" -p "${password}"`;
+
 	await execAsync(exportCommand);
 
 	// Set the password to dotnet user-secrets
 	const userSecretsPasswordCommand = `dotnet user-secrets --project "${projectFile}" set Kestrel:Certificates:Development:Password "${password}"`;
+
 	await execAsync(userSecretsPasswordCommand);
 }

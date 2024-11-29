@@ -15,6 +15,7 @@ export async function copyFullTag(
 ): Promise<string> {
 	if (!node) {
 		await ext.imagesTree.refresh(context);
+
 		node = await ext.imagesTree.showTreeItemPicker<ImageTreeItem>(
 			ImageTreeItem.contextValue,
 			{

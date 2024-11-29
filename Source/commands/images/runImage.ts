@@ -32,6 +32,7 @@ async function runImageCore(
 ): Promise<void> {
 	if (!node) {
 		await ext.imagesTree.refresh(context);
+
 		node = await ext.imagesTree.showTreeItemPicker<ImageTreeItem>(
 			ImageTreeItem.contextValue,
 			{

@@ -24,18 +24,21 @@ export class PythonGatherInformationStep extends GatherInformationStep<PythonSca
 		switch (wizardContext.platform) {
 			case "Python: Django":
 				wizardContext.pythonProjectType = "django";
+
 				await this.getDjangoCmdParts(wizardContext);
 
 				break;
 
 			case "Python: FastAPI":
 				wizardContext.pythonProjectType = "fastapi";
+
 				await this.getFastAPICmdParts(wizardContext);
 
 				break;
 
 			case "Python: Flask":
 				wizardContext.pythonProjectType = "flask";
+
 				await this.getFlaskCmdParts(wizardContext);
 
 				break;
@@ -43,6 +46,7 @@ export class PythonGatherInformationStep extends GatherInformationStep<PythonSca
 			case "Python: General":
 			default:
 				wizardContext.pythonProjectType = "general";
+
 				await this.getGeneralCmdParts(wizardContext);
 		}
 
@@ -83,9 +87,11 @@ export class PythonGatherInformationStep extends GatherInformationStep<PythonSca
 			const serviceName = path.basename(
 				path.dirname(wsgiPaths[0].fsPath),
 			);
+
 			wsgiModule = `${serviceName}.wsgi`;
 		} else {
 			wizardContext.wsgiComment = `# File wsgi.py was not found. Please enter the Python path to wsgi file.`;
+
 			wsgiModule = "pythonPath.to.wsgi";
 		}
 
@@ -196,7 +202,9 @@ export class PythonGatherInformationStep extends GatherInformationStep<PythonSca
 
 	private getCommonProps(wizardContext: PythonScaffoldingWizardContext): {
 		app: string[];
+
 		args: string[];
+
 		bindPort: number;
 	} {
 		return {

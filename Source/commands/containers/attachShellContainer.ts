@@ -22,6 +22,7 @@ export async function attachShellContainer(
 ): Promise<void> {
 	if (!node) {
 		await ext.containersTree.refresh(context);
+
 		node = await ext.containersTree.showTreeItemPicker<ContainerTreeItem>(
 			ContainerTreeItem.runningContainerRegExp,
 			{
@@ -34,6 +35,7 @@ export async function attachShellContainer(
 	}
 
 	const osType: ContainerOS = await getDockerOSType();
+
 	context.telemetry.properties.dockerOSType = osType;
 
 	let shellCommand: string;
@@ -55,6 +57,7 @@ export async function attachShellContainer(
 						command: ["sh", "-c", "which bash"],
 					}) as Promise<VoidCommandResponse>,
 			);
+
 			shellCommand = "bash";
 		} catch {
 			shellCommand = "sh";

@@ -19,8 +19,11 @@ export abstract class LocalGroupTreeItemBase<
 	TProperty extends string | CommonProperty,
 > extends AzExtParentTreeItem {
 	public readonly parent: LocalRootTreeItemBase<TItem, TProperty>;
+
 	public readonly group: string;
+
 	private _items: TItem[];
+
 	private _childTreeItems: AzExtTreeItem[];
 
 	public constructor(
@@ -29,7 +32,9 @@ export abstract class LocalGroupTreeItemBase<
 		items: TItem[],
 	) {
 		super(parent);
+
 		this.group = group;
+
 		this.id = this.group + "|LocalGroup"; // Add suffix to ensure this id doesn't coincidentally overlap with a non-grouped item
 		this._items = items;
 	}
@@ -62,6 +67,7 @@ export abstract class LocalGroupTreeItemBase<
 		if (!this._childTreeItems) {
 			this._childTreeItems = this.getChildTreeItems();
 		}
+
 		return this._childTreeItems;
 	}
 

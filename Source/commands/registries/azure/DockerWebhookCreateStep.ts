@@ -48,10 +48,12 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 		context: IAppServiceWizardContext,
 		progress: vscode.Progress<{
 			message?: string;
+
 			increment?: number;
 		}>,
 	): Promise<void> {
 		const vscAzureAppService = await getAzExtAppService();
+
 		vscAzureAppService.registerAppServiceExtensionVariables(ext);
 
 		const site: Site = nonNullProp(context, "site");
@@ -68,7 +70,9 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 				'Creating webhook for web app "{0}"...',
 				context.newSiteName,
 			);
+
 			ext.outputChannel.info(creatingNewWebhook);
+
 			progress.report({ message: creatingNewWebhook });
 
 			const webhook = await this.createWebhookForApp(
@@ -76,6 +80,7 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 				context.site,
 				appUri,
 			);
+
 			ext.outputChannel.info(
 				vscode.l10n.t(
 					'Created webhook "{0}" with scope "{1}", id: "{2}" and location: "{3}"',
@@ -114,6 +119,7 @@ export class DockerWebhookCreateStep extends AzureWizardExecuteStep<IAppServiceW
 				.then((response) => {
 					if (response) {
 						void vscode.env.clipboard.writeText(appUri);
+
 						void vscode.env.openExternal(
 							vscode.Uri.parse(dockerhubUri),
 						);

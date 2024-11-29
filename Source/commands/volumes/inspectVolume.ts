@@ -18,6 +18,7 @@ export async function inspectVolume(
 ): Promise<void> {
 	if (!node) {
 		await ext.volumesTree.refresh(context);
+
 		node = await ext.volumesTree.showTreeItemPicker<VolumeTreeItem>(
 			VolumeTreeItem.contextValue,
 			{
@@ -32,5 +33,6 @@ export async function inspectVolume(
 	const inspectResult = await ext.runWithDefaults((client) =>
 		client.inspectVolumes({ volumes: [node.volumeName] }),
 	);
+
 	await openReadOnlyJson(node, JSON.parse(inspectResult[0].raw));
 }

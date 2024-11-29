@@ -12,8 +12,11 @@ export class AzExtLogOutputChannelWrapper
 	implements vscode.LogOutputChannel, IAzExtOutputChannel
 {
 	public readonly name: string;
+
 	public readonly extensionPrefix: string;
+
 	public readonly onDidChangeLogLevel: vscode.Event<vscode.LogLevel>;
+
 	private _logOutputChannel: vscode.LogOutputChannel;
 
 	constructor(
@@ -21,8 +24,11 @@ export class AzExtLogOutputChannelWrapper
 		extensionPrefix: string,
 	) {
 		this._logOutputChannel = logOutputChannel;
+
 		this.name = this._logOutputChannel.name;
+
 		this.extensionPrefix = extensionPrefix;
+
 		this.onDidChangeLogLevel = this._logOutputChannel.onDidChangeLogLevel;
 	}
 
@@ -51,6 +57,7 @@ export class AzExtLogOutputChannelWrapper
 			this.info(value);
 		} else {
 			options ||= {};
+
 			this.info(
 				`${options.resourceName ? " ".concat(options.resourceName) : ""}: ${value}`,
 			);
@@ -99,7 +106,9 @@ export class AzExtLogOutputChannelWrapper
 	}
 
 	show(preserveFocus?: boolean): void;
+
 	show(column?: vscode.ViewColumn, preserveFocus?: boolean): void;
+
 	show(column?: boolean | vscode.ViewColumn, preserveFocus?: boolean): void {
 		this._logOutputChannel.show(column as vscode.ViewColumn, preserveFocus);
 	}

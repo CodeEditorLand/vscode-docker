@@ -41,11 +41,13 @@ import { ACROAuthProvider } from "./ACROAuthProvider";
 
 export interface AzureRegistryItem extends V2RegistryItem {
 	readonly subscription: AzureSubscription;
+
 	readonly id: string;
 }
 
 export interface AzureSubscriptionRegistryItem extends CommonRegistryItem {
 	readonly subscription: AzureSubscription;
+
 	readonly type: "azuresubscription";
 }
 
@@ -87,12 +89,16 @@ export class AzureRegistryDataProvider
 	implements vscode.Disposable
 {
 	public readonly id = "vscode-docker.azureContainerRegistry";
+
 	public readonly label = vscode.l10n.t("Azure");
+
 	public readonly iconPath = new vscode.ThemeIcon("azure");
+
 	public readonly description = vscode.l10n.t("Azure Container Registry");
 
 	private readonly subscriptionProvider =
 		new VSCodeAzureSubscriptionProvider();
+
 	private readonly authenticationProviders = new Map<
 		string,
 		ACROAuthProvider
@@ -114,6 +120,7 @@ export class AzureRegistryDataProvider
 
 			const subscriptions =
 				await this.subscriptionProvider.getSubscriptions();
+
 			this.sendSubscriptionTelemetryIfNeeded();
 
 			return subscriptions.map((sub) => {
@@ -136,6 +143,7 @@ export class AzureRegistryDataProvider
 			});
 		} else if (isAzureSubscriptionRegistryItem(element)) {
 			const registries = await this.getRegistries(element);
+
 			registries.forEach((registry) => {
 				registry.additionalContextValues = [
 					...(registry.additionalContextValues || []),
@@ -152,6 +160,7 @@ export class AzureRegistryDataProvider
 					e.subscription = (
 						element as AzureRegistryItem
 					).subscription;
+
 					e.additionalContextValues = [
 						...(e.additionalContextValues || []),
 						"azure",
@@ -165,6 +174,7 @@ export class AzureRegistryDataProvider
 
 	public dispose(): void {
 		super.dispose();
+
 		this.subscriptionProvider.dispose();
 	}
 
@@ -248,6 +258,7 @@ export class AzureRegistryDataProvider
 		);
 
 		const resourceGroup = getResourceGroupFromId(item.id);
+
 		await client.registries.beginDeleteAndWait(resourceGroup, item.label);
 	}
 
@@ -299,6 +310,7 @@ export class AzureRegistryDataProvider
 				item.baseUrl,
 				item.subscription,
 			);
+
 			this.authenticationProviders.set(registryString, provider);
 		}
 
@@ -307,10 +319,12 @@ export class AzureRegistryDataProvider
 	}
 
 	private hasSentSubscriptionTelemetry = false;
+
 	private sendSubscriptionTelemetryIfNeeded(): void {
 		if (this.hasSentSubscriptionTelemetry) {
 			return;
 		}
+
 		this.hasSentSubscriptionTelemetry = true;
 
 		// This event is relied upon by the DevDiv Analytics and Growth Team
@@ -318,6 +332,7 @@ export class AzureRegistryDataProvider
 			"updateSubscriptionsAndTenants",
 			async (context: IActionContext) => {
 				context.telemetry.properties.isActivationEvent = "true";
+
 				context.errorHandling.suppressDisplay = true;
 
 				const subscriptions =
@@ -326,8 +341,10 @@ export class AzureRegistryDataProvider
 				const tenantSet = new Set<string>();
 
 				const subscriptionSet = new Set<string>();
+
 				subscriptions.forEach((sub) => {
 					tenantSet.add(sub.tenantId);
+
 					subscriptionSet.add(sub.subscriptionId);
 				});
 
@@ -335,8 +352,10 @@ export class AzureRegistryDataProvider
 				// they will be put into Properties instead.
 				context.telemetry.properties.numtenants =
 					tenantSet.size.toString();
+
 				context.telemetry.properties.numsubscriptions =
 					subscriptionSet.size.toString();
+
 				context.telemetry.properties.subscriptions = JSON.stringify(
 					Array.from(subscriptionSet),
 				);

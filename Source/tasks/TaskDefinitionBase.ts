@@ -11,9 +11,12 @@ export interface DependsOn {
 
 export interface TaskDefinitionBase extends TaskDefinition {
 	label?: string;
+
 	dependsOn?: string[] | DependsOn;
+
 	options?: {
 		cwd?: string;
+
 		env?: NodeJS.ProcessEnv;
 	};
 }

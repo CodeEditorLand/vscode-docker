@@ -35,6 +35,7 @@ export class AzureRegistryNameStep extends AzureNameStep<IAzureRegistryWizardCon
 			context,
 			armContainerRegistry.ContainerRegistryManagementClient,
 		);
+
 		context.newRegistryName = (
 			await context.ui.showInputBox({
 				placeHolder: l10n.t("Registry name"),

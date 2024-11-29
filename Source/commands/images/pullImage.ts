@@ -44,6 +44,7 @@ export async function pullImage(
 				void context.ui.showWarningMessage(
 					l10n.t("Images without tags will be skipped."),
 				);
+
 				noneTagWarningShown = true;
 			}
 

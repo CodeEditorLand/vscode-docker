@@ -69,6 +69,7 @@ async function compose(
 			folder,
 			message,
 		);
+
 		selectedItems = selectedItem ? [selectedItem] : [];
 	}
 

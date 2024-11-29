@@ -16,13 +16,16 @@ export async function delay(
 		const timeout = setTimeout(() => {
 			/* eslint-disable-next-line no-unused-expressions */
 			cancellationListener?.dispose();
+
 			resolve();
 		}, ms);
 
 		if (token) {
 			cancellationListener = token.onCancellationRequested(() => {
 				cancellationListener.dispose();
+
 				clearTimeout(timeout);
+
 				reject();
 			});
 		}
@@ -57,13 +60,16 @@ export class CancellationPromiseSource extends vscode.CancellationTokenSource {
 		...args: unknown[]
 	) {
 		super();
+
 		this.promise = getCancelPromise(this.token, errorConstructor, args);
 	}
 }
 
 export class TimeoutPromiseSource implements vscode.Disposable {
 	private timeoutTimer: NodeJS.Timeout | undefined;
+
 	private readonly cps: CancellationPromiseSource;
+
 	private readonly emitter: vscode.EventEmitter<void>;
 
 	public constructor(private readonly timeoutMs: number) {
@@ -71,6 +77,7 @@ export class TimeoutPromiseSource implements vscode.Disposable {
 			Error,
 			vscode.l10n.t("Request timed out."),
 		);
+
 		this.emitter = new vscode.EventEmitter<void>();
 	}
 
@@ -81,6 +88,7 @@ export class TimeoutPromiseSource implements vscode.Disposable {
 	public get promise(): Promise<never> {
 		this.timeoutTimer = setTimeout(() => {
 			this.emitter.fire();
+
 			this.cps.cancel();
 		}, this.timeoutMs);
 
@@ -93,6 +101,7 @@ export class TimeoutPromiseSource implements vscode.Disposable {
 		}
 
 		this.cps.dispose();
+
 		this.emitter.dispose();
 	}
 }

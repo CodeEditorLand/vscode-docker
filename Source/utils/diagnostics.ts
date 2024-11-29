@@ -70,6 +70,7 @@ export function logSystemInfo(outputChannel: vscode.LogOutputChannel): void {
 
 		if (systemInfoDisposable) {
 			systemInfoDisposable.dispose();
+
 			systemInfoDisposable = null;
 		}
 

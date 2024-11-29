@@ -50,6 +50,7 @@ export interface DockerAttachConfiguration
 	extends NetCoreDockerDebugConfiguration,
 		NodeDockerDebugConfiguration {
 	processName?: string;
+
 	processId?: string | number;
 }
 
@@ -65,7 +66,9 @@ export class DockerDebugConfigurationProvider
 			debug.onDidTerminateDebugSession,
 			async (context: IActionContext, session: DebugSession) => {
 				context.errorHandling.suppressDisplay = true;
+
 				context.telemetry.suppressAll = true;
+
 				await this.removeDebugContainerIfNeeded(
 					context,
 					session.configuration,
@@ -79,7 +82,9 @@ export class DockerDebugConfigurationProvider
 			debug.onDidStartDebugSession,
 			async (context: IActionContext, session: DebugSession) => {
 				context.errorHandling.suppressDisplay = true;
+
 				context.telemetry.suppressAll = true;
+
 				await this.outputPortsAtDebuggingIfNeeded(
 					context,
 					session.configuration,
@@ -153,8 +158,10 @@ export class DockerDebugConfigurationProvider
 				}
 
 				const debugPlatform = getDebugPlatform(debugConfiguration);
+
 				actionContext.telemetry.properties.dockerPlatform =
 					debugPlatform;
+
 				actionContext.telemetry.properties.orchestration =
 					"single" as DockerOrchestration; // TODO: docker-compose, when support is added
 
@@ -179,6 +186,7 @@ export class DockerDebugConfigurationProvider
 			originalConfiguration,
 			context.folder,
 		);
+
 		context.actionContext.telemetry.properties.runTaskFound =
 			context.runDefinition ? "true" : "false";
 
@@ -191,6 +199,7 @@ export class DockerDebugConfigurationProvider
 
 		if (resolvedConfiguration) {
 			await this.validateResolvedConfiguration(resolvedConfiguration);
+
 			await this.removeDebugContainerIfNeeded(
 				context.actionContext,
 				resolvedConfiguration,
@@ -283,6 +292,7 @@ export class DockerDebugConfigurationProvider
 							"The application is listening on the following port(s) (Host => Container):",
 						),
 					);
+
 					ext.outputChannel.info(portMappings.join("\n"));
 				}
 			} catch {

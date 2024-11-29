@@ -26,6 +26,7 @@ const WEB_ROOT = "${workspaceFolder}";
 
 class ServerReadyDetector implements DockerServerReadyDetector {
 	private hasFired: boolean = false;
+
 	private regexp: RegExp;
 
 	public constructor(private session: vscode.DebugSession) {
@@ -48,6 +49,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 					this.session,
 					matches.length > 1 ? matches[1] : "",
 				);
+
 				this.hasFired = true;
 			}
 		}
@@ -78,7 +80,9 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 			async (context: IActionContext) => {
 				// Don't actually telemetrize or show anything (same as prior behavior), but wrap call to get an IActionContext
 				context.telemetry.suppressAll = true;
+
 				context.errorHandling.suppressDisplay = true;
+
 				context.errorHandling.rethrow = false;
 
 				if (captureString === "") {
@@ -89,12 +93,14 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 							"Format uri ('{0}') uses a substitution placeholder but pattern did not capture anything.",
 							format,
 						);
+
 						void vscode.window.showErrorMessage(errMsg, {
 							modal: true,
 						});
 
 						return;
 					}
+
 					captureString = format;
 				} else if (/^[0-9]+$/.test(captureString)) {
 					// looks like a port number -> use the uriFormat and substitute a single "%s" with the port
@@ -106,6 +112,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 							"Format uri ('{0}') must contain exactly one substitution placeholder.",
 							format,
 						);
+
 						void vscode.window.showErrorMessage(errMsg, {
 							modal: true,
 						});
@@ -129,6 +136,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 							"Captured string ('{0}') must contain a port number.",
 							captureString,
 						);
+
 						void vscode.window.showErrorMessage(errMsg, {
 							modal: true,
 						});
@@ -161,6 +169,7 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 							"Format uri ('{0}') must contain exactly two substitution placeholders.",
 							format,
 						);
+
 						void vscode.window.showErrorMessage(errMsg, {
 							modal: true,
 						});
@@ -252,10 +261,12 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 					const errMsg = vscode.l10n.t(
 						"The action 'debugWithChrome' requires the 'Debugger for Chrome' extension.",
 					);
+
 					void vscode.window.showErrorMessage(errMsg, {
 						modal: true,
 					});
 				}
+
 				break;
 
 			default:
@@ -267,9 +278,12 @@ class ServerReadyDetector implements DockerServerReadyDetector {
 type DebugAdapterMessage = {
 	body?: {
 		category?: string;
+
 		output?: string;
 	};
+
 	type?: string;
+
 	event?: string;
 };
 
@@ -279,6 +293,7 @@ interface DockerServerReadyDetector {
 
 class DockerLogsTracker extends vscode.Disposable {
 	private readonly cts = new vscode.CancellationTokenSource();
+
 	private lineReader: readline.Interface | undefined;
 
 	public constructor(
@@ -287,6 +302,7 @@ class DockerLogsTracker extends vscode.Disposable {
 	) {
 		super(() => {
 			this.cts.cancel();
+
 			this.lineReader?.close();
 		});
 
@@ -364,7 +380,9 @@ class MultiOutputDockerServerReadyManager
 	implements DockerServerReadyDetector
 {
 	private readonly detector: ServerReadyDetector;
+
 	private readonly logsTracker: DockerLogsTracker;
+
 	public readonly tracker: DockerDebugAdapterTracker;
 
 	public constructor(session: vscode.DebugSession) {
@@ -419,6 +437,7 @@ class DockerDebugAdapterTrackerFactory
 
 			if (!tracker) {
 				tracker = new MultiOutputDockerServerReadyManager(session);
+
 				DockerDebugAdapterTrackerFactory.trackers.set(
 					realSessionId,
 					tracker,
@@ -440,6 +459,7 @@ class DockerDebugAdapterTrackerFactory
 
 		if (tracker) {
 			DockerDebugAdapterTrackerFactory.trackers.delete(realSessionId);
+
 			tracker.dispose();
 		}
 	}
@@ -461,6 +481,7 @@ class DockerServerReadyDebugConfigurationProvider
 	implements vscode.DebugConfigurationProvider
 {
 	private readonly trackers: Set<string> = new Set<string>();
+
 	private readonly trackerFactory: DockerDebugAdapterTrackerFactory =
 		new DockerDebugAdapterTrackerFactory();
 
@@ -482,6 +503,7 @@ class DockerServerReadyDebugConfigurationProvider
 						this.trackerFactory,
 					),
 				);
+
 				this.trackers.add(debugConfiguration.type);
 			}
 		}

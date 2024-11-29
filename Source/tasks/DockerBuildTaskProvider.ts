@@ -27,7 +27,9 @@ export interface DockerBuildTaskDefinition
 	extends NetCoreBuildTaskDefinition,
 		NodeBuildTaskDefinition {
 	label?: string;
+
 	dependsOn?: string[];
+
 	platform?: DockerPlatform;
 }
 
@@ -46,6 +48,7 @@ export class DockerBuildTaskProvider extends DockerTaskProvider {
 		task: DockerBuildTask,
 	): Promise<void> {
 		const definition = cloneObject(task.definition);
+
 		definition.dockerBuild = definition.dockerBuild || {};
 
 		const helper = this.getHelper(context.platform);

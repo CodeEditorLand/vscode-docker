@@ -15,8 +15,11 @@ export class ImageGroupTreeItem extends LocalGroupTreeItemBase<
 	ImageProperty
 > {
 	public static readonly contextValue: string = "imageGroup";
+
 	public readonly canMultiSelect: boolean = true;
+
 	public readonly contextValue: string = ImageGroupTreeItem.contextValue;
+
 	public childTypeLabel: string = "image";
 
 	public get iconPath(): ThemeIcon {

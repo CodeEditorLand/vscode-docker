@@ -12,9 +12,11 @@ import { UnifiedRegistryItem } from "../../../tree/registries/UnifiedRegistryTre
 
 export interface PushImageWizardContext extends IActionContext {
 	connectedRegistry?: UnifiedRegistryItem<CommonRegistry>;
+
 	finalTag?: string;
 
 	initialTag: string;
+
 	node: ImageTreeItem;
 
 	azureSubscriptionNode?: UnifiedRegistryItem<AzureSubscriptionRegistryItem>;

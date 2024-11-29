@@ -20,6 +20,7 @@ export class VerifyDockerfileStep<
 			))
 		) {
 			wizardContext.errorHandling.suppressReportIssue = true;
+
 			wizardContext.errorHandling.buttons = [
 				{
 					callback: async () => {

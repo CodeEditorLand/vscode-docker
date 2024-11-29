@@ -31,6 +31,7 @@ export function debounce(
 	// cancels the timeout and deletes the item from the activeDebounces map
 	activeDebounces[id] = new vscode.Disposable(() => {
 		clearTimeout(timeout);
+
 		delete activeDebounces[id];
 	});
 }

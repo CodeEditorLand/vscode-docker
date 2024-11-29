@@ -21,6 +21,7 @@ export class ContainerGroupTreeItem extends LocalGroupTreeItemBase<
 	ContainerProperty
 > {
 	public childTypeLabel: string = "container";
+
 	public override readonly initialCollapsibleState:
 		| TreeItemCollapsibleState
 		| undefined; // TypeScript gets mad if we don't re-declare this here

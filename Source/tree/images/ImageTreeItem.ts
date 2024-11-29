@@ -19,8 +19,11 @@ import { NormalizedImageNameInfo } from "./NormalizedImageNameInfo";
 
 export class ImageTreeItem extends ToolTipTreeItem {
 	public static contextValue: string = "image";
+
 	public contextValue: string = ImageTreeItem.contextValue;
+
 	private readonly _item: DatedDockerImage;
+
 	private readonly _normalizedImageNameInfo: NormalizedImageNameInfo;
 
 	public constructor(
@@ -28,7 +31,9 @@ export class ImageTreeItem extends ToolTipTreeItem {
 		itemInfo: DatedDockerImage,
 	) {
 		super(parent);
+
 		this._item = itemInfo;
+
 		this._normalizedImageNameInfo = new NormalizedImageNameInfo(
 			itemInfo.image,
 		);

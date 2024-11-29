@@ -47,6 +47,7 @@ export async function migrateOldEnvironmentSettingsIfNeeded(): Promise<void> {
 			}
 
 			const newSetting = oldSettingsMap[oldSetting];
+
 			await migrateOldEnvironmentSetting(
 				oldConfig,
 				oldSetting,
@@ -121,6 +122,7 @@ async function migrateOldEnvironmentSettingForTarget(
 
 	// Append the old value to the current environment object for this target
 	newValue = cloneObject(newValue ?? {});
+
 	newValue[newSetting] = oldValue;
 
 	// Update the new setting for this target

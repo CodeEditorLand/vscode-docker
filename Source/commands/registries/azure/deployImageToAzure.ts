@@ -67,12 +67,16 @@ export async function deployImageToAzure(
 	};
 
 	promptSteps.push(new vscAzureAppService.SiteNameStep());
+
 	promptSteps.push(new azExtAzureUtils.ResourceGroupListStep());
+
 	vscAzureAppService.CustomLocationListStep.addStep(
 		wizardContext,
 		promptSteps,
 	);
+
 	promptSteps.push(new WebSitesPortPromptStep());
+
 	promptSteps.push(new vscAzureAppService.AppServicePlanListStep());
 
 	// Get site config before running the wizard so that any problems with the tag tree item are shown at the beginning of the process
@@ -90,7 +94,9 @@ export async function deployImageToAzure(
 		promptSteps,
 		executeSteps,
 	});
+
 	await wizard.prompt();
+
 	await wizard.execute();
 
 	const site: Site = nonNullProp(wizardContext, "site");
@@ -102,6 +108,7 @@ export async function deployImageToAzure(
 		site.name,
 		siteUri,
 	);
+
 	ext.outputChannel.info(createdNewWebApp);
 
 	const openSite: string = l10n.t("Open Site");

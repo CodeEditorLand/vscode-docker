@@ -20,7 +20,9 @@ import { NormalizedImageNameInfo } from "../NormalizedImageNameInfo";
 
 export interface ImageRegistry {
 	isMatch: (imageNameInfo: ImageNameInfo) => boolean;
+
 	baseUrl: string;
+
 	signRequest?(request: RequestLike, scope: string): Promise<RequestLike>;
 }
 
@@ -80,7 +82,9 @@ export const registries: ImageRegistry[] = [
 			};
 
 			const url = new URL(dockerHubAuthContext.realm.toString());
+
 			url.searchParams.append("service", dockerHubAuthContext.service);
+
 			url.searchParams.append("scope", scope);
 
 			const tokenResponse = await httpRequest<{ token: string }>(

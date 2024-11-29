@@ -9,6 +9,7 @@ import { ext } from "../extensionVariables";
 
 export function getThemedIconPath(iconName: string): {
 	light: string;
+
 	dark: string;
 } {
 	return {

@@ -65,6 +65,7 @@ export class NetSdkChooseBuildStep extends TelemetryPromptStep<NetChooseBuildTyp
 		);
 
 		const response = await wizardContext.ui.showQuickPick(items, opt);
+
 		wizardContext.containerBuildOption = response.data;
 
 		// update workspace momento storage
@@ -91,6 +92,7 @@ export class NetSdkChooseBuildStep extends TelemetryPromptStep<NetChooseBuildTyp
 		} catch (err) {
 			// Suppress report issue and rethrow
 			wizardContext.errorHandling.suppressReportIssue = true;
+
 			wizardContext.errorHandling.buttons = [
 				{
 					title: vscode.l10n.t("Open Extension"),

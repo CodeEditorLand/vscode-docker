@@ -63,6 +63,7 @@ async function pullImages(
 	allTags: boolean,
 ): Promise<void> {
 	const registryNode = node as UnifiedRegistryItem<CommonRegistry>;
+
 	await logInToDockerCli(context, registryNode);
 
 	const client = await ext.runtimeManager.getClient();

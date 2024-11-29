@@ -32,6 +32,7 @@ export const vsDbgInstallBasePath = path.join(os.homedir(), ".vsdbg");
 
 const acquisition: {
 	url: string;
+
 	scriptPath: string;
 
 	getShellCommand(runtime: VsDbgRuntime, version: VsDbgVersion): string;
@@ -60,6 +61,7 @@ function getInstallDirectory(
 
 export interface VsDbgType {
 	runtime: VsDbgRuntime;
+
 	version: VsDbgVersion;
 }
 
@@ -99,9 +101,11 @@ async function getLatestAcquisitionScriptIfNecessary(): Promise<boolean> {
 	}
 
 	ext.outputChannel.info(l10n.t("Acquiring latest VsDbg install script..."));
+
 	await streamToFile(acquisition.url, acquisition.scriptPath);
 
 	await ext.context.globalState.update(scriptAcquiredDateKey, Date.now());
+
 	ext.outputChannel.info(l10n.t("Script acquired."));
 
 	return true;
@@ -138,6 +142,7 @@ async function executeAcquisitionScriptIfNecessary(
 			version,
 		),
 	);
+
 	ext.outputChannel.info(command);
 
 	await execAsync(command, {}, (output: string) => {
@@ -145,6 +150,7 @@ async function executeAcquisitionScriptIfNecessary(
 	});
 
 	await ext.context.globalState.update(scriptExecutedDateKey, Date.now());
+
 	ext.outputChannel.info(
 		l10n.t(
 			"VsDbg installed, Runtime = {0}, Version = {1}...",

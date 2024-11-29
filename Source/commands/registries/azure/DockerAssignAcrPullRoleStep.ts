@@ -42,7 +42,9 @@ export class DockerAssignAcrPullRoleStep extends AzureWizardExecuteStep<IAppServ
 		const message: string = l10n.t(
 			"Granting permission for App Service to pull image from ACR...",
 		);
+
 		ext.outputChannel.info(message);
+
 		progress.report({ message: message });
 
 		const azExtAzureUtils = await getAzExtAzureUtils();
@@ -144,7 +146,9 @@ export class DockerAssignAcrPullRoleStep extends AzureWizardExecuteStep<IAppServ
 		const fullTag = getFullImageNameFromRegistryTagItem(
 			this.tagTreeItem.wrappedItem,
 		);
+
 		config.linuxFxVersion = `DOCKER|${fullTag}`;
+
 		await appSvcClient.webApps.updateConfiguration(
 			context.site.resourceGroup,
 			context.site.name,

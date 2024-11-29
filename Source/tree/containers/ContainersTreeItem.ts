@@ -46,12 +46,15 @@ export class ContainersTreeItem extends LocalRootTreeItemBase<
 	ContainerProperty
 > {
 	public treePrefix: TreePrefix = "containers";
+
 	public label: string = l10n.t("Containers");
+
 	public configureExplorerTitle: string = l10n.t(
 		"Configure containers explorer",
 	);
 
 	public childType: LocalChildType<DockerContainerInfo> = ContainerTreeItem;
+
 	public childGroupType: LocalChildGroupType<
 		DockerContainerInfo,
 		ContainerProperty
@@ -61,6 +64,7 @@ export class ContainersTreeItem extends LocalRootTreeItemBase<
 
 	public constructor(parent: AzExtParentTreeItem | undefined) {
 		super(parent);
+
 		this.newContainerUser = this.isNewContainerUser();
 	}
 
@@ -160,6 +164,7 @@ export class ContainersTreeItem extends LocalRootTreeItemBase<
 
 			return [dockerTutorialTreeItem];
 		}
+
 		return super.getTreeItemForEmptyList();
 	}
 
@@ -175,6 +180,7 @@ export class ContainersTreeItem extends LocalRootTreeItemBase<
 	): Promise<void> {
 		if (this.newContainerUser && items && items.length > 0) {
 			this.newContainerUser = false;
+
 			await ext.context.globalState.update(
 				"vscode-docker.container.newContainerUser",
 				false,

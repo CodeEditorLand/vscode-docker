@@ -12,6 +12,7 @@ declare module "tar" {
 
 	export interface ParseOptions {
 		filter?: (path: string, entry: ReadEntryClass) => boolean;
+
 		onentry?: (entry: ReadEntryClass) => void;
 	}
 
@@ -33,6 +34,7 @@ declare module "tar" {
 	export interface PackClass extends NodeJS.ReadWriteStream {
 		// eslint-disable-next-line @typescript-eslint/no-misused-new
 		new (options?: PackOptions): PackClass;
+
 		add(readEntry: ReadEntryClass): void;
 	}
 
@@ -44,13 +46,21 @@ declare module "tar" {
 
 	export interface ReadEntryOptions {
 		path: string;
+
 		type: "File" | "Directory";
+
 		size: number;
+
 		atime: Date;
+
 		mtime: Date;
+
 		ctime: Date;
+
 		mode?: number;
+
 		gid?: number;
+
 		uid?: number;
 	}
 
@@ -59,6 +69,7 @@ declare module "tar" {
 			NodeJS.ReadWriteStream {
 		// eslint-disable-next-line @typescript-eslint/no-misused-new
 		new (options: ReadEntryOptions): ReadEntryClass;
+
 		path: string;
 	}
 

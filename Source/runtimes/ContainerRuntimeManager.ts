@@ -13,6 +13,7 @@ import { RuntimeManager } from "./RuntimeManager";
 
 export class ContainerRuntimeManager extends RuntimeManager<IContainersClient> {
 	private readonly _contextManager = new ContextManager();
+
 	public readonly onContainerRuntimeClientRegistered =
 		this.runtimeClientRegisteredEmitter.event;
 

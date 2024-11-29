@@ -19,6 +19,7 @@ export async function showDanglingImages(
 	await ext.context.globalState.update(danglingImagesMementoKey, true);
 
 	setDanglingContextValue(true);
+
 	void ext.imagesTree.refresh(context);
 }
 
@@ -28,6 +29,7 @@ export async function hideDanglingImages(
 	await ext.context.globalState.update(danglingImagesMementoKey, false);
 
 	setDanglingContextValue(false);
+
 	void ext.imagesTree.refresh(context);
 }
 

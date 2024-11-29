@@ -17,6 +17,7 @@ import { getDockerOSType } from "../../utils/osUtils";
 
 export async function runAzureCliImage(context: IActionContext): Promise<void> {
 	const osType = await getDockerOSType();
+
 	context.telemetry.properties.dockerOSType = osType;
 
 	if (osType === "windows") {
@@ -40,7 +41,9 @@ export async function runAzureCliImage(context: IActionContext): Promise<void> {
 		const volumes: RunContainerBindMount[] = [];
 
 		await addHomedirFolderVolumeIfExists(volumes, ".azure");
+
 		await addHomedirFolderVolumeIfExists(volumes, ".ssh");
+
 		await addHomedirFolderVolumeIfExists(volumes, ".kube");
 
 		const workspaceFolder = vscode.workspace?.workspaceFolders?.[0];

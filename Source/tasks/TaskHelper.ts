@@ -62,8 +62,11 @@ export type DockerTaskProviderName =
 
 export interface DockerTaskContext {
 	folder: WorkspaceFolder;
+
 	platform?: DockerPlatform;
+
 	actionContext?: IActionContext;
+
 	cancellationToken?: CancellationToken;
 }
 
@@ -79,6 +82,7 @@ export function throwIfCancellationRequested(context: DockerTaskContext): void {
 
 export interface DockerTaskScaffoldContext extends DockerTaskContext {
 	dockerfile: string;
+
 	ports?: number[];
 }
 
@@ -88,11 +92,13 @@ export interface DockerTaskExecutionContext extends DockerTaskContext {
 
 export interface DockerBuildTaskContext extends DockerTaskExecutionContext {
 	imageName?: string;
+
 	buildTaskResult?: string;
 }
 
 export interface DockerRunTaskContext extends DockerTaskExecutionContext {
 	containerId?: string;
+
 	buildDefinition?: DockerBuildTaskDefinition;
 }
 
@@ -109,6 +115,7 @@ export interface TaskHelper {
 		context: DockerBuildTaskContext,
 		buildDefinition: DockerBuildTaskDefinition,
 	): Promise<DockerBuildOptions>;
+
 	postBuild?(
 		context: DockerBuildTaskContext,
 		buildDefinition: DockerBuildTaskDefinition,
@@ -123,6 +130,7 @@ export interface TaskHelper {
 		context: DockerRunTaskContext,
 		runDefinition: DockerRunTaskDefinition,
 	): Promise<DockerRunOptions>;
+
 	postRun?(
 		context: DockerRunTaskContext,
 		runDefinition: DockerRunTaskDefinition,
@@ -266,6 +274,7 @@ export async function getOfficialBuildTaskForDockerfile(
 
 	let buildTasks: DockerBuildTask[] =
 		(await tasks.fetchTasks({ type: "docker-build" })) || [];
+
 	buildTasks = buildTasks.filter((buildTask) => {
 		const taskDockerfile = pathNormalize(
 			resolveVariables(
@@ -378,6 +387,7 @@ export async function recursiveFindTaskByType(
 		if (Array.isArray(node.dependsOn)) {
 			for (const label of node.dependsOn as string[]) {
 				let next = await findTaskByLabel(allTasks, label);
+
 				next = await recursiveFindTaskByType(allTasks, type, next);
 
 				if (next) {

@@ -48,6 +48,7 @@ export async function createAzureRegistry(
 		new AzureRegistrySkuStep(),
 		new azExtAzureUtils.ResourceGroupListStep(),
 	];
+
 	azExtAzureUtils.LocationListStep.addStep(wizardContext, promptSteps);
 
 	const wizard = new AzureWizard(wizardContext, {
@@ -62,11 +63,13 @@ export async function createAzureRegistry(
 		wizardContext,
 		"newRegistryName",
 	);
+
 	await wizard.execute();
 
 	void window.showInformationMessage(
 		`Successfully created registry "${newRegistryName}".`,
 	);
+
 	void ext.registriesTree.refresh();
 
 	return newRegistryName;

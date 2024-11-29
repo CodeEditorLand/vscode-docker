@@ -20,6 +20,7 @@ export function registerDockerContextStatusBarEvent(
 		vscode.workspace.onDidChangeConfiguration,
 		(actionContext: IActionContext, e: vscode.ConfigurationChangeEvent) => {
 			actionContext.telemetry.suppressAll = true;
+
 			actionContext.errorHandling.suppressDisplay = true;
 
 			if (e.affectsConfiguration("docker.contexts.showInStatusBar")) {
@@ -62,12 +63,17 @@ async function showStatusBarItemIfNeeded() {
 		vscode.StatusBarAlignment.Left,
 		20,
 	);
+
 	ext.dockerContextStatusBarItem.command = dockerContextUseCommand;
+
 	ext.dockerContextStatusBarItem.name = vscode.l10n.t("Docker Contexts");
+
 	ext.dockerContextStatusBarItem.text = currentDockerContext.name;
+
 	ext.dockerContextStatusBarItem.tooltip = vscode.l10n.t(
 		"Change Docker Context",
 	);
+
 	ext.dockerContextStatusBarItem.show();
 }
 
@@ -78,5 +84,6 @@ function scheduleUpdateStatusBar(): Promise<void> {
 			() => (updatePromise = undefined),
 		);
 	}
+
 	return updatePromise;
 }

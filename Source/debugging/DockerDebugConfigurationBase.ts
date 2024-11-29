@@ -7,8 +7,11 @@ import { DebugConfiguration } from "vscode";
 
 export interface ServerReadyAction {
 	pattern?: string;
+
 	action?: "openExternally" | "debugWithChrome";
+
 	uriFormat?: string;
+
 	webRoot?: string;
 }
 
@@ -18,6 +21,7 @@ export interface DockerServerReadyAction extends ServerReadyAction {
 
 export interface DebugConfigurationBase extends DebugConfiguration {
 	preLaunchTask?: string;
+
 	serverReadyAction?: ServerReadyAction;
 }
 
@@ -25,5 +29,6 @@ export interface DockerDebugConfigurationBase extends DebugConfigurationBase {
 	containerName?: string;
 
 	dockerServerReadyAction?: DockerServerReadyAction;
+
 	removeContainerAfterDebug?: boolean;
 }

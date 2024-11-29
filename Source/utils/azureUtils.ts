@@ -17,6 +17,7 @@ function parseResourceId(id: string): RegExpMatchArray {
 	if (matches === null || matches.length < 3) {
 		throw new Error(l10n.t("Invalid Azure Resource Id"));
 	}
+
 	return matches;
 }
 

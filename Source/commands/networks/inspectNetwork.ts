@@ -18,6 +18,7 @@ export async function inspectNetwork(
 ): Promise<void> {
 	if (!node) {
 		await ext.networksTree.refresh(context);
+
 		node = await ext.networksTree.showTreeItemPicker<NetworkTreeItem>(
 			NetworkTreeItem.allContextRegExp,
 			{
@@ -32,5 +33,6 @@ export async function inspectNetwork(
 	const inspectResult = await ext.runWithDefaults((client) =>
 		client.inspectNetworks({ networks: [node.networkId] }),
 	);
+
 	await openReadOnlyJson(node, JSON.parse(inspectResult[0].raw));
 }

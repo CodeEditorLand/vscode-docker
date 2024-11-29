@@ -20,12 +20,14 @@ export class NodeGatherInformationStep extends GatherInformationStep<NodeScaffol
 
 		if (nodePackage.scripts?.start) {
 			this.packageHasStartScript = true;
+
 			wizardContext.nodeCmdParts = ["npm", "start"];
 
 			const [, main] = /node (.+)/i.exec(nodePackage.scripts.start) ?? [
 				undefined,
 				undefined,
 			];
+
 			wizardContext.nodeDebugCmdParts = [
 				"node",
 				"--inspect=0.0.0.0:9229",
@@ -33,6 +35,7 @@ export class NodeGatherInformationStep extends GatherInformationStep<NodeScaffol
 			];
 		} else if (nodePackage.main) {
 			wizardContext.nodeCmdParts = ["node", nodePackage.main];
+
 			wizardContext.nodeDebugCmdParts = [
 				"node",
 				"--inspect=0.0.0.0:9229",
@@ -40,6 +43,7 @@ export class NodeGatherInformationStep extends GatherInformationStep<NodeScaffol
 			];
 		} else {
 			wizardContext.nodeCmdParts = ["npm", "start"];
+
 			wizardContext.nodeDebugCmdParts = [
 				"node",
 				"--inspect=0.0.0.0:9229",

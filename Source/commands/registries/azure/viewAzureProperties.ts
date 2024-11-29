@@ -25,6 +25,7 @@ export async function viewAzureProperties(
 	}
 
 	const registryItem = node.wrappedItem;
+
 	await openReadOnlyJson(
 		{ label: registryItem.label, fullId: registryItem.id },
 		registryItem.registryProperties,

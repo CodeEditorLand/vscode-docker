@@ -51,6 +51,7 @@ export class ImagesTreeItem extends LocalRootTreeItemBase<
 
 	public constructor(parent?: AzExtParentTreeItem) {
 		super(parent);
+
 		this.sortBySettingInfo.properties.push({
 			property: "Size",
 			description: l10n.t("Sort by image size"),
@@ -58,10 +59,13 @@ export class ImagesTreeItem extends LocalRootTreeItemBase<
 	}
 
 	public treePrefix: TreePrefix = "images";
+
 	public label: string = l10n.t("Images");
+
 	public configureExplorerTitle: string = l10n.t("Configure images explorer");
 
 	public childType: LocalChildType<DatedDockerImage> = ImageTreeItem;
+
 	public childGroupType: LocalChildGroupType<
 		DatedDockerImage,
 		ImageProperty
@@ -108,6 +112,7 @@ export class ImagesTreeItem extends LocalRootTreeItemBase<
 		const result = await ext.runWithDefaults((client) =>
 			client.listImages(options),
 		);
+
 		this.outdatedImageChecker.markOutdatedImages(result);
 
 		return result;

@@ -35,7 +35,9 @@ export class AzureRegistryCreateStep extends AzureWizardExecuteStep<IAzureRegist
 			'Creating registry "{0}"...',
 			newRegistryName,
 		);
+
 		ext.outputChannel.info(creating);
+
 		progress.report({ message: creating });
 
 		const location: AzExtLocation =
@@ -70,6 +72,7 @@ export class AzureRegistryCreateStep extends AzureWizardExecuteStep<IAzureRegist
 			'Successfully created registry "{0}".',
 			newRegistryName,
 		);
+
 		ext.outputChannel.info(created);
 	}
 

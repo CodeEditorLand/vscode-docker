@@ -20,7 +20,9 @@ export async function copyRemoteFullTag(
 			contextValueFilter: { include: /commontag/i },
 		});
 	}
+
 	const fullTag = getFullImageNameFromRegistryTagItem(node.wrappedItem);
+
 	void vscode.env.clipboard.writeText(fullTag);
 
 	return fullTag;

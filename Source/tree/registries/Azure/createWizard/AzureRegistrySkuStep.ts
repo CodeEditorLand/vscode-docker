@@ -21,6 +21,7 @@ export class AzureRegistrySkuStep extends AzureWizardPromptStep<IAzureRegistryWi
 		});
 
 		const placeHolder: string = l10n.t("Select a SKU");
+
 		context.newRegistrySku = (
 			await context.ui.showQuickPick(picks, { placeHolder })
 		).data;

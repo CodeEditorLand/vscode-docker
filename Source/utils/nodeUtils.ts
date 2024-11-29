@@ -9,8 +9,11 @@ import { l10n } from "vscode";
 
 export interface NodePackage {
 	main?: string;
+
 	name?: string;
+
 	scripts?: { [key: string]: string };
+
 	version?: string;
 }
 

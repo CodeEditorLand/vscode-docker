@@ -21,9 +21,11 @@ export function tagsForImage(image: IHubSearchResponseResult): string {
 	} else if (image.is_official) {
 		tags.push("Official");
 	}
+
 	if (tags.length > 0) {
 		return "[" + tags.join("] [") + "]";
 	}
+
 	return "";
 }
 
@@ -170,7 +172,9 @@ function invokeHubSearch(
 	cache: boolean,
 ): Promise<IHubSearchResponse> {
 	const url = new URL("https://registry.hub.docker.com/v1/search");
+
 	url.searchParams.append("q", imageName);
+
 	url.searchParams.append("n", count.toString());
 	// https://registry.hub.docker.com/v1/search?q=redis&n=1
 	return fetchHttpsJson<IHubSearchResponse>(url.toString(), cache);
@@ -180,15 +184,19 @@ export interface IHubSearchResponse {
 	num_pages: number;
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	num_results: number;
+
 	results: [IHubSearchResponseResult];
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	page_size: number;
+
 	query: string;
+
 	page: number;
 }
 export interface IHubSearchResponseResult {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	is_automated: boolean;
+
 	name: string;
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	is_trusted: boolean;
@@ -196,6 +204,7 @@ export interface IHubSearchResponseResult {
 	is_official: boolean;
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	star_count: number;
+
 	description: string;
 }
 

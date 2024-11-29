@@ -30,11 +30,13 @@ export class TreeSettingListStep extends AzureWizardPromptStep<ITreeSettingsWiza
 					data: info,
 				};
 			});
+
 		picks.push({
 			label: l10n.t("$(history) Reset settings"),
 			detail: l10n.t("Restore settings to their original defaults."),
 			data: undefined,
 		});
+
 		context.info = (
 			await context.ui.showQuickPick(picks, {
 				placeHolder,

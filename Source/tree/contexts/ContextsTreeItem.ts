@@ -34,11 +34,15 @@ export class ContextsTreeItem extends LocalRootTreeItemBase<
 	ContextProperty
 > {
 	public treePrefix: TreePrefix = "contexts";
+
 	public label: string = l10n.t("Contexts");
+
 	public configureExplorerTitle: string = l10n.t(
 		"Configure Docker Contexts Explorer",
 	);
+
 	public childType: LocalChildType<ListContextItem> = ContextTreeItem;
+
 	public childGroupType: LocalChildGroupType<
 		ListContextItem,
 		ContextProperty

@@ -8,10 +8,15 @@ import { TaskDefinitionBase } from "./TaskDefinitionBase";
 export interface DockerComposeUpOptions {
 	up?: {
 		detached?: boolean;
+
 		build?: boolean;
+
 		scale?: { [service: string]: number };
+
 		services?: string[];
+
 		profiles?: string[];
+
 		customOptions?: string;
 	};
 
@@ -23,7 +28,9 @@ export interface DockerComposeDownOptions {
 
 	down?: {
 		removeImages?: "all" | "local";
+
 		removeVolumes?: boolean;
+
 		customOptions?: string;
 	};
 }

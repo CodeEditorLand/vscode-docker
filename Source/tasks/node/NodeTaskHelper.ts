@@ -49,8 +49,11 @@ export interface NodeBuildTaskDefinition extends DockerBuildTaskDefinitionBase {
 
 export interface NodeTaskRunOptions {
 	enableDebugging?: boolean;
+
 	inspectMode?: InspectMode;
+
 	inspectPort?: number;
+
 	package?: string;
 }
 

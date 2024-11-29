@@ -40,11 +40,13 @@ export async function deleteAzureRepository(
 		'Deleting repository "{0}"...',
 		node.wrappedItem.label,
 	);
+
 	await window.withProgress(
 		{ location: ProgressLocation.Notification, title: deleting },
 		async () => {
 			const azureDataProvider =
 				node.provider as unknown as AzureRegistryDataProvider;
+
 			await azureDataProvider.deleteRepository(node.wrappedItem);
 		},
 	);
@@ -55,5 +57,6 @@ export async function deleteAzureRepository(
 		'Successfully deleted repository "{0}".',
 		node.wrappedItem.label,
 	);
+
 	void window.showInformationMessage(deleteSucceeded);
 }

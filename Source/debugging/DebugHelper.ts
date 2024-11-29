@@ -35,9 +35,13 @@ import { pythonDebugHelper } from "./python/PythonDebugHelper";
 export interface DockerDebugContext {
 	// Same as DockerTaskContext but intentionally does not extend it, since we never need to pass a DockerDebugContext to tasks
 	folder: WorkspaceFolder;
+
 	platform: DockerPlatform;
+
 	actionContext: IActionContext;
+
 	cancellationToken?: CancellationToken;
+
 	runDefinition?: DockerRunTaskDefinition;
 }
 
@@ -48,6 +52,7 @@ export interface ResolvedDebugConfigurationOptions {
 	containerName?: string;
 
 	dockerServerReadyAction?: DockerServerReadyAction;
+
 	removeContainerAfterDebug?: boolean;
 }
 
@@ -59,10 +64,12 @@ export interface DebugHelper {
 	provideDebugConfigurations(
 		context: DockerDebugScaffoldContext,
 	): Promise<DockerDebugConfiguration[]>;
+
 	resolveDebugConfiguration(
 		context: DockerDebugContext,
 		debugConfiguration: DockerDebugConfiguration,
 	): Promise<ResolvedDebugConfiguration | undefined>;
+
 	afterResolveDebugConfiguration?(
 		context: DockerDebugContext,
 		debugConfiguration: DockerDebugConfiguration,

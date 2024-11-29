@@ -24,6 +24,7 @@ export async function scaffoldDebugConfig(
 	}
 
 	copyWizardContext(wizardContext, apiInput);
+
 	wizardContext.scaffoldType = "debugging";
 
 	const promptSteps: AzureWizardPromptStep<ScaffoldingWizardContext>[] = [
@@ -48,5 +49,6 @@ export async function scaffoldDebugConfig(
 	);
 
 	await wizard.prompt();
+
 	await wizard.execute();
 }

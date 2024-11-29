@@ -87,6 +87,7 @@ function resolveSingleVariable(
 	}
 
 	// Replace config variables, e.g. ${config:foo.bar}
+
 	const configMatch = configVariableMatcher.exec(variable);
 
 	if (configMatch && configMatch.length > 1) {
@@ -107,6 +108,7 @@ function resolveSingleVariable(
 	}
 
 	// Replace environment variables, e.g. ${env:FOO}
+
 	const envMatch = envVariableMatcher.exec(variable);
 
 	if (envMatch && envMatch.length > 1) {

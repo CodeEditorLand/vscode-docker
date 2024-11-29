@@ -29,9 +29,11 @@ export async function quickPickWorkspaceFolder(
 		if (!selected) {
 			throw new UserCancelledError();
 		}
+
 		return selected;
 	} else {
 		context.errorHandling.suppressReportIssue = true;
+
 		context.errorHandling.buttons = [
 			{
 				callback: async () => {

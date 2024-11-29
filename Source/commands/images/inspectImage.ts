@@ -18,6 +18,7 @@ export async function inspectImage(
 ): Promise<void> {
 	if (!node) {
 		await ext.imagesTree.refresh(context);
+
 		node = await ext.imagesTree.showTreeItemPicker<ImageTreeItem>(
 			ImageTreeItem.contextValue,
 			{
@@ -32,5 +33,6 @@ export async function inspectImage(
 	const inspectResult = await ext.runWithDefaults((client) =>
 		client.inspectImages({ imageRefs: [node.imageId] }),
 	);
+
 	await openReadOnlyJson(node, JSON.parse(inspectResult[0].raw));
 }

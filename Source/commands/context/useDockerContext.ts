@@ -25,6 +25,7 @@ export async function useDockerContext(
 				),
 			},
 		);
+
 		invokedFromCommandPalette = true;
 	}
 

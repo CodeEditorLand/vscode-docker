@@ -32,11 +32,15 @@ export class VolumesTreeItem extends LocalRootTreeItemBase<
 	VolumeProperty
 > {
 	public treePrefix: TreePrefix = "volumes";
+
 	public label: string = l10n.t("Volumes");
+
 	public configureExplorerTitle: string = l10n.t(
 		"Configure volumes explorer",
 	);
+
 	public childType: LocalChildType<ListVolumeItem> = VolumeTreeItem;
+
 	public childGroupType: LocalChildGroupType<ListVolumeItem, VolumeProperty> =
 		VolumeGroupTreeItem;
 

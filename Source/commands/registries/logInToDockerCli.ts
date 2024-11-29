@@ -56,6 +56,7 @@ export async function logInToDockerCli(
 						stdInPipe: stream.Readable.from(secret),
 					},
 				);
+
 				ext.outputChannel.info("Login succeeded.");
 			} catch (err) {
 				const error = parseError(err);

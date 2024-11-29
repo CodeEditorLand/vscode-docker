@@ -27,7 +27,9 @@ function canReferenceWrapper(item: unknown): item is WrappedElement {
 
 export interface UnifiedRegistryItem<T> {
 	provider: RegistryDataProvider<T>;
+
 	wrappedItem: T;
+
 	parent: UnifiedRegistryItem<T> | undefined;
 }
 
@@ -41,6 +43,7 @@ export class UnifiedRegistryTreeDataProvider
 		| UnifiedRegistryItem<unknown>[]
 		| undefined
 	>();
+
 	public readonly onDidChangeTreeData = this.onDidChangeTreeDataEmitter.event;
 
 	private readonly providers = new Map<
@@ -118,6 +121,7 @@ export class UnifiedRegistryTreeDataProvider
 			// if there are no connected providers, show a command to connect one
 			if (unifiedRegistryItems.length === 0) {
 				const connectRegistryItem = getConnectRegistryTreeItem();
+
 				unifiedRegistryItems.push(connectRegistryItem);
 			}
 		}
@@ -129,6 +133,7 @@ export class UnifiedRegistryTreeDataProvider
 			) {
 				return a.wrappedItem.label.localeCompare(b.wrappedItem.label);
 			}
+
 			return a.toString().localeCompare(b.toString());
 		});
 	}
@@ -155,6 +160,7 @@ export class UnifiedRegistryTreeDataProvider
 		return {
 			dispose: () => {
 				disposable.dispose();
+
 				this.providers.delete(provider.id);
 			},
 		};
@@ -209,6 +215,7 @@ export class UnifiedRegistryTreeDataProvider
 
 		if (!connectedProviderIds.includes(provider.id)) {
 			await provider?.onConnect?.();
+
 			await this.storeRegistryProvider(provider.id);
 		}
 
@@ -224,7 +231,9 @@ export class UnifiedRegistryTreeDataProvider
 		const connectedProviderIdsSet: Set<string> = new Set(
 			connectedProviderIds,
 		);
+
 		connectedProviderIdsSet.add(providerId);
+
 		await this.storageMemento.update(
 			ConnectedRegistryProvidersKey,
 			Array.from(connectedProviderIdsSet),
@@ -239,6 +248,7 @@ export class UnifiedRegistryTreeDataProvider
 		const newConnectedProviderIds = this.storageMemento
 			.get<string[]>(ConnectedRegistryProvidersKey, [])
 			.filter((cpi) => cpi !== item.provider.id);
+
 		await this.storageMemento.update(
 			ConnectedRegistryProvidersKey,
 			newConnectedProviderIds,
@@ -274,6 +284,7 @@ export class UnifiedRegistryTreeDataProvider
 						(r.wrappedItem as CommonRegistryRoot).label ===
 						ext.azureRegistryDataProvider.label,
 				);
+
 				findAzureRegistryOnly = true;
 			} else if (imageBaseName === "ghcr.io") {
 				registryRoots = registryRoots.filter(

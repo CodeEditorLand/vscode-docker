@@ -30,9 +30,13 @@ const noProjectFile = l10n.t(
 export interface NetCoreScaffoldingWizardContext
 	extends ScaffoldingWizardContext {
 	netCoreAssemblyName?: string;
+
 	netCoreRuntimeBaseImage?: string;
+
 	netCoreSdkBaseImage?: string;
+
 	netCorePlatformOS?: PlatformOS;
+
 	netCoreBaseImageDefaultUser?: string;
 }
 
@@ -55,6 +59,7 @@ export function getNetCoreSubWizardOptions(
 			wizardContext.scaffoldType === "compose")
 	) {
 		promptSteps.push(new NetCoreTryGetRandomPortStep());
+
 		promptSteps.push(new ChoosePortsStep([5000]));
 	}
 

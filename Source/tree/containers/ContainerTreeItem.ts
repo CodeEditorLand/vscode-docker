@@ -39,9 +39,13 @@ export class ContainerTreeItem
 	implements MultiSelectNode, ContainerTreeItemUsedByRemoteContainers
 {
 	public static allContextRegExp: RegExp = /Container$/;
+
 	public static runningContainerRegExp: RegExp = /^runningContainer$/i;
+
 	private readonly _item: DockerContainerInfo;
+
 	private children: AzExtTreeItem[] | undefined;
+
 	private containerOS: ContainerOS;
 
 	public constructor(
@@ -49,6 +53,7 @@ export class ContainerTreeItem
 		itemInfo: DockerContainerInfo,
 	) {
 		super(parent);
+
 		this._item = itemInfo;
 	}
 

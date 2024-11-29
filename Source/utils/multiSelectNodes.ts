@@ -41,6 +41,7 @@ export async function multiSelectNodes<T extends AzExtTreeItem>(
 	if (nodes.length === 0) {
 		// If still no selected nodes, need to prompt
 		await tree.refresh(context);
+
 		nodes = await tree.showTreeItemPicker<T>(expectedContextValue, {
 			...context,
 			canPickMany: true,
@@ -49,6 +50,7 @@ export async function multiSelectNodes<T extends AzExtTreeItem>(
 		// Otherwise if there's a filter, need to filter our selection to exclude ineligible nodes
 		// This uses the same logic as AzExtTreeItem.matchesContextValue()
 		const beforeLength = nodes.length;
+
 		nodes = nodes.filter((n) => {
 			return (
 				expectedContextValue === n.contextValue || // For strings, exact match comparison
