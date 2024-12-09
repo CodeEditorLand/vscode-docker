@@ -2921,10 +2921,10 @@
 		"onLanguage:dockercompose"
 	],
 	"dependencies": {
-		"@codeeditorland/container-client": "^0.1.2",
-		"@codeeditorland/docker-registries": "^0.1.12",
-		"@codeeditorland/arm-authorization": "^9.0.0",
-		"@codeeditorland/compose-language-service": "^0.2.0",
+		"@codeeditorland/arm-authorization": "0.0.1",
+		"@codeeditorland/compose-language-service": "0.0.1",
+		"@codeeditorland/container-client": "0.0.1",
+		"@codeeditorland/docker-registries": "0.0.1",
 		"dayjs": "^1.11.7",
 		"dockerfile-language-server-nodejs": "^0.13.0",
 		"fs-extra": "^11.1.1",
